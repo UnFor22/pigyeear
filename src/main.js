@@ -11,14 +11,6 @@ App.mpType = 'app'
 const app = new Vue(App)
 app.$mount()
 
-// export default {
-//     config: {
-//         usingComponents: {
-//             'i-loading': './assets/iView/spin/index.js',
-//             'i-card': './assets/iView/card/index'
-//         }
-//     }
-// }
 //全局配置fly请求
 const Fly = require("flyio/dist/npm/wx");
 const fly = new Fly;

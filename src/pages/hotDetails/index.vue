@@ -14,7 +14,6 @@
 
       <!--对应的银行卡-->
       <div class="content">
-        <!-- <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="bottomAllLoaded" :auto-fill="false" ref="loadmore" :bottomPullText='bottomText' :bottomDropText="bottomDropText"> -->
           <ul>
             <li v-for="(item, index) in pageList" :key="index" @click="toBanka(item.crediturl)">
                 <!--:href=item.crediturl-->
@@ -32,7 +31,6 @@
               <div class="button"><a style="color: #ff5b3d">立即申请</a></div>
             </li>
           </ul>
-        <!-- </mt-loadmore> -->
       </div>
 
     </div>
@@ -66,7 +64,7 @@ export default {
       wrapperHeight: 0,
       bottomText: '上拉加载更多',
       bottomDropText: '释放更新',
-
+      count: 0,  // 计算第几次触底刷新
       bankname: '',
       bankcontent: '',
       logo: '',
@@ -94,45 +92,25 @@ export default {
     // console.log('onLoad',this.pageList)
     this.changeParameter();
     // this.loadPageList();
+    
   },
   onShow(){
     this.credittips = [];
     this.cardTips = [];
     this.pageList=[];
-    this.searchCondition.page = 0;
-    this.loadPageList(); 
-  },
-  // onHide(){
-  //   console.log('onHide',this.pageList)
-  //   this.pageList=[]
-  // },
-  onUnload(){
-    // this.pageList=[]
+    this.searchCondition.page = 1;
+    this.loadPageList();   
   },
   // 触底刷新
-  onReachBottom() {
-    
-    // this.loadPageList();
+  onReachBottom() { 
+    this.count = this.count + 1
+    this.loadPageList(this.count);
   },
-  // mounted() {
-  //   // console.log(this.$root.$mp.query)
-  //   this.query = this.$root.$mp.query
-  //   // this.bankname = this.query.bankname;
-  //   // this.bankcontent = this.query.bankcontent;
-  //   // this.logo = this.query.logo;
-  //   // console.log(this.query)
-  //   // //动态计算页面高度
-  //   // this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
-  //   // //加载热门银行详情页时所需数据
-  //   this.changeParameter();
-  //   this.loadPageList();  
-  //   // this.changeParameter(); 
-  // },
 
   methods: {
     // 获取对于组件传递过来的值
     changeParameter() {
-      console.log(this.query)
+      // console.log(this.query)
       this.bankname = this.query.bankname;
       // console.log(this.bankname)
       this.bankcontent = this.query.bankcontent;
@@ -144,38 +122,64 @@ export default {
     //
     toBanka(linkUrl){
       // console.log('linkUrl', linkUrl)
-      let str = linkUrl.split('?')[0];
-      let str2 = linkUrl.split('?')[1];
-
-
-      let pages = getCurrentPages();
-      let currPage = pages[pages.length - 1];   //当前页面
-      let prevPage = pages[pages.length - 2];  //上一个页面
-      currPage.setData({
-        urlStr: linkUrl
-      });
-
-
-      // console.log('str2', str2)
-      wx.navigateTo({ 
-          url: `/pages/link/main?url=${str}&url2=${str2}`
-      });
+      wx.setClipboardData({
+        data: linkUrl,
+        success (res) {  
+            wx.hideToast() // 隐藏默认的Toast提示框
+            wx.showModal({
+              title: '提示',
+              content: '您所要办的信用卡链接已复制到剪切板，打开浏览器粘贴后即可打开。',
+              showCancel: false, //不显示取消按钮     
+            })            
+          }
+      })
+      // let str = linkUrl.split('?')[0];
+      // let str2 = linkUrl.split('?')[1];
+      // let pages = getCurrentPages();
+      // let currPage = pages[pages.length - 1];   //当前页面
+      // let prevPage = pages[pages.length - 2];  //上一个页面
+      // currPage.setData({
+      //   urlStr: linkUrl
+      // });
+      // wx.navigateTo({ 
+      //     url: `/pages/link/main?url=${str}&url2=${str2}`
+      // });
     },
 
     //查询数据
-    loadPageList(){
+    loadPageList(count){
+      if(count){
+        // this.credittips = [];
+        // this.cardTips = [];
+        this.searchCondition.page = this.searchCondition.page + count;
+      }
       this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
       this.searchCondition.token = md5(md5(this.searchCondition.bankid + this.searchCondition.t + 'kami2018@'));  //生成token
-      this.searchCondition.page = parseInt(this.searchCondition.page) + 1;
+      this.searchCondition.page = parseInt(this.searchCondition.page);
       getHotBankInfoListDetails(this.searchCondition).then(data => {
-        console.log(data)
         if(data.result.code == 10000){
-          this.pageList = data.data;
-          // 为信用卡的tips赋值
-          for(let i=0;i<this.pageList.length;i++){
-            this.credittips.push(data.data[i].credittips) 
-            this.cardTips.push(this.credittips[i].split(','))
+          if(count){
+            this.pageList = this.pageList.concat(data.data);
+            for(let i=0;i<data.data.length;i++){
+              this.credittips.push(data.data[i].credittips)  
+              // this.cardTips.push(this.credittips[i].split(','))
+            }
+            this.cardTips = [];
+            for(let j = 0; j<this.credittips.length; j++){
+              this.cardTips.push(this.credittips[j].split(','))
+            }
+            // console.log('this.credittips333',this.credittips)
+            // console.log('this.cardTips333',this.cardTips)
+          }else{
+            this.pageList = data.data;
+            // 为信用卡的tips赋值
+            for(let i=0;i<this.pageList.length;i++){
+              this.credittips.push(this.pageList[i].credittips) 
+              this.cardTips.push(this.credittips[i].split(','))
+            }
           }
+          // console.log("this.credittips2",this.credittips)
+          // console.log('this.cardTips2',this.cardTips)
         }else if(data.result.code == 99996) {
           this.bottomText = '已经到底了';
           this.bottomDropText = '已经到底了';

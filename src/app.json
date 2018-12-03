@@ -1,16 +1,22 @@
 {
   "pages": [
-    
-    "pages/index1/main",
+    "pages/index/main",
     "pages/hotDetails/main",
     "pages/onBehalf/main",
     "pages/counter/main",
-    "pages/link/main"
+    "pages/link/main",
+    "pages/noviceCard/main",
+    "pages/largemounte/main",
+    "pages/fastapproval/main",
+    "pages/progresscheck/main",
+    "pages/activation/main",
+    "pages/cardraiders/main",
+    "pages/politecard/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "卡秘办卡",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": 50
   }
