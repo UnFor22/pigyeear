@@ -1,19 +1,19 @@
 <template>
   <div>
     <!--养卡攻略详情-->
-    <!-- <div class="cardraidersdetails">
+    <div class="cardraidersdetails">
       <div class="header">
-        <p class="header_p">{{this.title}}</p>
+        <p class="header_p">{{title}}</p>
         <div class="header_fun">
           <span style="font-family: pingFangSC-Medium">2018-06-08</span>
-          <span style="margin-left: 30px; font-family: pingFangSC-Medium">
-              <img style="width: 15px" src="../../assets/liulan@2x.png" alt=""> 浏览
+          <span style="margin-left: 60rpx; font-family: pingFangSC-Medium">
+              <img style="width: 30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 浏览
             </span>
         </div>
-      </div> -->
+      </div>
 
 
-      <!-- <div class="detailsTxt">
+      <div class="detailsTxt">
         <div v-if="bankNo==1">
                 提额攻略：<br>
                 1.  金额数量尽量多，半年内消费总金额至少在额度30% 以上；<br>
@@ -102,8 +102,8 @@
         农行养卡攻略，如何3月一次提额度<br>
         一：农行临时额度有剧毒，勿用  农行临时额度有效期2个月，这两个月若想再提固定额度，需要再等3个月。也就是说，农行的临时额度是占用额度提升周期的，和固定额度一样，用了一次就占用固定额度提升的时间，原本3个月提升，变成了5个月 <br>
         二：不要频繁打电话要求客服提额，你的征信报告上都是贷后管理。<br>
-        只要是你电话申请提固定额度或者临时额度，每查询一次在你的征信报告上都会出现一次，之前看某论坛说，死命打，一个客服不管接着打，这个方式是错误的。你每次申请，就戳你的征信报告一针，频繁查询绝对会给你的征信报告减分。<br> -->
-        <!-- 正确方式：请计算好你的提额周期，首次提额是6个月，之后每3个月一次固定，时间没到99%不提。如果首次也没有成功，那就是本月好好用卡，下个月到时间再来一次  <br>
+        只要是你电话申请提固定额度或者临时额度，每查询一次在你的征信报告上都会出现一次，之前看某论坛说，死命打，一个客服不管接着打，这个方式是错误的。你每次申请，就戳你的征信报告一针，频繁查询绝对会给你的征信报告减分。<br>
+        正确方式：请计算好你的提额周期，首次提额是6个月，之后每3个月一次固定，时间没到99%不提。如果首次也没有成功，那就是本月好好用卡，下个月到时间再来一次  <br>
         三：关于农行喜欢的消费习惯  关于各个银行，很多盆友都说，银行喜欢赚钱，给他分期供着他就行，但是分期完，有多少银行是提额的呢？农行也是一样，分期对于他不痛不痒，只需要规范用卡就可以。<br>
         农行不需要刷爆，也不需要大额消费，保持正常的大小结合，账单占农行卡额度的20-30%就够了。<br>
         四：农行二卡额度不同，该如何调整<br>
@@ -112,8 +112,8 @@
         正确方式：看你首卡离固定提额周期相差多远了，还差一两个月，那就等等，看首卡能不能按周期提升。额度参差不齐也不大碍，如果实在是不能首卡提额，那就调平吧 之前江湖还流传这样的方式不占用提额时间：那就是去领卡网点填提额表格，额度写上想要提额的额度，不知道目前可不可行，欢迎有时间的盆友肉测。 <br>
         五：关于农行系统评分综合评分不足  涉及很多，以为每次提额都要查征信，征信不良的就难提了；还有的看你消费方式，上面第三条也说明了；看你的资质，不要网申不要网申，拿下500党的实在不提固定，可用信用币调平，可以去柜台拿些证明申请二卡刷新银行档案，祝你成功吧，网上申请低额度的难提额。<br>
         关于农行提额和消费方式，差不多是以上这些，收集于自身经验、身边盆友提额经验以及论坛提额案例总结，并不是100%但是肯定有参考意义，祝大家养卡提额成功。
-        </div> -->
-        <!-- <div v-if="bankNo==5">
+        </div>
+        <div v-if="bankNo==5">
                 光大银行养卡技巧：<br>
                 所谓养卡，就是通过一些"技术手段"，把信用卡额度提上去。一般来说，初始额度1万的信用卡养到5万的额度就自然〃毕业""了。如果手中有几张额度5万元的信用卡，总额 度也能达到几十万。那么，如何正确地养卡提额呢？下面， 就跟大家分享一些养卡的技巧。<br>
         1、 控制好刷卡的次数与金额<br>
@@ -196,8 +196,8 @@
         <br>
         同一持卡人，不同账户下同类型积分可以合并，并按照最高等级卡片档次换领，通过积分商城合并支付则按照同分行名下卡片的积分有效期先后顺序扣减积分。广发信用卡的主卡及附属卡、异型卡、虚拟卡的积分合并计于主卡账户中。<br>
         广发银行信用卡积分可通过消费或参与活动累计，积分有效期与所累计积分的卡片有效期一致。
-        </div> -->
-        <!-- <div v-if="bankNo==7">
+        </div> 
+        <div v-if="bankNo==7">
                 中国银行提额方法<br>
         信用卡申请之初，持卡人的信用额度都不是很高的，很多人一张卡用了很久还是初始的倍用额度。实际上呢，信用额度是可以提高的，随着收入、资产条件的提高，完全可以提高信用卡额度，以下八种方式助你成功信用卡提额。<br>
         1、 次数取胜<br>
@@ -247,8 +247,8 @@
         5、 持续消费，刷卡消费的帐单需连续3个月，中间不能断，即每月都要有消费。<br>
         6、 曲线提额式，曲线提额是指通过不断申请同一个银行的信用卡达到提高个人总额度的目的。<br>
         7、 外汇交易式提额，如拥有外币消费能力，可选用外汇交易的形式，增加交易次数。<br>
-        </div> -->
-        <!-- <div v-if="bankNo==10">
+        </div>
+        <div v-if="bankNo==10">
             华夏银行养卡<br>
         信用卡养卡，就是有技巧地刷卡，积累良好的刷卡记录，并遵循银行信用卡提额的规则，逐渐提升信用卡额度的过程。信用卡刷卡养卡的目的是为了提升信用卡额度，把低额度信用卡变成大额信用卡，这样持卡人可使用的信用资金就多了，能够满足持卡人资金周转的需求。那么信用卡养卡有哪些技巧呢？<br>
         1、 每月刷到额度至少30%以上，并且刷卡的种类要细，大到家居装修、大型购物等，小到电费、话费缴费等，能想到可以刷卡的尽量刷卡，在免息还款日期间把钱还上即可。这样银行才会认为你有足够的消费能力和需求。<br>
@@ -276,91 +276,87 @@
         1.  按时全额还款，免利息；<br>
         2.  按时还最低还款，按日息万分之五收取；<br>
         3.  逾期还款，除上述利息外，还有滞纳金。
-        </div> -->
+        </div>
 
-       <!-- {{this.txt}}-->
+       {{this.txt}}
 
-      <!-- </div>
-    </div> -->
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-  // export default {
-  //   data () {
-  //     return {
-  //       txt: '',
-  //       title: '',
-  //     }
-  //   },
+  export default {
+    data () {
+      return {
+        txt: '',
+        bankNo: '',
+        title: '',
+      }
+    },
+    onLoad(){
+      this.query = this.$root.$mp.query
+      this.changeParameter();
+    },
 
-  //   created () {
-  //     this.changeParameter();
-  //   },
+    methods: {
+      //获取对于组件传递过来的值
+      changeParameter() {
+        // console.log(this.$root.$mp)
+        // this.txt = this.query.txt;
+        this.title = this.query.title;
+        this.bankNo = this.query.bankNo;
+      },
+    },
 
-  //   methods: {
-  //     //获取对于组件传递过来的值
-  //     changeParameter() {
-  //       this.txt = this.$route.query.txt;
-  //       this.title = this.$route.query.title;
-  //       this.bankNo = this.$route.query.bankNo;
-  //     },
-  //        backHistory(){
-  //           this.$router.go(-1)
-  //       }
-
-  //   },
-
-  //   //监视页面数据是否更新
-  //   watch: {
-  //     '$route' (to, from) {
-  //       this.changeParameter();
-  //     }
-  //   },
-
-  // }
+    //监视页面数据是否更新
+    // watch: {
+    //   '$route' (to, from) {
+    //     this.changeParameter();
+    //   }
+    // },
+  }
 </script>
 
 <style lang="scss" scoped>
   .navTitle{
     width:100%;    
-    height: 43px;
-    line-height: 43px;
+    height: 86rpx;
+    line-height: 86rpx;
     text-align: center;
     font-size: 18px;
     color: #363636;
-    border-bottom: 1px solid #C9C9C9;
+    border-bottom: 2rpx solid #C9C9C9;
     background:#fff;
   }
   .navTitle img{
-    width: 12px;
+    width: 24rpx;
     position: absolute;
-    top: 10px;
+    top: 20rpx;
     left: 5%;
   }
   .cardraidersdetails{
     /*padding 20px 20px*/
     .header{
-      border:-1px(rgb(232, 232, 232));
-      padding-bottom: 1px;
+      border: -2rpx(rgb(232, 232, 232));
+      padding-bottom: 2rpx;
       .header_p{
-         margin: 20px;
+         margin: 40rpx;
         /*font-family pingFangSC-Heavy*/
       } 
       .header_fun{
         font-size: 14px;
         color: #9a9a9a;
-        margin: 20px;
-      }
-       
-    }
-      
+        margin: 40rpx;
+      }      
+    }    
     .detailsTxt{
       /*font-family pingFangSC-Medium*/
-      margin: 20px;
+      margin: 40rpx;
       color: #363636;
+      font-size: 16px;
       line-height: 2em;
-      text-indent: 1em;
+      // text-indent: 1em;
     }
       
   }

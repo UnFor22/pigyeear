@@ -28,11 +28,8 @@
       <div class="hotBanks">
         <div class="hotBanks_header">
           <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>热门银行</p>
-            <!--筛选-->
-          <navigator url='../index1/main' v-if="false">
-            <span style="color: #7370FF;font-size: 12px;">信用卡中心<img src="../../assets/cardCenterMore.png" alt="" style="width: 12rpx; height:22rpx; vertical-align: middle; margin-left: 6rpx;margin-top: -2rpx;"></span>
-          </navigator>
-            <!-- <span style="color: #BEBEBE;" @click="rechargePage">筛选 <img src="../../assets/shaixuan@2x.png" alt="" style="width: 13px; vertical-align: middle; margin-top: -2px"></span>-->
+          
+          <span @click="tofiltercard" style="color: #7370FF;font-size: 12px;">信用卡中心<img src="../../assets/cardCenterMore.png" alt="" style="width: 12rpx; height:22rpx; vertical-align: middle; margin-left: 6rpx;margin-top: -2rpx;"></span>
 
         </div>
         <div class="hotBanks_content">
@@ -51,16 +48,15 @@
                   <p style="color: #999;">{{item.bankcontent}}</p>
                 </div>
               
-            </li>
-            
-            <router-view></router-view>
-
+            </li> 
+            <!-- <router-view></router-view> -->
           </ul>
-          <div class="moreItem" @click="toggleShowList()">{{word}}<img :src=imgUrl style="width: 28rpx; height:15rpx; vertical-align: middle; margin-left: 10rpx" alt=""></div>
+          <div v-if="!showGD" class="moreItem" style="height:64rpx" @click="toggleShowList">{{word1}}<img :src=gengduo style="width: 28rpx; height:15rpx; vertical-align: middle; margin-left: 10rpx" alt=""></div>
+          <div v-else class="moreItem" style="height:64rpx" @click="toggleShowList">{{word2}}<img :src=shouqi style="width: 28rpx; height:15rpx; vertical-align: middle; margin-left: 10rpx" alt=""></div>
         </div>
       </div>
       <!-- 分割线 -->
-      <div class="splitLine"></div>
+      <div class="splitLine2" ></div>
       <!--主题精选-->
       <div class="theme">
         <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>主题精选</p>
@@ -107,8 +103,8 @@
       </div>
        <!--轮播图-->
       <div class="banner">
-        <div class="loading" v-show=isLoading_banner>
-          <!-- <mt-spinner type="fading-circle" color="rgb(115, 112, 255)"></mt-spinner> -->
+        <div class="loading" v-if=isLoading_hotBank>
+            <img src="../../assets/loading22.gif" alt="">
         </div>
         <swiper style="height:150rpx" autoplay='true' interval="2000">
           <swiper-item v-for="(item, index) in bannerData" :key="index" >
@@ -125,7 +121,7 @@
           </div>
           <div style="margin-left:160rpx;">
             <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
-              <swiper-item v-for="(item, index) in bannerDataTxt" :key="index">
+              <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in bannerDataTxt" :key="index">
                 <a @click="toswiperdetails(item.url,index)">
                   <span>{{item.title}}</span>
                 </a>
@@ -140,9 +136,12 @@
       <div class="hotCard" ref="test">
         <p class="hotCard_p" style="color: #363636;"><span class="leftBorder"></span>热门信用卡</p>
         <div class="hotCard_content">
+          <div class="loading" v-if=isLoading_hotCard>
+              <img src="../../assets/loading22.gif" alt="">
+          </div>
             <ul>
               <li v-for="(item, index) in pageList" :key="index" @click="hotdetailsNum(item.crediturl)">
-                <a :href=item.crediturl style="width: 100%; height: 100%"><!---->
+                <a style="width: 100%; height: 100%">
                   <img :src=item.creditphotourl alt="">
                   <div>
                     <p>{{item.creditname}}</p>
@@ -196,8 +195,7 @@
           t: '',
           page: 0,
           token: '',
-        creditid: '',
-        /*bankid: '',*/
+          creditid: '',
         },
         pageList: [],
         bottomAllLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
@@ -208,6 +206,7 @@
         isLoading_hotBank: true,
         isLoading_theme: true,
         isLoading_banner: true,
+        isLoading_hotCard: true,
         animate:false,
         translate: 0,
         scrollIcon:'',
@@ -238,13 +237,17 @@
             typeId:'',              //相应操作数据id（对应数据的id不存在时可以不传）==>信用卡ID
             address:'',	            //链接地址（app不需要；H5需要）
         },
-
         backgroundI1:{
           background:"url("+require('../../assets/1@3x.png')+")",
         },
         back_img1: require('../../assets/1@3x.png'),
         back_img2: require('../../assets/2@3x.png'),
         back_img3: require('../../assets/3@3x.png'),
+        showGD: false, // 控制更多和收起
+        word1: '更多',
+        word2: '收起',
+        gengduo: require('../../assets/gengduo@2x.png'),
+        shouqi: require('../../assets/shouqi@2x.png')
       }
     },
     
@@ -270,6 +273,12 @@
         });
       },
 
+      // 跳转到信用卡中心
+      tofiltercard(){
+        wx.navigateTo({ 
+          url: "/pages/filtercard/main" 
+        });
+      },
       // 跳转到热门银行详情页
       toHotbank(item){
         wx.navigateTo({ 
@@ -316,8 +325,9 @@
               wx.hideToast() // 隐藏默认的Toast提示框
               wx.showModal({
                 title: '提示',
-                content: '您所要办的信用卡链接已复制到剪切板，打开浏览器粘贴后即可打开。',
+                content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
                 showCancel: false, //不显示取消按钮     
+                confirmText: '知道了'  
               })            
             }
           })
@@ -330,9 +340,14 @@
           break;
         }
       },
+      // 禁止小的轮播文字滑动
+      stopTouchMove(){
+        return false
+      },
       // 切换showList的值
       toggleShowList(){
         this.showAll=!this.showAll
+        this.showGD = !this.showGD
         if(this.showAll){
           this.showList = []
           this.showList = this.hotBanks
@@ -347,26 +362,24 @@
           }
         }
       },
-      //查询数据
-      loadPageList(ind){
+      // 页面加载时查询数据
+      loadPageList(){
         this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
         this.searchCondition.token = md5(md5((new Date()).valueOf() + '@kami2018'));  //生成token
-        
-        this.searchCondition.page = parseInt(this.searchCondition.page + 1);
-          // console.log('触底刷新第',this.searchCondition.page)
-        
+        this.searchCondition.page = 1;
         getHotCard(this.searchCondition).then(data => {
           if(data.result.code == 10000){
-            this.pageList = this.pageList.concat(data.data);
-            //console.log(this.pageList)
+            for(let j = 0; j< data.data.length; j++){
+              this.pageList.push(data.data[j]);
+            }
+            // console.log(this.pageList)
+            this.isLoading_hotCard = false;
             // 为信用卡的tips赋值
             for(let i=0;i<this.pageList.length;i++){
               this.credittips.push(data.data[i].credittips) 
               this.cardTips.push(this.credittips[i].split(','))
               // this.cardTips.push(this.pageList.credittips.split(',')) 
             }
-            // console.log(this.credittips)
-            // console.log(this.cardTips)
           }else if(data.result.code == 99996) {
             this.bottomText = '没有更多了';
             this.bottomDropText = '没有更多了';
@@ -402,8 +415,9 @@
             wx.hideToast() // 隐藏默认的Toast提示框
             wx.showModal({
               title: '提示',
-              content: '您所要办的信用卡链接已复制到剪切板，打开浏览器粘贴后即可打开。',
+              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
               showCancel: false, //不显示取消按钮     
+              confirmText: '知道了'
             })            
           }
         })
@@ -411,29 +425,6 @@
       },
     },
     onLoad() {  
-      // 获取热门银行所需数据
-      getHotBankInfoList().then(data => {
-        if(data.result.code == 10000){
-          this.hotBanks = data.data;
-          // 第一次请求页面，给热门银行6个值
-          if(this.hotBanks.length > 6){
-            for(let i = 0; i < 6; i++){
-              this.showList.push(this.hotBanks[i]);
-            }
-          }else{
-            this.showList = this.hotBanks;
-          }
-          this.isLoading_hotBank = false;
-        }else {
-          this.isLoading_hotBank = false;
-          // Toast({message:'正在加载中。。。',duration: 500});
-        }
-      }).catch(err=>{
-        console.log(err)
-        this.isLoading_hotBank = false;
-        // Toast({message:'正在加载中。。。',duration: 500});
-      });
-
       //加载主题精选时所需数据
       getTopicSelect().then(data => {
         if(data.result.code == 10000){
@@ -455,7 +446,7 @@
       getBannerImg().then(data => {
         if(data.result.code == 10000){
           this.bannerData = data.data;
-          console.log(this.bannerData)
+          // console.log(this.bannerData)
           this.isLoading_banner = false;
         }else {
           this.isLoading_banner = false;
@@ -481,41 +472,90 @@
         console.log(err);
         this.isLoading_banner = false;
         // Toast({message:'正在加载中。。。',duration: 500});
-      });
-      //查询数据
-      
+      });         
     },
-    omShow(){
+    onShow(){
+      this.showGD = false
+      this.showAll = false
+      this.showList = []
+      // 页面展示时，清空热门信用卡数据，并重新请求
+      this.isLoading_hotCard = false
+      this.pageList = []
       this.loadPageList();
+
+      this.word= '更多'
+      this.isLoading_hotBank = true
+      this.imgUrl= require('../../assets/gengduo@2x.png')
+       // 获取热门银行所需数据
+      getHotBankInfoList().then(data => {
+        if(data.result.code == 10000){
+          this.hotBanks = data.data;
+          // 第一次请求页面，给热门银行6个值
+          if(this.hotBanks.length > 6){
+            for(let i = 0; i < 6; i++){
+              this.showList.push(this.hotBanks[i]);
+            }
+          }else{
+            this.showList = this.hotBanks;
+          }
+          this.isLoading_hotBank = false;
+        }else {
+          this.isLoading_hotBank = false;
+          // Toast({message:'正在加载中。。。',duration: 500});
+        }
+      }).catch(err=>{
+        console.log(err)
+        this.isLoading_hotBank = false;
+        // Toast({message:'正在加载中。。。',duration: 500});
+      });
     },
     // 触底刷新
     onReachBottom() {
-      this.loadPageList(1);
+        if(this.isLoading_hotCard){
+          this.loadPageList()
+          return false
+        }else{  
+          this.searchCondition.page = parseInt(this.searchCondition.page + 1);
+        }   
+      //查询数据
+        this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
+        this.searchCondition.token = md5(md5((new Date()).valueOf() + '@kami2018')); 
+        // 获取热门信用卡的信息
+        getHotCard(this.searchCondition).then(data => {      
+          if(data.result.code == 10000){
+            for(let j = 0; j< data.data.length; j++){
+              this.pageList.push(data.data[j]);
+              this.credittips.push(data.data[j].credittips)
+            }
+            console.log('111',this.pageList)
+            // 为信用卡的tips赋值
+            for(let i=0;i<this.pageList.length;i++){
+              this.cardTips.push(this.credittips[i].split(','))
+              // this.cardTips.push(this.pageList.credittips.split(',')) 
+            }
+            this.isLoading_hotCard = false;
+            // console.log(this.credittips)
+            // console.log(this.cardTips)
+          }else if(data.result.code == 99996) {
+            this.bottomText = '没有更多了';
+            this.bottomDropText = '没有更多了';
+            this.ReachBotton=false
+          }
+          else if(data.result.code == 99999){
+            // this.loadPageList()
+          }
+        }).catch(err => {
+          console.log(err);
+         /* Toast({message:'正在加载中。。。',duration: 500});*/
+        });
+      
     },
-    computed:{    
-      //对文字进行处理
-      word() {
-        if(this.showAll === false){
-          return '更多'
-        }else{
-          return '收起'
-        }
-      },
-      //对图片进行处理
-      imgUrl() {
-        if(this.showAll === false) {
-          return require('../../assets/gengduo@2x.png');
-        }else {
-          return require('../../assets/shouqi@2x.png');
-        }
-      },
-    }
+    
   }
  
 </script>
 
 <style lang='scss' scoped>
-
 .card {
   overflow: auto;
   background: #fff;
@@ -526,6 +566,12 @@
     height: 16rpx;
     background-color: #F6F6F6;
     margin: 40rpx 0;
+  }
+  .splitLine2{
+    width: 100%;
+    height: 16rpx;
+    background-color: #F6F6F6;
+    margin-bottom: 40rpx;
   }
   .funList{
     display: flex;
@@ -541,10 +587,7 @@
       width: 100rpx;
       height: 100rpx;
       margin-bottom: 16rpx;
-    }     
-    p{
-      /*font-family pingFangSC-Medium*/
-    }
+    }    
     .funListMiddle{
       position: relative;
       .hotGif {
@@ -844,41 +887,41 @@
                 text-overflow: ellipsis;
               }
                 
-             .tipsHint{
-               display: inline-block;
-                padding: 4rpx 10rpx;
-                margin-right: 6rpx;
-                color: #9a9a9a;
-                /*font-family pingFangSC-Medium*/
-                font-size: 11px;
-                /*background-color #FFF8E4*/
-                height: 30rpx;
-                line-height: 30rpx;
-                /*border-radius 4px
-                border: .5px solid #bdbdbd;*/
-                margin-top: 10rpx;
-                max-width: 150rpx;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                position: relative;
-             }
+            //  .itemTipsCss{
+            //    display: inline-block;
+            //     padding: 4rpx 10rpx;
+            //     margin-right: 6rpx;
+            //     color: #9a9a9a;
+            //     /*font-family pingFangSC-Medium*/
+            //     font-size: 11px;
+            //     /*background-color #FFF8E4*/
+            //     height: 30rpx;
+            //     line-height: 30rpx;
+            //     /*border-radius 4px
+            //     border: .5px solid #bdbdbd;*/
+            //     margin-top: 10rpx;
+            //     max-width: 150rpx;
+            //     overflow: hidden;
+            //     white-space: nowrap;
+            //     text-overflow: ellipsis;
+            //     position: relative;
+            //  }
                 
-             .tipsHint::after{
-               content: "  ";
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                  z-index:-1;
-                  width: 195%;
-                  height:68rpx;
-                  border-radius: 16rpx;
-                  border:2rpx solid #bdbdbd;
-                  -webkit-transform-origin: 0 0;
-                  transform-origin: 0 0;
-                  -webkit-transform: scale(.5, .5);
-                  transform: scale(.5, .5);
-             }     
+            //  .itemTipsCss::after{
+            //    content: "  ";
+            //       position: absolute;
+            //       left: 0;
+            //       top: 0;
+            //       z-index:-1;
+            //       width: 195%;
+            //       height:68rpx;
+            //       border-radius: 16rpx;
+            //       border:2rpx solid #bdbdbd;
+            //       -webkit-transform-origin: 0 0;
+            //       transform-origin: 0 0;
+            //       -webkit-transform: scale(.5, .5);
+            //       transform: scale(.5, .5);
+            //  }     
             }     
           }    
        }   
@@ -925,26 +968,28 @@
     max-width: 150rpx;
     height: 30rpx;
     line-height: 30rpx;
-    padding: 4rpx 8rpx;
-    margin-right: -6rpx;
+    padding: 2rpx 2rpx;
+    margin-right: 6rpx;
+    margin-top: 4rpx;
     font-size: 11px;
     overflow: hidden;
     white-space: nowrap;
+    border: 2rpx solid #bdbdbd;
+    border-radius: 8px;
     text-overflow: ellipsis;
-/*    border: 0.5px solid #bdbdbd;
-    border-radius: 8px;*/
     float:left;
     color: #9a9a9a;
     /*-webkit-transform: scale(0.5)*/
     /*transform: scale(0.5);*/
 }
 .itemTipsCss::after{
-    content: " ";
+    content: "";
     width: 195%;
-    height: 150%;
+    height: 30rpx;
+    line-height: 30rpx;
     padding: 4rpx;
-    margin-top: -44rpx;
-    margin-left: -57%;
+    // margin-top: -40rpx;
+    // margin-left: -57%;
     font-size: 11px;
     border: 2rpx solid #bdbdbd;
     border-radius: 8px;
@@ -953,6 +998,7 @@
     transform: scale(0.5);
 }
 .loading{
+    margin-bottom: 100rpx;
     display: flex;
     justify-content: center;
     img{

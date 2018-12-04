@@ -128,8 +128,9 @@ export default {
             wx.hideToast() // 隐藏默认的Toast提示框
             wx.showModal({
               title: '提示',
-              content: '您所要办的信用卡链接已复制到剪切板，打开浏览器粘贴后即可打开。',
+              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
               showCancel: false, //不显示取消按钮     
+              confirmText: '知道了'   
             })            
           }
       })

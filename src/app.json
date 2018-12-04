@@ -3,7 +3,6 @@
     "pages/index/main",
     "pages/hotDetails/main",
     "pages/onBehalf/main",
-    "pages/counter/main",
     "pages/link/main",
     "pages/noviceCard/main",
     "pages/largemounte/main",
@@ -11,13 +10,15 @@
     "pages/progresscheck/main",
     "pages/activation/main",
     "pages/cardraiders/main",
+    "pages/cardraidersdetails/main",
+    "pages/filtercard/main",
     "pages/politecard/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "卡秘办卡",
-    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#7370FF",
+    "navigationBarTitleText": "办信用卡",
+    "navigationBarTextStyle": "#fff",
     "onReachBottomDistance": 50
   }
 }

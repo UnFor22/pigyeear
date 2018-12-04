@@ -141,8 +141,9 @@
             wx.hideToast() // 隐藏默认的Toast提示框
             wx.showModal({
               title: '提示',
-              content: '您所要办的信用卡链接已复制到剪切板，打开浏览器粘贴后即可打开。',
+              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
               showCancel: false, //不显示取消按钮     
+              confirmText: '知道了'  
             })            
           }
         })
@@ -286,8 +287,8 @@
             /*font-family pingFangSC-Medium*/
             font-size: 14px;
             /*background-color #FFF8E4*/
-            height: 30rpx;
-            line-height: 30rpx;
+            height: 34rpx;
+            line-height: 34rpx;
             /*border-radius 4px
             border: 1px solid #bdbdbd;*/
             margin-top: 10rpx;
@@ -394,8 +395,8 @@
               /*font-family pingFangSC-Medium*/
               font-size: 11px;
               /*background-color #FFF8E4*/
-              height: 30rpx;
-              line-height: 30rpx;
+              height: 34rpx;
+              line-height: 34rpx;
               /*border-radius 4px
               border: 1px solid #bdbdbd;*/
               margin-top: 10rpx;
