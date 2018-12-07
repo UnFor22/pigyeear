@@ -15,17 +15,16 @@
       <!--对应的银行卡-->
       <div class="content">
           <ul>
-            <li v-for="(item, index) in pageList" :key="index" @click="toBanka(item.crediturl)">
-                <!--:href=item.crediturl-->
+            <li v-for="(item, index) in pageList" :key="index" @click="tokefu(item.creditname,item.crediturl)">
               <div style="text-align: left" class="leftBox">
                 <img :src="item.creditphotourl"  alt="">
                 <div class="creditRight">
                   <p>{{item.creditname}}</p>
                   <p>{{item.creditcontent}}</p>
-                  <!-- <div v-for="(itemTips, i) in item.credittips.split(',')" :key="i">
-                    <div class="tips">{{itemTips}}</div>
-                  </div> -->
                   <div class="itemTipsCss" v-for="(itemTips, i) in cardTips[index]" :key="i">{{itemTips}}</div>
+                  <div class="cardNum">
+                    <span><span style="color:#ff5b3d">{{item.cardcount}}</span>人申请</span>
+                  </div>
                 </div>
               </div>
               <div class="button"><a style="color: #ff5b3d">立即申请</a></div>
@@ -119,39 +118,22 @@ export default {
       this.bankid = this.query.bankid;
       // gio('page.set', {'bankname': this.bankname});     
     },
-    //
-    toBanka(linkUrl){
-      // console.log('linkUrl', linkUrl)
-      wx.setClipboardData({
-        data: linkUrl,
-        success (res) {  
-            wx.hideToast() // 隐藏默认的Toast提示框
-            wx.showModal({
-              title: '提示',
-              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              showCancel: false, //不显示取消按钮     
-              confirmText: '知道了'   
-            })            
-          }
-      })
-      // let str = linkUrl.split('?')[0];
-      // let str2 = linkUrl.split('?')[1];
-      // let pages = getCurrentPages();
-      // let currPage = pages[pages.length - 1];   //当前页面
-      // let prevPage = pages[pages.length - 2];  //上一个页面
-      // currPage.setData({
-      //   urlStr: linkUrl
-      // });
-      // wx.navigateTo({ 
-      //     url: `/pages/link/main?url=${str}&url2=${str2}`
-      // });
+    // 跳转到中间页
+    tokefu(title,url){
+      let pages = getCurrentPages();
+      let currPage = pages[pages.length - 1];   //当前页面
+      let prevPage = pages[pages.length - 2];  //上一个页面
+      currPage.setData({
+        urlStr: url
+      });
+      wx.navigateTo({ 
+          url: `/pages/link/main?title=${title}`
+      });
     },
 
     //查询数据
     loadPageList(count){
       if(count){
-        // this.credittips = [];
-        // this.cardTips = [];
         this.searchCondition.page = this.searchCondition.page + count;
       }
       this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
@@ -165,10 +147,12 @@ export default {
               this.credittips.push(data.data[i].credittips)  
               // this.cardTips.push(this.credittips[i].split(','))
             }
+
             this.cardTips = [];
             for(let j = 0; j<this.credittips.length; j++){
               this.cardTips.push(this.credittips[j].split(','))
             }
+            console.log('this.pageList',this.pageList)
             // console.log('this.credittips333',this.credittips)
             // console.log('this.cardTips333',this.cardTips)
           }else{
@@ -306,20 +290,27 @@ export default {
         padding: 40rpx 10rpx;
         border:-2rpx(rgb(232, 232, 232));
         position: relative;
+        
         .leftBox{
           margin-left: 2%;
           width:100%;
+          position: relative;
+          .cardNum {
+            position: absolute;
+            text-align: center;
+            width: 20%;
+            right: 2%;
+            bottom: 0;
+            font-size: 11px;
+            color: #666;
+          }
         }
-          
-        /*display flex*/
-        /*align-items center*/
-        /*vertical-align -30%*/
+
         .button{
           display: inline-block;
           width: 20%;
           height: 56rpx;
           line-height: 56rpx;
-
           border-radius: 40rpx;
           outline:none;
           font-size: 12px;
@@ -350,7 +341,7 @@ export default {
           float: left;
           height: 144rpx;
           width:48%;
-
+          
           p:nth-of-type(1){
             width: 80%;
             /*font-family  pingFangSC-Heavy */
@@ -373,7 +364,7 @@ export default {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            margin-bottom: 36rpx;
+            margin-bottom: 20rpx;
           }
             
           .tips{
@@ -404,8 +395,8 @@ export default {
               z-index:-1;
               width: 195%;
               height:56rpx;
-              border-radius: 8px;
-              border:2rpx solid #bdbdbd;
+              // border-radius: 8px;
+              // border: 1px solid #bdbdbd;
               -webkit-transform-origin: 0 0;
               transform-origin: 0 0;
               -webkit-transform: scale(.5, .5);
@@ -420,6 +411,8 @@ export default {
 .itemTipsCss{
   padding: 2px 5px;
   color: #9a9a9a;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
   font-size: 11px;
   margin-right: 5px;
   float: left;
@@ -430,20 +423,5 @@ export default {
   /* border: .5px solid #bdbdbd; */
   position: relative;
 }
-// .button{
-//     display: inline-block;
-//     /* background: linear-gradient(to right, #8B89FF , #7B5CFF); */
-//     width: 150rpx;
-//     height: 56rpx;
-//     line-height: 56rpx;
-//     border-radius: 20px;
-//     /* box-shadow: 3px 3px 8px #ddd; */
-//     outline: none;
-//     font-size: 12px;
-//     position: absolute;
-//     right: 3%;
-//     top: 36%;
-//     background-color: #fff;
-//     border: 2rpx solid #ff5b3d;
-// }
+
 </style>

@@ -239,6 +239,34 @@ export const getTopicSelect = params => {
       /*console.log(params);*/
     return fly.post(`${baseURL}/api.php/CreditPage/GetCreditStatics?creditid=${params.creditid}&bankid=${params.bankid}`).then(res => res.data);
   };
+  //统计立即购买creditid&bankid
+  export const getUserOpenid = params => {
+    return fly.post(`${baseURL}/api.php/msg/getwxcode?code=${params}`).then(res => res.data);
+  };
+
+  function urlencode (str) {  
+    str = (str + '').toString();   
+
+    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+} 
+   //统计立即购买creditid&bankid
+  export const postUser = params => {
+    var g_openid = "";
+    wx.getStorage({
+      key: 'user',
+      success (res) { 
+        // console.log('bbb',res)
+        params.openId = res.data.openId;
+        g_openid = urlencode(params.openId);
+          console.log('11111',params.openId );   
+          return fly.post(`https://main.kamicard.com/api.php/msg/savewxuserinfo?nickName=${params.username}&avatarUrl=${params.avatarUrl}&wxid=${g_openid}&gender=${params.gender}&province=${params.province}&city=${params.city}`).then(res => res.data);
+      }
+    })  
+ //  console.log('params',params); 
+ //  console.log('222',g_openid);     
+   // return fly.post(`https://main.pcuion.com/api.php/msg/savewxuserinfo?nickName=${params.username}&avatarUrl=${params.avatarUrl}&wxid=${g_openid}&gender=${params.gender}&province=${params.province}&city=${params.city}`).then(res => res.data);  
+  };
   /*
   //统计首页立即购买creditid&bankid
   export const postIndexNum = params => {

@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- <div v-if="isLogin">
+      <button @getuserinfo="onGotUserInfo" @click="tologin" open-type='getUserInfo'>登录</button>
+    </div>    -->
+    <!-- <open-data type="userNickName"></open-data> -->
     <div class="card">
       <!-- 功能导航 -->
       <div class="funList">
@@ -27,10 +31,8 @@
       <!-- 热门银行 -->
       <div class="hotBanks">
         <div class="hotBanks_header">
-          <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>热门银行</p>
-          
-          <span @click="tofiltercard" style="color: #7370FF;font-size: 12px;">信用卡中心<img src="../../assets/cardCenterMore.png" alt="" style="width: 12rpx; height:22rpx; vertical-align: middle; margin-left: 6rpx;margin-top: -2rpx;"></span>
-
+          <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>热门银行</p>          
+          <span @click="tofiltercard" style="color: #7370FF;font-size: 12px;">全部卡片<img src="../../assets/cardCenterMore.png" alt="" style="width: 12rpx; height:22rpx; vertical-align: middle; margin-left: 6rpx;margin-top: -2rpx;"></span>
         </div>
         <div class="hotBanks_content">
           <!-- loading图 -->
@@ -107,10 +109,11 @@
             <img src="../../assets/loading22.gif" alt="">
         </div>
         <swiper style="height:150rpx" autoplay='true' interval="2000">
-          <swiper-item v-for="(item, index) in bannerData" :key="index" >
-            <a @click="hotdetailsNum(item.picurl)">
+          <swiper-item class="banneritem" v-for="(item, index) in bannerData" :key="index" >
+            <a @click="tokefu('办信用卡',item.picurl)">
               <img style="width:740rpx; height:150rpx;" :src=item.pic_url alt="">
             </a>
+            
           </swiper-item>
         </swiper>
 
@@ -122,7 +125,7 @@
           <div style="margin-left:160rpx;">
             <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
               <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in bannerDataTxt" :key="index">
-                <a @click="toswiperdetails(item.url,index)">
+                <a @click="toswiperdetails(item.url,index,'光大银行信用卡')">
                   <span>{{item.title}}</span>
                 </a>
               </swiper-item>
@@ -140,25 +143,26 @@
               <img src="../../assets/loading22.gif" alt="">
           </div>
             <ul>
-              <li v-for="(item, index) in pageList" :key="index" @click="hotdetailsNum(item.crediturl)">
+              <li v-for="(item, index) in pageList" :key="index" @click="tokefu(item.creditname,item.crediturl)">   
                 <a style="width: 100%; height: 100%">
-                  <img :src=item.creditphotourl alt="">
-                  <div>
+                  <img :src=item.creditphotourl mode="widthFix" alt="">
+                  <div class="bankContent">
                     <p>{{item.creditname}}</p>
                     <p>{{item.creditcontent}}</p>
                     <span class="itemTipsCss" v-for="(itemTips, i) in cardTips[index]" :key="i">{{itemTips}}</span>
+                    <div class="cardNum">
+                      <span><span style="color:#ff5b3d">{{item.cardcount}}</span>人申请</span>
+                    </div>  
                   </div>
                 </a>
                 <div class="imgBox">
                   <img v-if="index==0" :src=back_img1 alt="">
                   <img v-if="index==1" :src=back_img2 alt="">
                   <img v-if="index==2" :src=back_img3 alt="">
-                </div>
+                </div>      
               </li>
             </ul>
-
-        </div>
-        
+        </div>       
         <div class="noMore" v-if="!ReachBotton">
           <p>{{bottomText}}</p>
         </div>
@@ -170,10 +174,11 @@
 
 <script>
   import md5 from 'js-md5';
-  import {getHotBankInfoList, getTopicSelect, getBannerImg, getHotCard, getBannerTxt,registerHref,userOperation} from '../../requestAPI/requestAPI';
+  import {getHotBankInfoList, getTopicSelect, getBannerImg, getHotCard, getBannerTxt,registerHref,userOperation,getUserOpenid,postUser} from '../../requestAPI/requestAPI';
   export default {
     data(){
       return {
+        isLogin: true,
         isActive :false,
         appear:true,
         tips:true,
@@ -247,7 +252,15 @@
         word1: '更多',
         word2: '收起',
         gengduo: require('../../assets/gengduo@2x.png'),
-        shouqi: require('../../assets/shouqi@2x.png')
+        shouqi: require('../../assets/shouqi@2x.png'),
+        userInfo:{
+          username: '',
+          avatarUrl: '',
+          gender: '',
+          province:'',
+          city: '',
+          openId: ''
+        }
       }
     },
     
@@ -255,7 +268,6 @@
       // 跳转到代还页
       toOnbehalf() {
         wx.navigateTo({ 
-          // url: '../workingMode/workingMode?workModeAndPriceList=' + JSON.stringify(workModeAndPriceList) + '&deviceId=' + deviceId,
           url: "/pages/onBehalf/main" + '?utm_source='
            + this.urlList.urlUtm + '&mob' + this.urlList.urlMob 
         });
@@ -310,7 +322,7 @@
         });
       },
       // 跳转到轮播图详细页
-      toswiperdetails(tourl,index){
+      toswiperdetails(url,index,title){
         switch(index)
         {
         case 0:
@@ -319,18 +331,15 @@
           });
           break;
         case 1:
-          wx.setClipboardData({
-            data: tourl,
-            success (res) {  
-              wx.hideToast() // 隐藏默认的Toast提示框
-              wx.showModal({
-                title: '提示',
-                content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-                showCancel: false, //不显示取消按钮     
-                confirmText: '知道了'  
-              })            
-            }
-          })
+          let pages = getCurrentPages();
+          let currPage = pages[pages.length - 1];   //当前页面
+          let prevPage = pages[pages.length - 2];  //上一个页面
+          currPage.setData({
+            urlStr: url
+          });
+          wx.navigateTo({ 
+              url: `/pages/link/main?title=${title}`
+          });
           break;
         case 2:
         console.log(tourl)
@@ -406,25 +415,159 @@
           this.operationList.address=window.location.href;
           userOperation(this.operationList);
       },
-      // 把banner的办卡链接复制到剪切板
-      hotdetailsNum(linkUrl){
-        // console.log('linkUrl', linkUrl)
-        wx.setClipboardData({
-          data: linkUrl,
-          success (res) {  
-            wx.hideToast() // 隐藏默认的Toast提示框
-            wx.showModal({
-              title: '提示',
-              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              showCancel: false, //不显示取消按钮     
-              confirmText: '知道了'
-            })            
+      // 跳转到中间页
+      tokefu(title,url){
+        let pages = getCurrentPages();
+        let currPage = pages[pages.length - 1];   //当前页面
+        let prevPage = pages[pages.length - 2];  //上一个页面
+        currPage.setData({
+          urlStr: url
+        });
+        wx.navigateTo({ 
+            url: `/pages/link/main?title=${title}`
+        });
+      },
+      // 获取用户信息
+      onGotUserInfo: function(e) {
+        // console.log(e)
+        // console.log(e.mp.detail.userInfo)
+        wx.login({
+          success (res) {        
+            if (res.code) {
+              //发起网络请求            
+              getUserOpenid(res.code).then(data => {  
+                console.log('qqq',data)
+                // this.userInfo.openId = data.result.msg
+                wx.setStorage({
+                  key: 'user',
+                  data: {
+                    "openId":data.result.msg
+                  }
+                })
+              })      
+            } else {            
+              // console.log('登录失败！' + res.errMsg)
+            }
+          }
+        })   
+        wx.setStorage({
+          key: 'userInfo',
+          data: {
+            "username": e.mp.detail.userInfo.nickName,
+            "avatarUrl": e.mp.detail.userInfo.avatarUrl,
+            "gender": e.mp.detail.userInfo.gender,
+            "province": e.mp.detail.userInfo.province,
+            "city": e.mp.detail.userInfo.city
+          }
+        }) 
+        wx.getStorage({
+          key: 'userInfo',
+          // key: 'user',      
+          success (res) {      
+            // console.log('aaa',res)
+            let userInfo={
+              username: '',
+              avatarUrl: '',
+              gender: '',
+              province:'',
+              city: '',
+              openId: ''
+            }
+            userInfo.username = res.data.username
+            userInfo.avatarUrl = res.data.avatarUrl
+            userInfo.gender = res.data.gender
+            userInfo.city = res.data.city
+            userInfo.province = res.data.province
+            wx.getStorage({
+              key: 'user',
+              success (res) {
+                // console.log('bbb',res)
+                userInfo.openId = res.data.openId
+                console.log(userInfo.openId );   
+              }
+            })      
+            console.log(userInfo)
+            postUser(userInfo)
+            // .then(data => {  
+            //   console.log('111')
+            //   console.log(data)
+            // })
           }
         })
-        
       },
     },
     onLoad() {  
+      wx.login({
+        success (res) {        
+          if (res.code) {
+            //发起网络请求            
+            getUserOpenid(res.code).then(data => {  
+              // console.log(data)
+              // this.userInfo.openId = data.result.msg
+               wx.setStorage({
+                key: 'user',
+                data: {
+                  "openId":data.result.msg
+                }
+              })
+            })      
+          } else {            
+            // console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })   
+      wx.getUserInfo({
+        success: function(res) {
+          // console.log(res)
+          // console.log(res.userInfo)
+          wx.setStorage({
+            key: 'userInfo',
+            data: {
+              "username": res.userInfo.nickName,
+              "avatarUrl":res.userInfo.avatarUrl,
+              "gender":res.userInfo.gender,
+              "province":res.userInfo.province,
+              "city":res.userInfo.city
+            }
+          })         
+        }
+      })
+      wx.getStorage({
+        key: 'userInfo',
+        // key: 'user',      
+        success (res) {      
+          // console.log('aaa',res)
+          let userInfo={
+            username: '',
+            avatarUrl: '',
+            gender: '',
+            province:'',
+            city: '',
+            openId: ''
+          }
+          userInfo.username = res.data.username
+          userInfo.avatarUrl = res.data.avatarUrl
+          userInfo.gender = res.data.gender
+          userInfo.city = res.data.city
+          userInfo.province = res.data.province
+          wx.getStorage({
+            key: 'user',
+            success (res) {
+              // console.log('bbb',res)
+              userInfo.openId = res.data.openId
+               console.log(userInfo.openId );   
+            }
+          })      
+          console.log(userInfo)
+          postUser(userInfo)
+          // .then(data => {  
+          //   console.log('111')
+          //   console.log(data)
+          // })
+        }
+      })
+
+      
       //加载主题精选时所需数据
       getTopicSelect().then(data => {
         if(data.result.code == 10000){
@@ -441,7 +584,7 @@
         console.log(err);
         this.isLoading_theme = false;
         // Toast({message:'正在加载中。。。',duration: 500});
-      });
+      })
       //加载轮播图时所需数据
       getBannerImg().then(data => {
         if(data.result.code == 10000){
@@ -456,7 +599,7 @@
         console.log(err);
         this.isLoading_banner = false;
         // Toast({message:'正在加载中。。。',duration: 500});
-      });
+      })
 
       //加载轮播文字时所需数据
       getBannerTxt().then(data => {
@@ -472,9 +615,10 @@
         console.log(err);
         this.isLoading_banner = false;
         // Toast({message:'正在加载中。。。',duration: 500});
-      });         
+      })     
     },
     onShow(){
+      
       this.showGD = false
       this.showAll = false
       this.showList = []
@@ -527,7 +671,7 @@
               this.pageList.push(data.data[j]);
               this.credittips.push(data.data[j].credittips)
             }
-            console.log('111',this.pageList)
+            // console.log('111',this.pageList)
             // 为信用卡的tips赋值
             for(let i=0;i<this.pageList.length;i++){
               this.cardTips.push(this.credittips[i].split(','))
@@ -751,7 +895,10 @@
       justify-content: flex-start;
       /*margin-top 15px*/
     }
-
+    .banneritem{
+      position: relative;
+      
+    }
     // .lamititleswiper{
     //   clear: both;
     //   overflow: hidden;
@@ -799,30 +946,7 @@
     }   
     .hotCard_content{
        ul{
-          text-align: center;   
-          // li:nth-of-type(2){
-          //   .imgBox{
-          //     position: absolute;
-          //     width: 94rpx;
-          //     height: 94rpx;
-          //     right: 0;
-          //     top: -24rpx;
-          //     background: url(../../assets/2@3x.png) no-repeat;
-          //     background-size: 94rpx;
-          //   }   
-          // }
-            
-          // li:nth-of-type(3){
-          //   .imgBox{
-          //     position: absolute;
-          //     width: 94rpx;
-          //     height: 94rpx;
-          //     right: 0;
-          //     top: -24rpx;
-          //     background: url('') no-repeat;
-          //     background-size: 94rpx;
-          //   }
-          // }       
+          text-align: center;          
           li{
             display: inline-block;
             border-radius: 10rpx;
@@ -832,38 +956,44 @@
             padding: 20rpx;
             position: relative;
             width: 85%;
-                  
-            a{
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-            }
-              
             .imgBox{
               position: absolute;
-              width: 94rpx;
-              height: 94rpx;
               right: 0;
-              top: -0;
+              top: 0;
+              
               img{
                 width: 94rpx;
                 height: 94rpx;
               }
-            }  
+            }
+            a{
+              display: flex;
+              justify-content: flex-start;
+              align-items: center;
+            }             
             img{
               /*position absolute*/
               /*left 10px*/
-              vertical-align: -30%;
+              // vertical-align: -30%;
               width: 37%;
-              height: 144rpx;
+              // height: 144rpx;
               border-radius: 10rpx;
               margin-right: 30rpx;
             }
-            div{
+            .bankContent{
               line-height: 56rpx;
+              width: 100%;
               display: inline-block;
               text-align: left;
+              position: relative;
               /*margin-left 10px*/
+              .cardNum {
+                position: absolute;
+                right: 0;
+                bottom: -4%;
+                font-size: 11px;
+                color: #666;
+              }
               p:nth-of-type(1){
                  /*font-family  pingFangSC-Medium
                 font-weight normal*/
@@ -885,43 +1015,7 @@
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-              }
-                
-            //  .itemTipsCss{
-            //    display: inline-block;
-            //     padding: 4rpx 10rpx;
-            //     margin-right: 6rpx;
-            //     color: #9a9a9a;
-            //     /*font-family pingFangSC-Medium*/
-            //     font-size: 11px;
-            //     /*background-color #FFF8E4*/
-            //     height: 30rpx;
-            //     line-height: 30rpx;
-            //     /*border-radius 4px
-            //     border: .5px solid #bdbdbd;*/
-            //     margin-top: 10rpx;
-            //     max-width: 150rpx;
-            //     overflow: hidden;
-            //     white-space: nowrap;
-            //     text-overflow: ellipsis;
-            //     position: relative;
-            //  }
-                
-            //  .itemTipsCss::after{
-            //    content: "  ";
-            //       position: absolute;
-            //       left: 0;
-            //       top: 0;
-            //       z-index:-1;
-            //       width: 195%;
-            //       height:68rpx;
-            //       border-radius: 16rpx;
-            //       border:2rpx solid #bdbdbd;
-            //       -webkit-transform-origin: 0 0;
-            //       transform-origin: 0 0;
-            //       -webkit-transform: scale(.5, .5);
-            //       transform: scale(.5, .5);
-            //  }     
+              }   
             }     
           }    
        }   
@@ -974,8 +1068,8 @@
     font-size: 11px;
     overflow: hidden;
     white-space: nowrap;
-    border: 2rpx solid #bdbdbd;
-    border-radius: 8px;
+    border: 1px solid #bdbdbd;
+    border-radius: 6px;
     text-overflow: ellipsis;
     float:left;
     color: #9a9a9a;

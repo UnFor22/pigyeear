@@ -96,13 +96,6 @@
             }
           })
         }
-        // backHistory(){
-        //     this.$router.go(-1)
-        // },
-        // isUpTo() {
-        //     this.upToType = this.$route.query.upToType;
-        // },
-
     },
 
     computed: {

@@ -493,7 +493,19 @@ import {getBannerImg} from '../../requestAPI/requestAPI';
         wx.navigateTo({ 
           url: "/pages/cardraidersdetails/main?title=" + titles + '&bankNo=' + bankNum
         });
-      }        
+      }, 
+      // // 跳转到中间页
+      // tokefu(title,url){
+      //   let pages = getCurrentPages();
+      //   let currPage = pages[pages.length - 1];   //当前页面
+      //   let prevPage = pages[pages.length - 2];  //上一个页面
+      //   currPage.setData({
+      //     urlStr: url
+      //   });
+      //   wx.navigateTo({ 
+      //       url: `/pages/link/main?title=${title}`
+      //   });
+      // },      
     },
   }
 </script>

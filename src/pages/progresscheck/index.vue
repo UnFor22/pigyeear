@@ -5,6 +5,7 @@
       <div class="bankHint" v-if="upToType==1">(此处为银行公开信息，方便用户查询信息)</div>
       <ul>
         <li v-for="(item, index) in pageList" :key="index" v-if="item.prophone!=null">
+          
           <div class="navBox" @click="isShowFun(index)">
             <div>
               <img :src="item.logourl" alt=""><span style="color: #5f5f5f; font-size:16px;">{{item.bank_name}}</span>
@@ -14,7 +15,7 @@
             </div>
           </div>
           <div class="contentBox" v-show="(isShow && index == i)">
-            <a @click="hotdetailsNum(item.prourl)" style="display: inline-block;width:100%;" v-if="item.prourl!=''">
+            <a @click="tokefu(item.bank_name+'进度查询',item.prourl)" style="display: inline-block;width:100%;" v-if="item.prourl!=''">    
               <div class="online">
                 <div style="width:100%;">
                   <p>点击在线查询</p>
@@ -90,21 +91,17 @@
 
             });
         },
-        // 把办卡链接复制到剪切板
-        hotdetailsNum(linkUrl){
-          // console.log('linkUrl', linkUrl)
-          wx.setClipboardData({
-            data: linkUrl,
-            success (res) {  
-              wx.hideToast() // 隐藏默认的Toast提示框
-              wx.showModal({
-                title: '提示',
-                content: '您所需要的链接已复制，请到手机浏览器地址栏粘贴打开即可访问。',
-                showCancel: false, //不显示取消按钮     
-                confirmText: '知道了'  
-              })            
-            }
-          })
+        // 跳转到中间页
+        tokefu(title,url){
+          let pages = getCurrentPages();
+          let currPage = pages[pages.length - 1];   //当前页面
+          let prevPage = pages[pages.length - 2];  //上一个页面
+          currPage.setData({
+            urlStr: url
+          });
+          wx.navigateTo({ 
+              url: `/pages/link/main?title=${title}`
+          });
         },
         // 拔打查询电话
         call(phone){
@@ -173,6 +170,7 @@
     background-color: #fff;
     ul{
       li{
+        
         .navBox{
           display: flex;
           justify-content: space-between;
@@ -210,6 +208,8 @@
             align-items:center;
             border: 2rpx(rgb(232, 232, 232));
             padding: 20rpx 40rpx;
+            position: relative;
+            
             div:nth-of-type(1){
               p:nth-of-type(1){
                 color: #5f5f5f;

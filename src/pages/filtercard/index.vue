@@ -46,10 +46,8 @@
       <div class="content">
         <div :bottom-method="loadBottom" :bottom-all-loaded="bottomAllLoaded" :auto-fill="false" ref="loadmore" :bottomPullText='bottomText' :bottomDropText="bottomDropText">
           <ul>
-            <li v-for="(item, index) in pageList" @click="hotdetailsNum(item.crediturl)" :key="index">
-                <!--:href=item.crediturl-->
-             <a style="display: inline-block;width: 100%;">
-              <div class="leftBox">
+            <li v-for="(item, index) in pageList" @click="tokefu(item.creditname,item.crediturl)" :key="index">
+              <div class="leftBox" style="display: inline-block;width: 100%;">
                 <img :src="item.creditphotourl" alt="">
                 <div class="creditRight" style="text-align: left;">
                   <p>{{item.creditname}}</p>
@@ -57,10 +55,13 @@
                   <section v-for="(itemTips, i) in cardTips[index]" :key="i">
                     <div class="tips">{{itemTips}}</div>
                   </section>
+                  <div class="cardNum">
+                    <span><span style="color:#ff5b3d">{{item.cardcount}}</span>人申请</span>
+                  </div>
                 </div>
-              </div>
+              </div>  
               <div class="rightBox"><span style="color: #ff5b3d">立即申请</span></div>
-            </a>
+
             </li>
           </ul>
         </div>
@@ -210,7 +211,8 @@
       this.loadPageList();
     },
     onShow(){
-
+      this.cardTips=[]
+      this.credittips=[]
     },
     // 触底刷新
     onReachBottom() { 
@@ -251,10 +253,13 @@
 
       //页面正常加载和用户选择加载数据
       loadPageList(){
+        
         this.filterSearch.page = parseInt(this.filterSearch.page) + 1;
         this.filterSearch.token = md5(md5(this.filterSearch.bid + this.filterSearch.yp + this.filterSearch.level + this.filterSearch.type + this.filterSearch.page + 'kami@2018'));  //生成token
         getFilterHotBank(this.filterSearch).then(data => {
           if(data.result.code == 10000){
+            this.cardTips=[]
+            this.credittips=[]
             this.pageList = data.data;
             for(let i=0;i<this.pageList.length;i++){
               this.credittips.push(this.pageList[i].credittips)  
@@ -277,22 +282,17 @@
         });
       },
 
-      // 把办卡链接复制到剪切板
-      hotdetailsNum(linkUrl){
-        // console.log('linkUrl', linkUrl)
-        wx.setClipboardData({
-          data: linkUrl,
-          success (res) {  
-            wx.hideToast() // 隐藏默认的Toast提示框
-            wx.showModal({
-              title: '提示',
-              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              showCancel: false, //不显示取消按钮     
-              confirmText: '知道了'   
-            })            
-          }
-        })
-        
+      // 跳转到中间页
+      tokefu(title,url){
+        let pages = getCurrentPages();
+        let currPage = pages[pages.length - 1];   //当前页面
+        let prevPage = pages[pages.length - 2];  //上一个页面
+        currPage.setData({
+          urlStr: url
+        });
+        wx.navigateTo({ 
+            url: `/pages/link/main?title=${title}`
+        });
       },
       //银行选择列
       chooseBank(label, value, index) {
@@ -778,15 +778,24 @@
           /*margin-bottom 10px*/
           padding: 40rpx 0;
           border-bottom: 2rpx(rgb(232, 232, 232));
+          
           .leftBox{
-            margin-left: 4%;
+            margin-left: 2%;
+            width: 100%;
             text-align: left;
             width: 100%;
-          /*display flex*/
-          /*align-items center*/
-          /*vertical-align -30%*/
+            position: relative;
+            .cardNum {
+              position: absolute;
+              text-align: center;
+              width: 20%;
+              right: 3%;
+              bottom: 0;
+              font-size: 11px;
+              color: #666;
+            } 
           }
-            
+          
           .rightBox{
             position: absolute;
             display: inline-block;
@@ -825,6 +834,7 @@
             float: left;
             height: 144rpx;
             width:50%;
+            
             p:nth-of-type(1){
               
               /*font-family  pingFangSC-Heavy*/
@@ -846,12 +856,14 @@
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
-              margin-bottom: 36rpx;
+              margin-bottom: 20rpx;
             }
               
             .tips{
               padding: 4rpx 10rpx;
               color: #9a9a9a;
+              border: 1px solid #bdbdbd;
+              border-radius: 6px;
               font-size: 11px;
               /*font-family pingFangSC-Medium*/
               margin-right: 10rpx;
@@ -874,7 +886,7 @@
               width: 195%;
               height:50rpx;
               border-radius: 8px;
-              border: 2rpx solid #bdbdbd;
+              // border: 2rpx solid #bdbdbd;
               -webkit-transform-origin: 0 0;
               transform-origin: 0 0;
               -webkit-transform: scale(.5, .5);

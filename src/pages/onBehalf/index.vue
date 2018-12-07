@@ -1,8 +1,12 @@
 <template>
    <div class="selectContainer">
+    <!-- <div class="mainLoading" v-if="true">
+      <img src="../../assets/loading22.gif" alt="">
+      <p>正在拼命加载中</p>
+    </div> -->    
      <div class="content">
         <ul>
-          <li v-for="(item, index) in pageList" :key="index" @click="hotdetailsNum(item.rpurl)">
+          <li v-for="(item, index) in pageList" :key="index" @click="tokefu(item.rpname,item.rpurl)">
             <div class="topBox">
               <img :src=item.logourl alt="">
               <div>
@@ -14,7 +18,10 @@
                   <span>{{item.label}}</span>
                 </div>
               </div>
-              <div class="topBtn" @click="hotdetailsNum(item.rpurl)"><a>立即申请</a></div>
+              
+              <div class="topBtn">
+                <span>立即申请</span> 
+              </div>         
             </div>
 
             <div class="bottomBox">
@@ -32,6 +39,7 @@
                 <p style="color: #9a9a9a; font-size: 12px;">期限</p>
               </div>
             </div>
+            
           </li>
         </ul>
         <div class="import">
@@ -52,6 +60,8 @@
 export default {
   data () {
     return {
+      aaa:'aa',
+      isLoading: true,  // 页面切换loading图
       onbehalfFilter: {
         page: 0,		//当前页数，默认传1,每页显示10条，接口默认返回20条
       },
@@ -75,6 +85,18 @@ export default {
     this.dropPageList();
   },
   methods: {
+    tokefu(title,url){
+      let pages = getCurrentPages();
+      let currPage = pages[pages.length - 1];   //当前页面
+      let prevPage = pages[pages.length - 2];  //上一个页面
+      currPage.setData({
+        urlStr: url
+      });
+      wx.navigateTo({ 
+          url: `/pages/link/main?title=${title}`
+      });
+    },
+    
     //下拉时查询数据
     dropPageList(){
       this.onbehalfFilter.page = parseInt(this.onbehalfFilter.page) + 1;
@@ -83,6 +105,7 @@ export default {
           this.pageList = data.data;
           // console.log(this.pageList)
           // 为日/月利率赋值
+          this.isLoading = false
           for(let i=0;i<this.pageList.length;i++){
             this.lilvs.push(data.data[i].lilv) 
             this.rates.push(this.lilvs[i].split(','))
@@ -102,21 +125,17 @@ export default {
         // Toast({message:'正在加载中。。。',duration: 500});
       });
     },
-    // 把办卡链接复制到剪切板
-    hotdetailsNum(linkUrl){
-      // console.log('linkUrl', linkUrl)
-      wx.setClipboardData({
-        data: linkUrl,
-        success (res) {  
-            wx.hideToast() // 隐藏默认的Toast提示框
-            wx.showModal({
-              title: '提示',
-              content: '您所需要的链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              showCancel: false, //不显示取消按钮     
-              confirmText: '知道了'   
-            })            
-          }
-      })
+    // 跳转到中间页
+    tokefu(title,url){
+      let pages = getCurrentPages();
+      let currPage = pages[pages.length - 1];   //当前页面
+      let prevPage = pages[pages.length - 2];  //上一个页面
+      currPage.setData({
+        urlStr: url
+      });
+      wx.navigateTo({ 
+          url: `/pages/link/main?title=${title}`
+      });
     },
   },
 }
@@ -127,6 +146,21 @@ export default {
   background-color: #F6F6F6;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  .mainLoading{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    img{
+      width: 100rpx;
+      height: 100rpx;
+    }
+    p{
+      font-size: 14px;
+      color: #9a9a9a;
+    }
+
+  }
   .content{
     padding: 0 20rpx;
     ul{
@@ -152,24 +186,22 @@ export default {
             position: absolute;
             right: 0;
             display: inline-block;
-            /*background: linear-gradient(to right, #8B89FF , #7B5CFF);*/ /* 标准的语法 */
             background-color: #fff;
             margin-right: 10rpx;
-            /*font-family: pingFangSC-Medium "微软雅黑"*/
-            border: 2rpx solid #FF8163;
-            width: 150rpx;
+            border: none;
+            width: 160rpx;
             height: 56rpx;
             text-align: center;
             line-height: 56rpx;
             border-radius: 60rpx;
-            /*box-shadow: 3px 3px 8px #ddd;*/
             outline:none;
             font-size: 12px;
-            a{
-              color: #FF8163;
-            }
-          } 
+            border: 2rpx solid #FF8163;
+            color: #FF8163;
+            // position: relative; 
             
+          } 
+          
         }
           
         .bottomBox{

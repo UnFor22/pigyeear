@@ -18,7 +18,11 @@
                   <span>{{itemTips}}</span>
                 </section>
             </div> 
-            <div class="button" @click="hotdetailsNum(firstData.crediturl)"><a style="color: #fff; font-size: 15px">立即申请</a></div>
+            <div class="cardNum" style="font-size:12px; margin-top:20rpx;">
+              <span><span style="color:#ff5b3d">{{firstData.cardcount}}</span>人申请</span>
+            </div> 
+            <div class="button" @click="tokefu(firstData.creditname,firstData.crediturl)"><a style="color: #fff; font-size: 15px">
+              立即申请</a></div>
           </div>
 
           <div class="otherCard" v-for="(item, index) in pageList" :key="index">
@@ -27,13 +31,17 @@
               <div>
                 <img  src="../../assets/huangguan@2x.png" alt="">
                 <img style="border-radius: 5px" class="otherCardBox_img" :src=item.creditphotourl alt="" mode="widthFix">
+                <div class="cardNum" style="font-size:12px; margin-top:20rpx;">
+                  <span><span style="color:#ff5b3d">{{item.cardcount}}</span>人申请</span>
+                </div> 
               </div>
               <div>
                 <p>{{item.creditcontent}}</p>
                 <section v-for="(itemTips, i) in cardTips[index+1]" :key="i">
                   <span>{{itemTips}}</span>
                 </section>
-                <div class="button" @click="hotdetailsNum(item.crediturl)"><a>立即申请</a></div><!---->
+                <div class="button" @click="tokefu(item.creditname,item.crediturl)">
+                <a>立即申请</a></div><!---->
               </div>
             </div>
           </div>
@@ -132,21 +140,17 @@
           Toast('正在加载中。。。');
         });
       },
-      // 把办卡链接复制到剪切板
-      hotdetailsNum(linkUrl){
-        // console.log('linkUrl', linkUrl)
-        wx.setClipboardData({
-          data: linkUrl,
-          success (res) {  
-            wx.hideToast() // 隐藏默认的Toast提示框
-            wx.showModal({
-              title: '提示',
-              content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              showCancel: false, //不显示取消按钮     
-              confirmText: '知道了'   
-            })            
-          }
-        })
+      // 跳转到中间页
+      tokefu(title,url){
+        let pages = getCurrentPages();
+        let currPage = pages[pages.length - 1];   //当前页面
+        let prevPage = pages[pages.length - 2];  //上一个页面
+        currPage.setData({
+          urlStr: url
+        });
+        wx.navigateTo({ 
+            url: `/pages/link/main?title=${title}`
+        });
       },
       //统计第一个
       // hotdetailsNumF(creditid,bankid){
@@ -313,7 +317,7 @@
         }
           
         .button{
-          margin-top: 40rpx;
+          margin-top: 20rpx;
           display: inline-block;
           background: linear-gradient(to right, #8B89FF , #7B5CFF); /* 标准的语法 */
           color: #fff;
@@ -325,6 +329,8 @@
           border-radius: 30px;
           box-shadow: 3px 3px 8px #ddd;
           outline:none;
+          position: relative;
+          
           /*font-family pingFangSC-Medium*/
         } 
           
@@ -341,8 +347,8 @@
         text-align: center;
         img:nth-of-type(1){
           position: absolute;
-          top: 92rpx;
-          left: 16rpx;
+          top: 79rpx;
+          left: 18rpx;
           width: 40rpx;
           height: 40rpx;
         }
@@ -356,8 +362,18 @@
           display: flex;
           justify-content: space-between;
           div:nth-of-type(1){
-            padding: 20rpx 10rpx;
+            padding: 0rpx 10rpx;
             width: 50%;
+            .cardNum {
+              // position: absolute;
+              width: 100%;
+              text-align: center;
+              right: 0;
+              bottom: -4%;
+              font-size: 11px;
+              color: #666;
+              margin-top: -10rpx;
+            }
             /*background url("../../assets/huangguan@2x.png") no-repeat*/
             /*background-position 6% 1%*/
             /*background-size 15px 15px*/
@@ -436,6 +452,8 @@
               border-radius: 30px;
               box-shadow: 3px 3px 8px #ddd;
               outline:none;
+              position: relative;
+             
               a{
                 color: #fff;
                 font-size: 14px;
