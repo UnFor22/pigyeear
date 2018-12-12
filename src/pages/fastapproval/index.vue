@@ -74,7 +74,7 @@
         wrapperHeight: 0,
         bottomText: '上拉加载更多',
         bottomDropText: '释放更新',
-        firstData: null,
+        firstData: {},
         photoUrl: '',
         hrefUrl: '',
         isLoading: true,
@@ -100,6 +100,14 @@
 
     onLoad(){
       this.query = this.$root.$mp.query
+    },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `办信用卡，我们是认真的！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/eduda.png',
+        path: '/pages/index/index'
+      }
     },
     onShow(){
       this.loadPageList()
@@ -133,11 +141,11 @@
             this.bottomDropText = '没有更多了';
           }
           else {
-            Toast('正在加载中。。。');
+            // Toast('正在加载中。。。');
           }
         }).catch(err => {
           console.log(err);
-          Toast('正在加载中。。。');
+          // Toast('正在加载中。。。');
         });
       },
       // 跳转到中间页

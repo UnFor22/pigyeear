@@ -210,9 +210,16 @@
 
       this.loadPageList();
     },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `论下卡成功率，我没服过谁！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/songxianj.png',
+        path: '/pages/index/index'
+      }
+    },
     onShow(){
-      this.cardTips=[]
-      this.credittips=[]
+
     },
     // 触底刷新
     onReachBottom() { 
@@ -230,7 +237,7 @@
             for(let i=0;i<data.data.length;i++){
               this.credittips.push(data.data[i].credittips)  
             }
-            console.log(this.pageList)
+            // console.log(this.pageList)
             this.cardTips = [];
             for(let j = 0; j<this.credittips.length; j++){
               this.cardTips.push(this.credittips[j].split(','))
@@ -252,9 +259,8 @@
       },
 
       //页面正常加载和用户选择加载数据
-      loadPageList(){
-        
-        this.filterSearch.page = parseInt(this.filterSearch.page) + 1;
+      loadPageList(){       
+        this.filterSearch.page = parseInt(1);
         this.filterSearch.token = md5(md5(this.filterSearch.bid + this.filterSearch.yp + this.filterSearch.level + this.filterSearch.type + this.filterSearch.page + 'kami@2018'));  //生成token
         getFilterHotBank(this.filterSearch).then(data => {
           if(data.result.code == 10000){
@@ -264,8 +270,7 @@
             for(let i=0;i<this.pageList.length;i++){
               this.credittips.push(this.pageList[i].credittips)  
               this.cardTips.push(this.credittips[i].split(','))
-            }
-          
+            }         
             // console.log('选择或初次加载pageList',this.pageList)
             // console.log('选择或初次加载的credittips',this.credittips)            
             // console.log('选择或初次加载的cardTips',this.cardTips)            
@@ -588,7 +593,7 @@
       background: rgba(0, 0, 0, 0.5);
     }
     .select{
-      border:-2rpx(rgb(232, 232, 232));
+      border-bottom: 1px solid #f2f2f2;
       height:100rpx;
       line-height: 100rpx;
       background: #fff;
@@ -777,7 +782,7 @@
           /*margin-top 10px*/
           /*margin-bottom 10px*/
           padding: 40rpx 0;
-          border-bottom: 2rpx(rgb(232, 232, 232));
+          border-bottom: 1px solid #f2f2f2;
           
           .leftBox{
             margin-left: 2%;

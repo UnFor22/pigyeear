@@ -119,6 +119,15 @@
       // console.log(this.screenHeight)
       this.loadPageList()
     },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `信用卡还没下?，着急没用，点击查看进度
+`,
+        imageUrl: 'http://download.pcuion.com/app2_0/jindu3.png',
+        path: '/pages/index/index'
+      }
+    },
     onShow(){
       
     },
@@ -231,6 +240,7 @@
     /*padding-top 20px*/
     .box{
       padding-top: 240rpx;
+      box-sizing: border-box;
       padding-bottom: 40rpx;
       .topDiv{
         width: 80%;
@@ -357,6 +367,7 @@
         margin: 40rpx auto;
         padding: 40rpx 0;
         text-align: center;
+        box-sizing: border-box;
         img:nth-of-type(1){
           position: absolute;
           top: 79rpx;
@@ -479,7 +490,7 @@
   }   
   .wrapper{
     width: 100%;
-    height: 603px;
+    // height: 603px;
     position: relative;
    
     .bgImg{

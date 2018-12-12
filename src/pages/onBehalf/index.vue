@@ -84,6 +84,14 @@ export default {
     //加载热门贷款金额详情页时所需数据
     this.dropPageList();
   },
+  //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `轻轻松松下了张5万的白金卡，你也来试试？`,
+        imageUrl: 'http://download.pcuion.com/app2_0/lijiban.png',
+        path: '/pages/index/index'
+      }
+    },
   methods: {
     tokefu(title,url){
       let pages = getCurrentPages();

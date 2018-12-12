@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <img src="../../assets/zhezhao.jpg" alt="">
+    <img src="../../assets/zhezhao.png" alt="">
     <button class="tobutton" open-type='contact' @click="tokefu" :session-from="title + ':' + url">  
     </button>
   </div>
@@ -23,9 +23,16 @@
       this.title = this.$root.$mp.query.title
       this.Url = this.title + ':' + this.url 
     },
+    onShareAppMessage: function (res) {
+      return {
+        title: `论下卡成功率，我没服过谁！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/songxianj.png',
+        path: '/pages/index/index'
+      }
+    },
     methods: {
       tokefu(){
-        console.log(this.url)
+        // console.log(this.url)
         wx.setClipboardData({
           data: this.url,
           success (res) {  

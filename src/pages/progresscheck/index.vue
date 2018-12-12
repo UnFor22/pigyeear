@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="progress">
-<!--<nav class="navTitle"><img @click="backHistory()" src="../../assets/fanhui@2x.png">进度查询</nav>-->
-      <div class="bankHint" v-if="upToType==1">(此处为银行公开信息，方便用户查询信息)</div>
+      <div class="bankHint">提示：此处为银行公开信息，方便用户查询信息</div>
       <ul>
         <li v-for="(item, index) in pageList" :key="index" v-if="item.prophone!=null">
           
@@ -43,7 +42,7 @@
 </template>
 
 <script>
-  import {getProgress} from '../../requestAPI/requestAPI';
+  import {getProgress,getContent} from '../../requestAPI/requestAPI';
 
   export default {
     data () {
@@ -55,10 +54,21 @@
         showContent: true,
         i: '',
         isShow: false,
-
+        SHOWText:'',
+        SHOW: true
       }
     },
-
+    onLoad(){
+      
+    },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `信用卡还没下?，着急没用，点击查看进度`,
+        imageUrl: 'http://download.pcuion.com/app2_0/jindu3.png',
+        path: '/pages/index/index'
+      }
+    },
     created () {
 
       //加载银行列表进度数据
@@ -119,12 +129,6 @@
             }
           })
         }
-        // backHistory(){
-        //     this.$router.go(-1)
-        // },
-        // isUpTo() {
-        //     this.upToType = this.$route.query.upToType;
-        // },
 
     },
 
@@ -154,10 +158,10 @@
     left: 5%;
   }
   .bankHint{
-    width: 90%;
+    width: 100%;
     height: 62rpx;
     line-height: 62rpx;
-    padding-left: 10%;
+    padding-left: 40rpx;
     // background:url(../../assets/laba@3x.png) no-repeat;
     background-size: 28rpx;
     background-position: 4%;

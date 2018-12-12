@@ -298,7 +298,15 @@
       this.query = this.$root.$mp.query
       this.changeParameter();
     },
-
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `信用卡还没下?，着急没用，点击查看进度
+`,
+        imageUrl: 'http://download.pcuion.com/app2_0/jindu3.png',
+        path: '/pages/index/index'
+      }
+    },
     methods: {
       //获取对于组件传递过来的值
       changeParameter() {

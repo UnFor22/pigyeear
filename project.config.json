@@ -9,8 +9,8 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx974c96e191f3f8ea",
-	"projectname": "xinyongka-wx",
+	"appid": "wx73ee2d2406a9d30a",
+	"projectname": "xinyongka-wx1",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -74,7 +74,7 @@
         wrapperHeight: 0,
         bottomText: '上拉加载更多',
         bottomDropText: '释放更新',
-        firstData: null,
+        firstData: {},
         photoUrl: '',
         hrefUrl: '',
         isLoading: true,
@@ -117,6 +117,14 @@
     onLoad(){
       this.query = this.$root.$mp.query
     },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `办信用卡，我们是认真的！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/eduda.png',
+        path: '/pages/index/index'
+      }
+    },
     onShow(){
       this.loadPageList()
     },
@@ -130,7 +138,7 @@
             this.isLoading = false;
             //将获取到的数据添加到定义的pageList中
             this.pageList = this.pageList.concat(data.data);
-              /*console.log(this.pageList[0].creditid);*/
+            
             // 为信用卡的tips赋值
             for(let i=0;i<this.pageList.length;i++){
               this.credittips.push(data.data[i].credittips) 
@@ -140,7 +148,9 @@
             //如果是第一次添加，首先拿出第一次数据的第一个元素，并返回新数组，同时将取出的元素赋值给初始化的firstData供页面使用
             if(this.filterSearch.page == 1) {
               this.firstData = this.pageList[0];
+              // console.log(this.firstData)
               this.pageList = this.pageList.splice(1);
+              // console.log('111',this.pageList);
             }
             this.photoUrl = this.firstData ? this.firstData.creditphotourl : '';
             this.hrefUrl = this.firstData ? this.firstData.crediturl : '';

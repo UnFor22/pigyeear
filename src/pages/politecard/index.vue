@@ -82,7 +82,7 @@
         wrapperHeight: 0,
         bottomText: '上拉加载更多',
         bottomDropText: '释放更新',
-        firstData: null,
+        firstData: {},
         photoUrl: '',
         hrefUrl: '',
         isLoading: true,
@@ -105,24 +105,31 @@
         query:{}
       }
     },
- 
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `办信用卡，我们是认真的！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/eduda.png',
+        path: '/pages/index/index'
+      }
+    },
     onLoad(){
       this.query = this.$root.$mp.query
-      wx.login({
-        success (res) {
-          if (res.code) {
-            //发起网络请求
-            wx.request({
-              url: 'https://test.com/onLogin',
-              data: {
-                code: res.code
-              }
-            })
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
-        }
-      })
+      // wx.login({
+      //   success (res) {
+      //     if (res.code) {
+      //       //发起网络请求
+      //       wx.request({
+      //         url: 'https://test.com/onLogin',
+      //         data: {
+      //           code: res.code
+      //         }
+      //       })
+      //     } else {
+      //       console.log('登录失败！' + res.errMsg)
+      //     }
+      //   }
+      // })
     },
     onShow(){
       this.loadPageList()

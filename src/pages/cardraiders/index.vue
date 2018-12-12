@@ -14,7 +14,7 @@
               <p>交通银行信用卡养卡攻略</p>
               <p>1.  金额数量尽量多，半年内消费总金额至少在额度30% 以上；</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 3530</span>
             </div>
             <div class="content_right">
               <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151057-269.png" mode="widthFix" alt="">
@@ -29,7 +29,7 @@
               <p>建设银行信用卡养卡技巧</p>
               <p>1、 经常刷卡消费，次数越多越好，最好每个月刷完差不多所有额度。</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 6680</span>
             </div>
             <div class="content_right">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1530103741&di=f9639e4e2b06ca0eedd9d4680fd99b32&src=http://imgsrc.baidu.com/forum/pic/item/7e3e6709c93d70cf4f46d499f8dcd100bba12be1.jpg" mode="widthFix" alt="">
@@ -44,7 +44,7 @@
               <p>工商银行-养卡攻略</p>
               <p>1. 多笔消费，比例25/2/1 25笔500元以下，2笔5000 左右，1笔达总卡额度百分之70。（额度太小或者额度较大具体对待）</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 4846</span>
             </div>
             <div class="content_right">
               <img src="http://image.sudaizhijia.com/production/20171012/bank/20171012201435-573.png" mode="widthFix" alt="">
@@ -59,7 +59,7 @@
               <p>农业银行养卡攻略</p>
               <p>由于某些历史原因，农行申卡成功率低，额度普遍偏低，而且提额很难，这已经成为卡右的一大共识。好多卡友咨询如何才能提高农行信用卡的额度，今天给大家分享下农行提额的最实用的几个技巧：</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5721</span>
             </div>
             <div class="content_right">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113879491&di=5d05f10bd9592aafbb385086f3c39d36&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316ca9789ee.png" mode="widthFix" alt="">
@@ -74,7 +74,7 @@
               <p>光大银行养卡技巧</p>
               <p>所谓养卡，就是通过一些"技术手段" ，把信用卡额度提上去。一般来说，初始额度1万的信用卡养到5万的额度就自然〃毕业""了。如果手中有几张额度5万元的信用卡，总额 度也能达到几十万。那么，如何正确地养卡提额呢？下面， 就跟大家分享一些养卡的技巧。</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5541</span>
             </div>
             <div class="content_right">
               <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151123-331.png" mode="widthFix" alt="">
@@ -89,7 +89,7 @@
               <p>广发银行养卡技巧</p>
               <p>以卡养卡，就是A卡消费后，从B卡种来获得现金来还A 卡，等到B卡要还款了，再从A卡获得现金来还B卡，如此循环。信用卡以卡养卡，看起来似乎很简单，但是要注意的地方也还是不少，所以想要卡养得好，就得掌握一些养卡技巧。</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 3096</span>
             </div>
             <div class="content_right">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113917489&di=34b853bae2e32f903e336b34020d24db&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316cbf452df.png" mode="widthFix" alt="">
@@ -104,7 +104,7 @@
               <p>中国银行提额方法</p>
               <p>信用卡申请之初，持卡人的信用额度都不是很高的，很多人一张卡用了很久还是初始的倍用额度。实际上呢，信用额度是可以提高的，随着收入、资产条件的提高，完全可以提高信用卡额度，以下八种方式助你成功信用卡提额。</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 11562</span>
             </div>
             <div class="content_right">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113946255&di=934a7aeb4e34dafb00b70b7fb004927f&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8326cffc1e178a82e50ad11afd03738da977e852.jpg" mode="widthFix" alt="">
@@ -119,7 +119,7 @@
               <p>兴业银行信用卡养卡技巧</p>
               <p>刷好第一笔，多元化消费，真实消费，少套。按时还兴业银行的卡片要多点真实消费，少用鸡，养卡开商户15-20户左右， 一个月能有10到20笔之间，多刷优质商户。这个优质商户的定义包括银行特约商户和高端知名商户</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5569</span>
             </div>
             <div class="content_right">
               <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151004-923.png" mode="widthFix" alt="">
@@ -134,7 +134,7 @@
               <p>民生银行信用卡提额攻略</p>
               <p>首次申请提高额度需要使用信用卡满半年以上，保持良好的还款记录，方可申请。首次提额后需要过了6个月以后才可再次申请。对成功提额有帮助的消费方式有：</p>
               <span>2018-06-08</span>
-              <!-- <span><img width="30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}</span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
             </div>
             <div class="content_right">
               <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113977790&di=713e4c302531ff87b4783dcdfade2120&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316cc45bac5.png" mode="widthFix" alt="">
@@ -149,9 +149,7 @@
               <p>华夏银行养卡</p>
               <p>信用卡养卡，就是有技巧地刷卡，积累良好的刷卡记录，并遵循银行信用卡提额的规则，逐渐提升信用卡额度的过程。信用卡刷卡养卡的目的是为了提升信用卡额度，把低额度信用卡变成大额信用卡，这样持卡人可使用的信用资金就多了，能够满足持卡人资金周转的需求。那么信用卡养卡有哪些技巧呢？</p>
               <span>2018-06-08</span>
-              <!-- <span>
-                <img style="width: 30rpx" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> {{Number(this.nowNum) + Number(Math.floor(Math.random(1) * 10))}}
-              </span> -->
+              <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 9845</span>
             </div>
             <div class="content_right">
               <img src="http://image.sudaizhijia.com/production/20171229/bank/20171229171255-146.png" mode="widthFix" alt="">
@@ -164,7 +162,7 @@
 </template>
 
 <script>
-import {getBannerImg} from '../../requestAPI/requestAPI';
+// import {getBannerImg} from '../../requestAPI/requestAPI';
 
   //产生随机数函数
   function RndNum(n) {
@@ -474,11 +472,16 @@ import {getBannerImg} from '../../requestAPI/requestAPI';
         '2.  按时还最低还款，按日息万分之五收取；\n' +
         '3.  逾期还款，除上述利息外，还有滞纳金。\n' +
         '"\n',
-
-
       }
     },
-
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `论下卡成功率，我没服过谁！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/songxianj.png',
+        path: '/pages/index/index'
+      }
+    },
     created () {
 
       // this.nowNum = localStorage.getItem("watchNum");

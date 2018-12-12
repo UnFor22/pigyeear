@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="progress">
-<!--<nav class="navTitle"><img @click="backHistory()" src="../../assets/fanhui@2x.png">进度查询</nav>-->
-      <div class="bankHint" v-if="upToType==1">(此处为银行公开信息，方便用户查询信息)</div>
+      <div class="bankHint">提示：此处为银行公开信息，方便用户查询使用</div>
       <ul>
         <li v-for="(item, index) in pageList" :key="index" v-if="item.actphone!=null">
           <div class="navBox" @click="isShowFun(index)">
@@ -31,29 +30,27 @@
 </template>
 
 <script>
-  import {getActivation} from '../../requestAPI/requestAPI';
+  import {getActivation,getContent} from '../../requestAPI/requestAPI';
 
   export default {
     data () {
       return {
         phototUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528106264550&di=635bd54844f92c9672485b5d5f6ba3cc&imgtype=0&src=http%3A%2F%2Fwww.xiazaiba.com%2Fuploadfiles%2Fsub_ico%2F2015%2F0417%2F2015041715312182286.png',
-
         pageList: [],
-
         showContent: true,
         i: '',
         isShow: false,
-
+        SHOWText:'',
+        SHOW: true
       }
     },
 
-    onLoad () {
-
+    onLoad () {     
       //加载银行列表进度数据
       getActivation().then(data => {
         if(data.result.code == 10000){
           this.pageList = data.data;
-            console.log(this.pageList)
+            // console.log(this.pageList)
         
         }else {
           // Toast({message:'正在加载中。。。',duration: 500});
@@ -61,11 +58,18 @@
       }).catch(err => {
         console.log(err);
         // Toast({message:'正在加载中。。。',duration: 500});
-      });
+      })
         // this.isUpTo();
        
     },
-
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `办信用卡，我们是认真的！`,
+        imageUrl: 'http://download.pcuion.com/app2_0/eduda.png',
+        path: '/pages/index/index'
+      }
+    },
     methods: {
         isShowFun(index) {
             this.pageList.forEach((item, ind) => {
@@ -124,10 +128,10 @@
     left: 5%;
   }
   .bankHint{
-    width: 90%;
+    width: 100%;
     height: 62rpx;
     line-height: 62rpx;
-    padding-left: 10%;
+    padding-left: 40rpx;
     // background:url(../../assets/laba@3x.png) no-repeat;
     background-size: 28rpx;
     background-position: 4%;

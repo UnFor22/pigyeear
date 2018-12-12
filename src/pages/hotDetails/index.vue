@@ -63,7 +63,7 @@ export default {
       wrapperHeight: 0,
       bottomText: '上拉加载更多',
       bottomDropText: '释放更新',
-      count: 0,  // 计算第几次触底刷新
+      count: 1,  // 计算第几次触底刷新
       bankname: '',
       bankcontent: '',
       logo: '',
@@ -93,12 +93,21 @@ export default {
     // this.loadPageList();
     
   },
+  //页面设置转发功能
+  onShareAppMessage: function (res) {
+    return {
+      title: `论下卡成功率，我没服过谁！
+`,
+      imageUrl: 'http://download.pcuion.com/app2_0/songxianj.png',
+      path: '/pages/index/index'
+    }
+  },
   onShow(){
     this.credittips = [];
     this.cardTips = [];
     this.pageList=[];
     this.searchCondition.page = 1;
-    this.loadPageList();   
+    this.loadPageList(1);   
   },
   // 触底刷新
   onReachBottom() { 
@@ -134,7 +143,7 @@ export default {
     //查询数据
     loadPageList(count){
       if(count){
-        this.searchCondition.page = this.searchCondition.page + count;
+        this.searchCondition.page = count;
       }
       this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
       this.searchCondition.token = md5(md5(this.searchCondition.bankid + this.searchCondition.t + 'kami2018@'));  //生成token
@@ -152,11 +161,11 @@ export default {
             for(let j = 0; j<this.credittips.length; j++){
               this.cardTips.push(this.credittips[j].split(','))
             }
-            console.log('this.pageList',this.pageList)
+            // console.log('this.pageList',this.pageList)
             // console.log('this.credittips333',this.credittips)
             // console.log('this.cardTips333',this.cardTips)
           }else{
-            this.pageList = data.data;
+            this.pageList = this.pageList;
             // 为信用卡的tips赋值
             for(let i=0;i<this.pageList.length;i++){
               this.credittips.push(this.pageList[i].credittips) 
@@ -253,7 +262,7 @@ export default {
     align-items: center;
     margin-top: 30rpx;
     padding-left: 3%;
-    border:-2rpx(rgb(232, 232, 232));
+    border-bottom: 1rpx solid #f2f2f2;
     img{
       margin-bottom: 30rpx;
       margin-right: 30rpx;
@@ -288,7 +297,7 @@ export default {
         /*margin-top 10px*/
         /*margin-bottom 10px*/
         padding: 40rpx 10rpx;
-        border:-2rpx(rgb(232, 232, 232));
+        border-bottom: 1px solid #f2f2f2;
         position: relative;
         
         .leftBox{

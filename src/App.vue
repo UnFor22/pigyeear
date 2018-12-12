@@ -7,12 +7,20 @@ export default {
     wx.setStorageSync('logs', logs)
 
     // console.log('app created and cache logs by setStorageSync')
-  }
+  },
+  //页面设置转发功能
+  // onShareAppMessage: function (res) {
+  //   return {
+  //     title: `111，大神玩卡`,
+  //     imageUrl: 'https://head.image.fengniaojizhang.cn/duck/shareLoveMoneyDuck.jpg',
+  //     path: `/pages/hotDetails/index`
+  //   }
+  // },
 }
 </script>
 
 <style>
-.container {
+/* .container { */
   /* height: 100%;
   display: flex;
   flex-direction: column;
@@ -20,7 +28,7 @@ export default {
   justify-content: space-between; */
   /* padding: 200rpx 0; */
   /* box-sizing: border-box; */
-}
+/* } */
 /* this rule will be remove */
 /* * {
   transition: width 2s;

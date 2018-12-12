@@ -12,12 +12,13 @@
     "pages/cardraiders/main",
     "pages/cardraidersdetails/main",
     "pages/filtercard/main",
-    "pages/politecard/main"
+    "pages/politecard/main",
+    "pages/downloadApp/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#7370FF",
-    "navigationBarTitleText": "办信用卡",
+    "navigationBarTitleText": "大神玩卡",
     "navigationBarTextStyle": "#fff",
     "onReachBottomDistance": 50
   }

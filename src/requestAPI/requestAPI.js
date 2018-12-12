@@ -240,6 +240,11 @@ export const getTopicSelect = params => {
     return fly.post(`${baseURL}/api.php/CreditPage/GetCreditStatics?creditid=${params.creditid}&bankid=${params.bankid}`).then(res => res.data);
   };
   //统计立即购买creditid&bankid
+  export const getContent = params => {
+    /*console.log(params);*/
+    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?test=1`).then(res => res.data);
+  };
+  //统计立即购买creditid&bankid
   export const getUserOpenid = params => {
     return fly.post(`${baseURL}/api.php/msg/getwxcode?code=${params}`).then(res => res.data);
   };
