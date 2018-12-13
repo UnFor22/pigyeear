@@ -10,7 +10,7 @@
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
 	"appid": "wx73ee2d2406a9d30a",
-	"projectname": "xinyongka-wx1",
+	"projectname": "xinyongka-wx",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -2,11 +2,13 @@
 //全局配置fly请求
 // var Fly = require("../../node_modules/flyio/dist/npm/wx") 
 const Fly = require("flyio/dist/npm/wx");
+const Qs = require('qs');
 const fly = new Fly;
 
 //配置请求基地址
 // const baseURL = 'https://api.fengniaojizhang.com';
-const baseURL = 'https://main.kamicard.com';
+// const baseURL = 'https://main.kamicard.com';
+const baseURL = 'https://main.pcuion.com';
 
 /**
  * http request 请求拦截器，有token值则配置上token值
@@ -242,38 +244,55 @@ export const getTopicSelect = params => {
   //统计立即购买creditid&bankid
   export const getContent = params => {
     /*console.log(params);*/
-    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?test=1`).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?`).then(res => res.data);
   };
   //统计立即购买creditid&bankid
   export const getUserOpenid = params => {
     return fly.post(`${baseURL}/api.php/msg/getwxcode?code=${params}`).then(res => res.data);
   };
 
-  function urlencode (str) {  
-    str = (str + '').toString();   
+  // 点击 开 激活任务
+  export const startTask = params => {
+    // console.log('点击开激活任务参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/starttask`,  Qs.stringify(params)).then(res => res.data);
+  };
+  
+  // 小程序用户信息上传
+  export const postUserInfo = params => {
+    // console.log('上传信息参数',params)
+      return fly.post(`${baseURL}/api.php/msg/savewxuserinfo`, Qs.stringify(params)).then(res => res.data);
+  };  
+  // 获取活动进度，状态
+  export const getTaskInfo = params => {
+    // console.log('获取活动进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/getaskinfo`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 获取任务进度，状态
+  export const getRWInfo = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/getrwstatus`, Qs.stringify(params)).then(res => res.data);
+  };
+  // function urlencode (str) {  
+  //   str = (str + '').toString();   
 
-    return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
-    replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
-} 
+  //   return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+  //   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+  // } 
    //统计立即购买creditid&bankid
   export const postUser = params => {
-    var g_openid = "";
-    wx.getStorage({
-      key: 'user',
-      success (res) { 
-        // console.log('bbb',res)
-        params.openId = res.data.openId;
-        g_openid = urlencode(params.openId);
-          console.log('11111',params.openId );   
-          return fly.post(`https://main.kamicard.com/api.php/msg/savewxuserinfo?nickName=${params.username}&avatarUrl=${params.avatarUrl}&wxid=${g_openid}&gender=${params.gender}&province=${params.province}&city=${params.city}`).then(res => res.data);
-      }
-    })  
+    // var g_openid = "";
+    // wx.getStorage({
+    //   key: 'user',
+    //   success (res) { 
+    //     // console.log('bbb',res)
+    //     params.openId = res.data.openId;
+    //     g_openid = urlencode(params.openId);
+    //       console.log('11111',params.openId );   
+    return fly.post(`${baseURL}/api.php/msg/savewxuserinfo?nickName=${params.username}&avatarUrl=${params.avatarUrl}&wxid=${params.openid}&gender=${params.gender}&province=${params.province}&city=${params.city}`).then(res => res.data);
+      // }
+    // })  
  //  console.log('params',params); 
  //  console.log('222',g_openid);     
    // return fly.post(`https://main.pcuion.com/api.php/msg/savewxuserinfo?nickName=${params.username}&avatarUrl=${params.avatarUrl}&wxid=${g_openid}&gender=${params.gender}&province=${params.province}&city=${params.city}`).then(res => res.data);  
   };
-  /*
-  //统计首页立即购买creditid&bankid
-  export const postIndexNum = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/GetCreditStatics?creditid=${params.creditid}`).then(res => res.data);
-  };*/
+  

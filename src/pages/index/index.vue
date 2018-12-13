@@ -167,12 +167,12 @@
     </div>
     <div v-if='!SHOW' class="card">
     <!-- 蒙版  -->
-    <div class="mengban"></div>
+    <div class="mengban" v-if="showmengban"></div>
     <!-- 开奖页 -->
     <div class="kaijiang" v-if="showkaijiang">
       <img class="main_img" src="../../assets/active/1_1.png" mode="widthFix" alt="">
-      <div class="kaijiang_btn" @click="toaward">
-        <button open-type='getUserInfo' @click="toaward"></button> 
+      <div class="kaijiang_btn">
+        <button open-type='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo"></button> 
         <img class="kaijiang_button" mode="widthFix" src="../../assets/active/1_1_open.png" alt="">          
       </div>
       <div class="quxiao" @click="quxiao"></div>
@@ -204,9 +204,9 @@
       </div>
       <div class="share_main">
         <p>还差<span style="color:red;">X</span>人即可领红包</p>
-        <img class="user_img" src="../../assets/active/3_1_bigface.png" alt="">
-        <p>助力倒计时 <span class="time">23</span>:<span class="time">46</span>:<span class="time">32</span></p>
-        <p>561人已免费领取</p>
+        <img class="user_img" :src="userImg" alt="">
+        <p>助力倒计时 <span class="time">{{times.hours}}</span>:<span class="time">{{times.mins}}</span>:<span class="time">{{times.secs}}</span></p>
+        <p>{{peoplenum}}人已免费领取</p>
       </div>
       <img class="main_img" src="../../assets/active/3_1.png" mode="widthFix" alt="">
       <div class="share_user">
@@ -252,9 +252,20 @@
         <p>还差<span style="color:#F3392A">1</span>人</p>
       </div>
       <div class="helphe_btn">
+        <button open-type='getUserInfo' lang="zh_CN" @getuserinfo="GotUserInfo"></button>
         <img class="helphe_button1" src="../../assets/active/5_1_btn1.png" mode="widthFix" alt="">
         <img class="helphe_button2" src="../../assets/active/5_1_btn2.png" mode="widthFix" alt="">
       </div>
+    </div>
+    <!-- 助力成功 -->
+    <div class="success" v-if="showsuccess">
+      <img class="main_img" src="../../assets/active/success.png" mode="widthFix" alt="">
+      <div class="success_btn">
+        <!-- <button open-type='share'></button> -->
+        <button @click="tokaijiang"></button>
+        <!-- <img class="success_button" mode="widthFix" src="../../assets/active/2_1_btn.png" alt="">  -->
+      </div>
+      <div class="quxiao" @click="quxiao"></div>
     </div>
       <!-- 功能导航 -->
       <div class="funList">     
@@ -279,11 +290,9 @@
             <img src='../../assets/daihuan@2x.png' alt="">
             <p style="font-size: 14px; color: #333;">代还</p>
         </div>
-      </div>
-      
+      </div>  
       <!-- 分割线 -->
-      <div class="splitLine" style="margin: 0;"></div>
-      
+      <div class="splitLine" style="margin: 0;"></div>   
       <!-- 需要显示的主体部分 -->
       <div>
       <!-- <div v-if="true"> -->
@@ -435,7 +444,9 @@
 <script>
   import md5 from 'js-md5';
   import vueTabBar from '../../components/tabBar'
-  import {getHotBankInfoList,getContent, getTopicSelect, getBannerImg, getHotCard, getBannerTxt,registerHref,userOperation,getUserOpenid,postUser} from '../../requestAPI/requestAPI';
+  import {getHotBankInfoList, getContent, getTopicSelect, getBannerImg, getHotCard, getBannerTxt, registerHref, userOperation, getUserOpenid, postUser,postUserInfo, getTaskInfo, startTask, getRWInfo} from '../../requestAPI/requestAPI';
+  import { setInterval } from 'timers';
+  import { fail } from 'assert';
   export default {
     data(){
       return {
@@ -445,17 +456,25 @@
         showshare: false,
         showcomplete: false,
         showhelphe: false,
+        showsuccess: false,
         helpNum: 0,
         screenHeight:'',
         title: '',
         url:'',
         Url: '',
         urlStr:'',
-        awardArr: [18,28,38,48,58], // 奖金池，用户获得的金额从中选取一个
-        // minNum: 1, // 红包最低金额
-        // maxNum: 4, // 红包最高金额
-        award: 0, // 奖金
-        awardNum: 1, // 记录第几次领奖金
+        startTime: '',
+        times:{
+          hours: '',
+          mins: '',
+          secs: ''
+        },  // 助力计时
+        award: '', // 奖金
+        userImg: '', // 用户头像
+        userName: '', // 用户昵称
+        iszhuli: '',
+        peoplenum: '', // 已取现人数
+        // 记录帮助助力人信息
         userArr:[
           {
             img: require('../../assets/active/3_1_face.png'),
@@ -478,8 +497,50 @@
             name: '小二'
           }
         ],
-
-        SHOWText: '',
+        helpUser:[
+          {
+            img: require('../../assets/active/face_1.png'),
+            name: 'AAA'
+          },
+          {
+            img: require('../../assets/active/face_2.png'),
+            name: 'Aimee'
+          },{
+            img: require('../../assets/active/face_3.png'),
+            name: 'Mr. Ma'
+          },{
+            img: require('../../assets/active/face_4.png'),
+            name: 'ohh'
+          },{
+            img: require('../../assets/active/face_5.png'),
+            name: 'pong'
+          },{
+            img: require('../../assets/active/face_6.png'),
+            name: 'Quan、'
+          },{
+            img: require('../../assets/active/face_7.png'),
+            name: '阿甘'
+          },{
+            img: require('../../assets/active/face_8.png'),
+            name: '毛小驴'
+          },{
+            img: require('../../assets/active/face_9.png'),
+            name: '喵咪'
+          },{
+            img: require('../../assets/active/face_10.png'),
+            name: '木公'
+          },{
+            img: require('../../assets/active/face_11.png'),
+            name: '闹腾'
+          },{
+            img: require('../../assets/active/face_12.png'),
+            name: '彭贵宝'
+          },{
+            img: require('../../assets/active/face_13.png'),
+            name: '入魔、'
+          },
+        ],
+        SHOWText: '', // 控制首页显示养卡攻略或真实内容
         SHOW: true, // 控制首页显示养卡攻略或真实内容
         jt_title: '交通银行提额攻略:',
         js_title: '建设银行提额攻略',
@@ -572,34 +633,208 @@
           gender: '',
           province:'',
           city: '',
-          openId: ''
+          openid: '',
+          encryptedData: '',
+          iv: ''
         }
       }
     },
     components: {
       vueTabBar
-    },
+    },   
     methods: {  
-      // 将时间戳转化为时间
-      getLocalTime(nS) {     
-        return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');     
-      },
       // 获得奖金
       getaward(){
         // 从奖金池中随机选取一个
         let num = Math.ceil(Math.random()*5) -1 
         this.award = this.awardArr[num]
+      },  
+      // 新用户点击开奖获取用户信息，并跳到开奖页
+      onGotUserInfo: function(e) {
+        let that = this
+        // console.log(e)
+        // console.log(e.mp.detail.userInfo)    
+        if(e.target.userInfo) {
+          // console.log('用户已经授权');
+          // this.userInfo.encryptedData = e.target.encryptedData;
+          // this.userInfo.iv = e.target.iv;
+          wx.login({
+            success (res) {       
+              if (res.code) {
+                //发起网络请求,获取用户openid           
+                getUserOpenid(res.code).then(data => {  
+                  that.userInfo.openid = data.result.msg                   
+                  wx.setStorage({
+                    key: 'openID',
+                    data: {
+                      "openId":data.result.msg
+                    }
+                  })  
+                  startTask({openid: that.userInfo.openid}).then(res=>{
+                     // 获取当前时间戳
+                    let timestamp = Date.parse(new Date()) + "0"
+                    let xianziatime = timestamp.substring(0,10)
+                    // console.log()
+                    if(res.result.msg == '活动正在进行中'){
+                      getTaskInfo({openid: that.userInfo.openid}).then(res=>{
+                        console.log('活动信息',res)
+                        that.award = res.data.coin
+                        that.startTime = res.data.stime
+                        that.userImg = res.data.headurl
+                        that.peoplenum = res.data.peoples
+                        that.userName = decodeURI(res.data.usname)
+                              
+                        let times = xianziatime - that.startTime
+                        console.log('times',times)
+                        that.times.secs = parseInt(times%60) 
+                        that.times.mins = parseInt(times/60%60)
+                        that.times.hours = parseInt(times/3600%24)
+                        if(that.times.secs<10){
+                          that.times.secs = "0" + that.times.hours
+                        }
+                        if(that.times.mins<10){
+                          that.times.mins = "0" + that.times.hours
+                        }
+                        if(that.times.hours<10){
+                          that.times.hours = "0" + that.times.hours
+                        }
+                        setInterval(()=>{
+                          // this.times.secs += 1
+                          that.times.secs = parseInt(that.times.secs) + 1
+                          if(that.times.secs<10){
+                            that.times.secs = "0"+that.times.secs
+                          } else if(that.times.secs > 59){
+                            that.times.secs = '00'
+                            that.times.mins = parseInt(that.times.mins) + 1
+                            if(that.times.mins<10){
+                              that.times.mins = "0"+that.times.mins
+                            }else if(that.times.mins > 59){
+                              that.times.mins = '00'
+                              that.times.hours = parseInt(that.times.secs) + 1
+                              if(that.times.hours<10){
+                                that.times.hours = "0"+that.times.hours
+                              }
+                            }
+                          }
+                        },1000)
+                        // console.log('secs',that.times.secs)
+                        // console.log('mins',that.times.mins)
+                        // console.log('hours',that.times.hours)
+                      })
+                    } 
+                  })              
+                })      
+              } else {            
+                // console.log('登录失败！' + res.errMsg)
+              }
+            }
+          })
+          that.userInfo.username= e.mp.detail.userInfo.nickName,
+          that.userInfo.avatarUrl= e.mp.detail.userInfo.avatarUrl,
+          that.userInfo.gender= e.mp.detail.userInfo.gender,
+          that.userInfo.province= e.mp.detail.userInfo.province,
+          that.userInfo.city= e.mp.detail.userInfo.city
+          that.userInfo.encryptedData= e.mp.detail.encryptedData
+          that.userInfo.iv= e.mp.detail.iv
+          // console.log('that.userinfo',that.userInfo)
+          // 将用户信息传给后台
+          postUserInfo(that.userInfo).then(res=>{
+            // console.log(res)
+          })
+          this.showkaijiang = false
+          this.showaward = true
+        } else {
+          console.log('用户拒绝授权');
+          //用户拒绝授权
+          wx.showModal({
+            title: '提示',
+            content: '只有授权后才能领红包哦！',
+            showCancel: false,
+            confirmText: '好的',
+            success: function(res) {
+              if (res.confirm) {
+                console.log('用户点击确定');
+              }
+            }
+          })
+        }
       },
-      
-      toaward(){
-        this.showkaijiang = false
-        this.showaward = true
-        this.getaward()
-        // this.randomNum(this.minNum,this.maxNum)
-      },
+      // 跳转到分享好友页
       tofenxiang(){
+        // // 用用户openid请求任务状态
+        // getTaskInfo({openid:this.userInfo.openId}).then(res => {
+        //   console.log('任务状态接口返回',res)
+        // })
         this.showaward = false
         this.showshare = true
+      },
+      // 助力人获取用户信息，并跳转到助力完成页
+      GotUserInfo: function(e) {
+        let that = this
+        console.log(e)
+        // console.log(e.mp.detail.userInfo)    
+        if(e.target.userInfo) {
+          console.log('用户已经授权');
+          // this.userInfo.encryptedData = e.target.encryptedData;
+          // this.userInfo.iv = e.target.iv;
+          wx.login({
+            success (res) {       
+              if (res.code) {
+                //发起网络请求,获取用户openid           
+                getUserOpenid(res.code).then(data => {  
+                  that.userInfo.openId = data.result.msg                   
+                  wx.setStorage({
+                    key: 'openID',
+                    data: {
+                      "openId":data.result.msg
+                    }
+                  })
+                })      
+              } else {            
+                // console.log('登录失败！' + res.errMsg)
+              }
+            }
+          })
+          that.userInfo.username= e.mp.detail.userInfo.nickName,
+          that.userInfo.avatarUrl= e.mp.detail.userInfo.avatarUrl,
+          that.userInfo.gender= e.mp.detail.userInfo.gender,
+          that.userInfo.province= e.mp.detail.userInfo.province,
+          that.userInfo.city= e.mp.detail.userInfo.city
+          console.log('that.userinfo',that.userInfo)
+          // 将用户信息传给后台
+          // postUser(that.userInfo)
+          this.showhelphe = false
+          this.showsuccess = true
+        } else {
+          console.log('用户拒绝授权');
+          //用户拒绝授权
+          wx.showModal({
+            title: '提示',
+            content: '只有授权后才能帮好友助力哦！',
+            showCancel: false,
+            confirmText: '好的',
+            success: function(res) {
+              if (res.confirm) {
+                console.log('用户点击确定');
+              }
+            }
+          })
+        }
+      },
+      // 从助力完成页跳到开奖页
+      tokaijiang(){
+        this.showsuccess = false
+        this.showkaijiang = true
+      },
+      // 取消显示活动页面
+      quxiao(){
+        this.showkaijiang = false
+        this.showaward = false
+        this.showshare = false
+        this.showmengban = false
+        this.showcomplete = false
+        this.showhelphe = false
+        this.showsuccess = false
       },
       // 跳转到代还页
       toOnbehalf() {
@@ -761,75 +996,7 @@
         wx.navigateTo({ 
             url: `/pages/link/main?title=${title}`
         });
-      },
-      // 获取用户信息
-      onGotUserInfo: function(e) {
-        // console.log(e)
-        // console.log(e.mp.detail.userInfo)
-        wx.login({
-          success (res) {        
-            if (res.code) {
-              //发起网络请求            
-              getUserOpenid(res.code).then(data => {  
-                console.log('qqq',data)
-                // this.userInfo.openId = data.result.msg
-                wx.setStorage({
-                  key: 'user',
-                  data: {
-                    "openId":data.result.msg
-                  }
-                })
-              })      
-            } else {            
-              // console.log('登录失败！' + res.errMsg)
-            }
-          }
-        })   
-        wx.setStorage({
-          key: 'userInfo',
-          data: {
-            "username": e.mp.detail.userInfo.nickName,
-            "avatarUrl": e.mp.detail.userInfo.avatarUrl,
-            "gender": e.mp.detail.userInfo.gender,
-            "province": e.mp.detail.userInfo.province,
-            "city": e.mp.detail.userInfo.city
-          }
-        }) 
-        wx.getStorage({
-          key: 'userInfo',
-          // key: 'user',      
-          success (res) {      
-            // console.log('aaa',res)
-            let userInfo={
-              username: '',
-              avatarUrl: '',
-              gender: '',
-              province:'',
-              city: '',
-              openId: ''
-            }
-            userInfo.username = res.data.username
-            userInfo.avatarUrl = res.data.avatarUrl
-            userInfo.gender = res.data.gender
-            userInfo.city = res.data.city
-            userInfo.province = res.data.province
-            wx.getStorage({
-              key: 'user',
-              success (res) {
-                // console.log('bbb',res)
-                userInfo.openId = res.data.openId
-                console.log(userInfo.openId );   
-              }
-            })      
-            console.log(userInfo)
-            postUser(userInfo)
-            // .then(data => {  
-            //   console.log('111')
-            //   console.log(data)
-            // })
-          }
-        })
-      },
+      },    
       // 未显示的跳转到养卡攻略详情页
       tocardraidersdetails(titles,bankNum){
         // console.log(titles,bankNum)
@@ -844,102 +1011,132 @@
         });
       }
     },
-    onLoad() {  
-      var timestamp = Date.parse(new Date())  
-      console.log(timestamp)
-      console.log(this.getLocalTime(timestamp))
-      
-      // 登录后获取用户openID
-      wx.login({
-        success (res) {        
-          if (res.code) {
-            //发起网络请求            
-            getUserOpenid(res.code).then(data => {  
-              // 将用户信息存储到storage中
-              wx.setStorage({
-                key: 'user',
-                data: {
-                  "openId":data.result.msg
-                }
-              })
-            })      
-          } else {            
-            // console.log('登录失败！' + res.errMsg)
-          }
-        }
-      })   
-      // 获取用户信息授权
-      wx.getUserInfo({
-        success: function(res) {
-          // 将用户信息存储到storage中
-          wx.setStorage({
-            key: 'userInfo',
-            data: {
-              "username": res.userInfo.nickName,
-              "avatarUrl":res.userInfo.avatarUrl,
-              "gender":res.userInfo.gender,
-              "province":res.userInfo.province,
-              "city":res.userInfo.city
-            }
-          })         
-        }
-      })
-      // 从storage中获取用户信息
-      wx.getStorage({
-        key: 'userInfo',
-        // key: 'user',      
-        success (res) {      
-          // console.log('aaa',res)
-          let userInfo={
-            username: '',
-            avatarUrl: '',
-            gender: '',
-            province:'',
-            city: '',
-            openId: ''
-          }
-          userInfo.username = res.data.username
-          userInfo.avatarUrl = res.data.avatarUrl
-          userInfo.gender = res.data.gender
-          userInfo.city = res.data.city
-          userInfo.province = res.data.province
-          this.userInfo.openid = 
-          wx.getStorage({
-            key: 'user',
-            success (res) {
-              // console.log('bbb',res)
-              userInfo.openId = res.data.openId
-              console.log(userInfo.openId );   
-            }
-          })      
-          console.log(userInfo)
-          postUser(userInfo)
-        }
-      })
-      
+    onLoad(options) {  
+      this.iszhuli = options.userId;  
     },
     //页面设置转发功能
     onShareAppMessage: function (res) {
       return {
         title: "这可能是2018年你最不想错过的红包活动>>>",
         imageUrl: '../../assets/active/4_1.png',
-        path: '/pages/index/index'
+        path: `/pages/index/main?userId=${this.userInfo.openId}`
       }
     },
     onShow(){
-      // 判断助力人数 显示对应页面
-      if(this.helpNum == 0) {     
-        this.showkaijiang = true
-      } else if(this.helpNum == 5) {
-        this.showcomplete = true
-      }  else {
-        this.showshare = true
+      let that = this
+      // 判断是通过帮助别人助力进来的或者不是
+      if(this.iszhuli){
+        this.showhelphe = true
+      } else {
+        this.showhelphe = false
+        // 获取任务状态
+        wx.getStorage({
+          key:'openID',
+          success:function(res){   
+            if(res.data.openId){
+              let openID = res.data.openId
+              // 获取任务信息
+              getRWInfo({openid: res.data.openId}).then(res => {
+                let timestamp = Date.parse(new Date()) + "0"
+                let xianziatime = timestamp.substring(0,10)
+                // 若任务未激活
+                if(res.data.status == 0){
+                  that.showmengban = true
+                  that.showkaijiang = true
+                  that.showaward = false
+                  that.showshare = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                  // 任务已激活
+                } else if(res.data.status == 1){   
+                    that.showkaijiang = false
+                    that.showaward = false
+                    that.showshare = true
+                    that.showcomplete = false
+                    that.showhelphe = false
+                    that.showsuccess = false
+                    that.showmengban = true
+                    getTaskInfo({openid: openID}).then(res=>{
+                        console.log('活动信息',res)
+                        that.award = res.data.coin
+                        that.startTime = res.data.stime
+                        that.userImg = res.data.headurl
+                        that.userName = decodeURI(res.data.usname)
+       
+                        let times = xianziatime - that.startTime
+                        console.log('times',times)
+                        that.times.secs = parseInt(times%60) 
+                        that.times.mins = parseInt(times/60%60)
+                        that.times.hours = parseInt(times/3600%24)
+                        if(that.times.secs<10){
+                          that.times.secs = "0" + that.times.hours
+                        }
+                        if(that.times.mins<10){
+                          that.times.mins = "0" + that.times.hours
+                        }
+                        if(that.times.hours<10){
+                          that.times.hours = "0" + that.times.hours
+                        }
+                        setInterval(()=>{
+                          // this.times.secs += 1
+                          that.times.secs = parseInt(that.times.secs) + 1
+                          if(that.times.secs<10){
+                            that.times.secs = "0"+that.times.secs
+                          } else if(that.times.secs > 59){
+                            that.times.secs = '00'
+                            that.times.mins = parseInt(that.times.mins) + 1
+                            if(that.times.mins<10){
+                              that.times.mins = "0"+that.times.mins
+                            }else if(that.times.mins > 59){
+                              that.times.mins = '00'
+                              that.times.hours = parseInt(that.times.secs) + 1
+                              if(that.times.hours<10){
+                                that.times.hours = "0"+that.times.hours
+                              }
+                            }
+                          }
+                        },1000)
+                        // console.log('secs',that.times.secs)
+                        // console.log('mins',that.times.mins)
+                        // console.log('hours',that.times.hours)
+                      })
+                  // 任务已完成
+                } else if(res.data.status == 2){
+                  that.showmengban = false
+                  that.showkaijiang = false
+                  that.showaward = false
+                  that.showshare = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                  // 活动已结束
+                } else if(res.data.status == 3){
+                  that.showmengban = false
+                  that.showkaijiang = false
+                  that.showaward = false
+                  that.showshare = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                } 
+              })
+            }else{
+              that.showmengban = true
+              this.showkaijiang = true
+              this.showaward = false
+              this.showshare = false
+              this.showcomplete = false
+              this.showhelphe = false
+              this.showsuccess = false
+            }
+          },
+        })
       }
       // 用于tabbar判断
       this.selectNavIndex = 0
-      // this.SHOW = true
         // 用于判断是否显示真正内容
-       getContent().then(data => {
+      getContent().then(data => {
         this.SHOWText = data
         // console.log(this.SHOWText)
         if(this.SHOWText === 'abcdefg'){
@@ -1044,7 +1241,8 @@
         this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
         this.searchCondition.token = md5(md5((new Date()).valueOf() + '@kami2018')); 
         // 获取热门信用卡的信息
-        getHotCard(this.searchCondition).then(data => {      
+        getHotCard(this.searchCondition).then(data => {    
+          // console.log(data)  
           if(data.result.code == 10000){
             for(let j = 0; j< data.data.length; j++){
               this.pageList.push(data.data[j]);
@@ -1109,6 +1307,7 @@
       // right: 0;
       z-index: 11;
       button{
+        z-index: 12;
         width: 100%;
         height: 100%;
         padding: 0;
@@ -1243,6 +1442,7 @@
         color: #000;
       }
       .user_img{
+        border-radius: 50%;
         width: 112rpx;
         height: 112rpx;
         margin: 30rpx 0 25rpx;
@@ -1473,6 +1673,59 @@
         opacity: 0;
       }
       
+    }
+    .quxiao{
+      position: absolute;
+      bottom: 0;
+      left: 40%;
+      width: 20%;
+      height: 16%;
+    }
+  }
+  .success{
+    z-index: 10;
+    width: 500rpx;
+    height: 794rpx;
+    position: fixed;
+    left: 125rpx;
+    top: 10%;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    // .award_edu{
+    //   position: absolute;
+    //   width: 100%;
+    //   top: 24%;
+    //   // left: 40%;
+    //   p{
+    //     font-size: 32px;
+    //     color: #000;
+    //     font-weight: 700;
+    //   }
+    // }
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    .success_btn {
+      width: 373rpx;
+      height: 77rpx;
+      position: absolute;
+      top: 60%;
+      left: 63.5rpx;
+      z-index: 11;
+      button{
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
     }
     .quxiao{
       position: absolute;
