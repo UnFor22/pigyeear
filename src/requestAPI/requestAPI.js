@@ -256,11 +256,16 @@ export const getTopicSelect = params => {
     // console.log('点击开激活任务参数',params)
     return fly.post(`${baseURL}/api.php/userwx/starttask`,  Qs.stringify(params)).then(res => res.data);
   };
-  
+  // function urlencode (str) {  
+  //   str = (str + '').toString();   
+  //   return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
+  //   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
+  // } 
   // 小程序用户信息上传
   export const postUserInfo = params => {
-    // console.log('上传信息参数',params)
-      return fly.post(`${baseURL}/api.php/msg/savewxuserinfo`, Qs.stringify(params)).then(res => res.data);
+    
+    console.log('上传信息参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/savewxuserinfo`, Qs.stringify(params)).then(res => res.data);
   };  
   // 获取活动进度，状态
   export const getTaskInfo = params => {
@@ -271,6 +276,21 @@ export const getTopicSelect = params => {
   export const getRWInfo = params => {
     // console.log('获取任务进度参数',params)
     return fly.post(`${baseURL}/api.php/userwx/getrwstatus`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 帮助好友助力
+  export const helpHe = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/pushpower`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 获取验证码
+  export const getCode = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/getwxsms`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 绑定手机
+  export const bandPhone = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/bindmob`, Qs.stringify(params)).then(res => res.data);
   };
   // function urlencode (str) {  
   //   str = (str + '').toString();   
