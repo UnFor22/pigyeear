@@ -7,8 +7,8 @@ const fly = new Fly;
 
 //配置请求基地址
 // const baseURL = 'https://api.fengniaojizhang.com';
-// const baseURL = 'https://main.kamicard.com';
-const baseURL = 'https://main.pcuion.com';
+const baseURL = 'https://main.kamicard.com';
+// const baseURL = 'https://main.pcuion.com';
 
 /**
  * http request 请求拦截器，有token值则配置上token值
@@ -156,12 +156,6 @@ fly.interceptors.response.use(
     }
 );
 
-/*
- * 发送网络请求
- * @param params  请求参数
- * @returns {Promise<FlyResponse<any>>}
- */
-
 //用户登陆
 // export const loginAPI = params => {
 //     return fly.post(`${baseURL}/rest/api/v1/loginByWXApplet/wxapplet`, {code: params}).then(res => res.data);
@@ -244,7 +238,7 @@ export const getTopicSelect = params => {
   //统计立即购买creditid&bankid
   export const getContent = params => {
     /*console.log(params);*/
-    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?`).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?test=2`).then(res => res.data);
   };
   //统计立即购买creditid&bankid
   export const getUserOpenid = params => {
@@ -291,6 +285,11 @@ export const getTopicSelect = params => {
   export const bandPhone = params => {
     // console.log('获取任务进度参数',params)
     return fly.post(`${baseURL}/api.php/userwx/bindmob`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 获取更多助力人
+  export const getMore = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/getmorefriend`, Qs.stringify(params)).then(res => res.data);
   };
   // function urlencode (str) {  
   //   str = (str + '').toString();   

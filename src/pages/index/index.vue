@@ -13,6 +13,48 @@
           <img src="http://ioskamidownload.oss-cn-qingdao.aliyuncs.com/yangkabeijing%402x.9d34970.png" mode="widthFix" alt="">
         </div>
         <div class="articleList">
+	          <!--科普 | 信用卡到底有什么用？-->
+          <div @click="tocardraidersdetails('科普 | 信用卡到底有什么用？',11)">
+            <div class="content">
+              <div class="content_left">
+                <p>科普 | 信用卡到底有什么用？</p>
+                <p>想象一下，看上一款尼康相机，但手里没有钱买。于是，你开始拼命存钱，等终于存够了钱，这款相机停产了</p>
+                <span>2018-06-08</span>
+                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
+              </div>
+              <div class="content_right">
+                <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3879099796,3374544206&fm=26&gp=0.jpg" mode="widthFix" alt="">
+              </div>
+            </div>
+          </div>	
+	          <!--科普 | 什么样的卡是一张"好卡"？-->
+          <div @click="tocardraidersdetails('什么样的卡是一张好卡',12)">
+            <div class="content">
+              <div class="content_left">
+                <p>什么样的卡是一张"好卡"？</p>
+                <p>对于不同的人来说，好卡的标准是不一样的。通常没有十全十美的情况，纠结于找一张完美的卡的结果很可能是犹豫不决最后..</p>
+                <span>2018-06-08</span>
+                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
+              </div>
+              <div class="content_right">
+                <img src="https://mmbiz.qpic.cn/mmbiz_jpg/5zmuhB1W64buIRHvQgwsU6YVjicm7WaLLMV8JQF1KeLg6Xx5hZibNE2fQ3TU3eiaM4AtxngBawprMZnWlMYcfAIPA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" mode="widthFix" alt="">
+              </div>
+            </div>
+          </div>
+	          <!-- 银行下0额度信用卡，该不该愤而销卡？ -->
+          <div @click="tocardraidersdetails('银行下0额度信用卡，该不该愤而销卡？',13)">
+            <div class="content">
+              <div class="content_left">
+                <p>银行下0额度信用卡，该不该愤而销卡？</p>
+                <p>有些小伙伴会有这样的经历：自己申请了个工行信用卡，本以为怎么也能下个几千额度，结果.</p>
+                <span>2018-06-08</span>
+                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
+              </div>
+              <div class="content_right">
+                <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1879652293,3757964995&fm=26&gp=0.jpg" mode="widthFix" alt="">
+              </div>
+            </div>
+          </div>
           <!--交通银行-->
           <div @click="tocardraidersdetails(jt_title,1)">
             <div class="content">
@@ -166,7 +208,7 @@
       </div>
     </div>
     <div v-if='!SHOW' class="card">
-      <div class="active_fuchuang" @click="toactive">
+      <div class="active_fuchuang" @click="toactive(1)">
         <img src="../../assets/active/active_img.png" alt="">
       </div>
       <!-- 蒙版  -->
@@ -207,9 +249,9 @@
           <img class="share_right" mode="widthFix" src="../../assets/active/3_1_send.png" alt="">
         </div>
         <div class="share_main">
-          <p>还差<span style="color:red;">X</span>人即可领红包</p>
+          <p>还差<span style="color:red;">{{haicharenshu}}</span>人即可领红包</p>
           <img class="user_img" :src="userImg" alt="">
-          <p>助力倒计时 <span class="time">{{times.hours}}</span>:<span class="time">{{times.mins}}</span>:<span class="time">{{times.secs}}</span></p>
+          <p>助力计时 {{times.days}}天<span class="time">{{times.hours}}</span>:<span class="time">{{times.mins}}</span>:<span class="time">{{times.secs}}</span></p>
           <p>{{peoplenum}}人已免费领取</p>
         </div>
         <img class="main_img" src="../../assets/active/3_1.png" mode="widthFix" alt="">
@@ -227,23 +269,32 @@
       </div>
       <!-- 助力完成页 -->
       <div class="complete" v-if="showcomplete">
-        <img class="main_img" src="../../assets/active/5_1.png" mode="widthFix" alt="">
+        <img class="main_img" src="../../assets/active/zhuliwancheng.png" mode="widthFix" alt="">
         <div class="complete_title">
           <p>你的朋友果然给力</p>
         </div>
         <div class="complete_main">
           <p style="font-size:30px; ">￥{{award}}</p>
-          <p style="font-size:12px; color:#888;">红包已到达您的账户</p>
+          <!-- <p style="font-size:12px; color:#888;">红包已到达您的账户</p> -->
         </div>
-        <div class="complete_btn" @click="tofenxiang">
-          <button open-type='share' class="complete_button"></button>
-          <img class="complete_button" src="../../assets/active/2_1_btn.png" alt="">
+        <div class="complete_zhuli" @click="tozhulixiangqing">
+          <li v-for="(item, index) in userArr" :key="index">
+            <img :src="item.img" mode="widthFix" alt="">
+            <span>{{item.name}}</span>
+          </li>
+          <div class="howpeople">
+            <p>{{peoplenum}}位好友帮你助力&nbsp;&nbsp;查看>></p>
+          </div>
+        </div>
+        <div class="complete_btn">
+          <button class="complete_button" open-type='share'></button>
+          <img class="complete_button" src="../../assets/active/qianjin.png" alt="">
         </div>
         <div class="complete_tips">
-          <button class="complete_left" @click="totixian"></button>
-          <button class="complete_right" @click="to"></button>
-          <span>提现</span>
-          <span>晒一晒</span>
+          <!-- <button class="complete_left" open-type='share'></button> -->
+          <button class="complete_right" @click="totixian"></button>
+          <span>余额:{{award}}金币</span>
+          <span>兑换红包</span>
         </div>
         <div class="quxiao" @click="quxiao"></div>
       </div>
@@ -254,11 +305,11 @@
           <p>帮Ta助力！</p>
         </div>
         <div class="helphe_user">
-          <img src="../../assets/active/3_1_bigface.png" mode="widthFix" alt="">
+          <img :src="fenxiangImg" mode="widthFix" alt="">
           <p>还差<span style="color:#F3392A">1</span>人</p>
         </div>
-        <div class="helphe_btn"> 
-          <button class="helphe_btn1" v-if="isshouquan" @click="tosuccess"></button>
+        <div class="helphe_btn">  
+          <button class="helphe_btn1" v-if="isshouquan"  @click="tosuccess"></button>
           <button class="helphe_btn1" v-else open-type='getUserInfo' lang="zh_CN" @getuserinfo="GotUserInfo"></button>
           <img class="helphe_button1" src="../../assets/active/helphe_btn1.png" mode="widthFix" alt="">
           <button class="helphe_btn2" @click="tokaijiang"></button>
@@ -271,17 +322,17 @@
         <img class="main_img" src="../../assets/active/success.png" mode="widthFix" alt="">
         <div class="success_btn">
           <!-- <button open-type='share'></button> -->
-          <button @click="tokaijiang"></button>
+          <button @click="tokaijiang(1)"></button>
           <!-- <img class="success_button" mode="widthFix" src="../../assets/active/2_1_btn.png" alt="">  -->
         </div>
         <div class="quxiao" @click="quxiao"></div>
       </div>
-      <!-- 体现 -->
+      <!-- 提现 -->
       <div class="tixian" v-if="showtixian">
-        <img src="../../assets/active/tixian.png" mode="widthFix" class="main_img" alt="">
+        <img src="../../assets/active/duihuan.png" mode="widthFix" class="main_img" alt="">
         <div class="tixian_title">
-          <p>可兑换现金</p>
-          <p>￥5.88元</p>
+          <p>可兑换红包</p>
+          <p>{{tixianNum}}元</p>
         </div>
         <div class="tixian_input">
           <div class="tixian_input_phone">
@@ -297,12 +348,33 @@
           <button class="tixian_button" @click="bindphone"></button>
           <img mode="widthFix" class="tixian_button" src="../../assets/active/2_1_btn.png" alt="">
         </div>
-        <div class="tixian_tips">
-          <span>注意事项</span>
-          <p>1、如遇高峰期，可能延迟到账，请耐心等待；</p>
-          <p>2、为保证资金安全，金额大于10元时，需身份认证；</p>
-          <p>3、客服提现48小时内到账，系统提现2小时内到账。</p>
+        <div class="tixian_tips" @click="toactiveshuoming">
+          <!-- <span>注意事项</span> -->
+          <p>查看活动说明 >></p>
+          <!-- <p>2、为保证资金安全，金额大于10元时，需身份认证；</p> -->
+          <!-- <p>3、客服提现48小时内到账，系统提现2小时内到账。</p> -->
         </div>
+        <div class="quxiao" @click="quxiao"></div>
+      </div>
+      <!-- 提现页有手机 -->
+      <div class="phone" v-if="showphone">
+        <img src="../../assets/active/duihuan.png" mode="widthFix" class="main_img" alt="">
+        <div class="phone_title">
+          <p>可兑换红包</p>
+          <p>￥{{tixianNum}}元</p>
+        </div>
+        <div class="phone_num">
+          <p>已绑手机号</p>
+          <p>{{mob}}</p>
+        </div>
+        <div class="phone_btn">
+          <button class="phone_button" @click="tojiakefu"></button>
+          <img mode="widthFix" class="phone_button" src="../../assets/active/2_1_btn.png" alt="">
+        </div>
+        <div class="phone_tips" @click="toactiveshuoming">
+          <p>查看活动说明 >></p>
+        </div>
+        <div class="quxiao" @click="quxiao"></div>
       </div>
       <!-- 功能导航 -->
       <div class="funList">     
@@ -496,6 +568,7 @@
         showhelphe: false,
         showsuccess: false,
         showtixian: false,
+        showphone: false,
         helpNum: 0,
         screenHeight:'',
         title: '',
@@ -504,6 +577,7 @@
         urlStr:'',
         startTime: '',
         times:{
+          days: '00',
           hours: '',
           mins: '',
           secs: ''
@@ -520,6 +594,9 @@
         codeTime: 60,
         codetime: '', // 验证码计时器
         codejishi: true,
+        tixianNum: '', //可提现金额数
+        haicharenshu: 5,
+        from: '', // 记录分享者来源
         // 记录帮助助力人信息
         userArr:[
           {
@@ -586,9 +663,11 @@
             name: '入魔、'
           },
         ],
+        mob: '',
         computetime: '', // 计时器
         SHOWText: '', // 控制首页显示养卡攻略或真实内容
         SHOW: true, // 控制首页显示养卡攻略或真实内容
+        fenxiangImg : '', // 分享者的头像
         jt_title: '交通银行提额攻略:',
         js_title: '建设银行提额攻略',
         gs_title: '工商银行通用攻略：',
@@ -612,8 +691,7 @@
         politeCard: [], //办卡有礼
         bannerData: [], //轮播图
         bannerDataTxt: [], //轮播文字
-        //分页属性
-        
+        //分页属性      
         showList:[], //循环显示银行卡
         cardTips:[], //热门信用卡小标签
         credittips:[], //热门信用卡小便签未处理
@@ -690,12 +768,6 @@
       vueTabBar
     },   
     methods: {  
-      // 获得奖金
-      getaward(){
-        // 从奖金池中随机选取一个
-        let num = Math.ceil(Math.random()*5) -1 
-        this.award = this.awardArr[num]
-      },  
       // 新用户点击开奖获取用户信息，并跳到开奖页
       onGotUserInfo: function(e) {
         let that = this
@@ -710,6 +782,7 @@
           that.userInfo.city= e.mp.detail.userInfo.city
           that.userInfo.encrydata= e.mp.detail.encryptedData
           that.userInfo.iv= e.mp.detail.iv
+          that.isshouquan = true
           wx.login({
             success (res) {       
               if (res.code) {
@@ -726,8 +799,8 @@
                   postUserInfo(that.userInfo).then(res=>{
                     console.log('上传用户信息返回',res)
                     if(res.result.code == 10000){
-                      this.showkaijiang = false
-                      this.showaward = true
+                      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                         
                     }else if(res.result.code == 99999){
                       wx.showModal({
                         title: '提示',
@@ -743,10 +816,12 @@
                     }
                   })
                   startTask({openid: that.userInfo.openid}).then(res=>{
-                    if(res.result.msg == '活动正在进行中'){
-                      that.gettaskinfo(that.userInfo.openid)
+                    if(res.result.code == 10000 ){
+                      that.gettaskinfo()
+                      that.showkaijiang = false
+                      that.showaward = true
                     } 
-                  })              
+                  })           
                 })      
               } else {                         
                 wx.showModal({
@@ -784,6 +859,13 @@
         this.showkaijiang = false
         this.showmengban = true
         this.showaward = true
+        startTask({openid: this.userInfo.openid}).then(res=>{
+          if(res.result.code == 10000 ){
+            this.gettaskinfo()
+            this.showkaijiang = false
+            this.showaward = true
+          } 
+        }) 
       },
       // 跳转到分享好友页
       tofenxiang(){
@@ -791,16 +873,17 @@
         // getTaskInfo({openid:this.userInfo.openId}).then(res => {
         //   console.log('任务状态接口返回',res)
         // })
+        clearInterval(this.computetime)
         this.showaward = false
         this.showshare = true
       },
       // 助力人获取用户信息，并跳转到助力完成页
       GotUserInfo(e) {
-        let that = this
+        let that = this   
         // console.log(e)
         // console.log(e.mp.detail.userInfo)    
         if(e.target.userInfo) {
-          console.log('用户已经授权');
+          // console.log('用户已经授权');
           that.userInfo.username= e.mp.detail.userInfo.nickName,
           that.userInfo.avatarUrl= e.mp.detail.userInfo.avatarUrl,
           that.userInfo.gender= e.mp.detail.userInfo.gender,
@@ -808,13 +891,16 @@
           that.userInfo.city= e.mp.detail.userInfo.city
           that.userInfo.encrydata= e.mp.detail.encryptedData
           that.userInfo.iv= e.mp.detail.iv
-          console.log('that.userinfo',that.userInfo)
+          that.isshouquan = true
+          // console.log('that.userinfo',that.userInfo)
           // 将用户信息传给后台
           postUserInfo(that.userInfo).then(res=>{
             console.log('上传用户信息返回',res)
             if(res.result.code == 10000){
-              this.showkaijiang = false
-              this.showaward = true
+              // this.showkaijiang = false
+              // this.helpHe = true
+              // this.showaward = true
+              this.isshouquan = true
             }else if(res.result.code == 99999){
               wx.showModal({
                 title: '提示',
@@ -829,15 +915,16 @@
               })
             }
           })
-          let params = {
-            tarid: that.iszhuli,
-            curid: that.userInfo.openid
-          }
-          helpHe(params).then(res => {
-            console.log(res)
-          })
+          // let params = {
+          //   tarid: that.iszhuli,
+          //   curid: that.userInfo.openid
+          // }
+          // helpHe(params).then(res => {
+          //   console.log(res)
+          // })
           // 记录助力人的活动状态，是否已经帮忙助力过
-          that.completezhuli = true   
+          // this.isshouquan = true
+          // this.completezhuli = true   
         } else {
           console.log('用户拒绝授权');
           //用户拒绝授权
@@ -855,102 +942,193 @@
         }
       },
       // 已授权用户帮别人助力，跳转到助力完成页
-      tosuccess(){
-        this.showhelphe = false
-        this.showmengban = true
-        this.showsuccess = true
-      },
-      // 从助力完成页跳到开奖页
-      tokaijiang(){
-        
-        this.showhelphe = false
-        this.showsuccess = false
-        this.showkaijiang = true
-      },
-      // 获取任务信息
-      gettaskinfo(){ 
-        let timestamp = Date.parse(new Date()) + "0"
-        let xianziatime = timestamp.substring(0,10)
-        let that = this
-        wx.getStorage({
-          key:'openID',
-          success:function(res){  
-            getTaskInfo({openid: res.data.openId}).then(res=>{
-              // console.log('活动信息2',res)
-              that.award = res.data.coin
-              that.startTime = res.data.stime
-              that.userImg = res.data.headurl
-              that.peoplenum = res.data.peoples
-              that.userName = decodeURI(res.data.usname)
-              let json = JSON.parse(res.data.peoplesinfo)
-              // console.log(json)
-              // console.log(json.length)
-              // console.log(that.userName)
-              for(let i = 0; i< json.length; i++){
-                // console.log('json[i]',json[i].fname)
-                that.userArr[i].name = decodeURI(json[i].fname)
-                that.userArr[i].img = json[i].fheadurl
-              }
-              // console.log('that.userArr',that.userArr)
-              let times = xianziatime - that.startTime
-              // console.log('times',times)
-              that.times.secs = parseInt(times%60) 
-              that.times.mins = parseInt(times/60%60)
-              that.times.hours = parseInt(times/3600%24)
-              // console.log('secs1',this.times.secs)
-              // console.log('mins1',this.times.mins)
-              // console.log('hours1',this.times.hours)
-              if(that.times.secs<10){
-                that.times.secs = "0" + that.times.secs
-              }
-              if(that.times.mins<10){
-                that.times.mins = "0" + that.times.mins
-              }
-              if(that.times.hours<10){
-                that.times.hours = "0" + that.times.hours
-              }
-              that.computetime = setInterval(()=>{
-                // this.times.secs += 1
-                that.times.secs = parseInt(that.times.secs) + 1
-                if(that.times.secs<10){
-                  that.times.secs = "0"+that.times.secs
-                } else if(that.times.secs > 59){
-                  that.times.secs = '00'
-                  that.times.mins = parseInt(that.times.mins) + 1
-                  if(that.times.mins<10){
-                    that.times.mins = "0"+that.times.mins
-                  }else if(that.times.mins > 59){
-                    that.times.mins = '00'
-                    that.times.hours = parseInt(that.times.secs) + 1
-                    if(that.times.hours<10){
-                      that.times.hours = "0"+that.times.hours
-                    }
-                  }
+      tosuccess(){   
+        // console.log('主理人页面的用户信息',this.userInfo)
+        // console.log('分享者的openid',this.iszhuli)
+        this.completezhuli = true
+        let that = this  
+        let params = {
+          tarid: this.iszhuli,
+          curid: this.userInfo.openid
+        }
+        helpHe(params).then(res => {
+          console.log(res)
+          if(res.result.code == 10000) {
+            // console.log('助力成功')
+            wx.showToast({
+              title: '助力成功',
+              icon: 'success',
+              duration: 1000
+            })
+            this.showsuccess = true
+            this.showmengban = true         
+          } else if(res.result.code == 99999){
+            wx.showToast({
+              title: '您已经为好友助力过了,自己也要加油哦！',
+              icon: 'none',
+              duration: 1500
+            })
+            this.showhelphe = false
+            this.showmengban = false
+          } else if(res.result.code == 99998) {
+            wx.showToast({
+              title: '不能给自己助力哦！',
+              icon: 'none',
+              duration: 1000
+            })
+            this.showhelphe = false
+            this.showmengban = false   
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '网络错误，请稍后重试！',
+              showCancel: false,
+              confirmText: '好的',
+              success: function(res) {
+                if (res.confirm) {
+                  console.log('用户点击确定');
                 }
-              },1000)
-              // console.log('secs',this.times.secs)
-              // console.log('mins',this.times.mins)
-              // console.log('hours',this.times.hours)
+              }
             })
           }
         })
       },
+      // 从助力完成页跳到开奖页
+      tokaijiang(params){
+        if(params == 1) {
+          this.isshouquan = true
+          this.showmengban = true
+          this.showkaijiang = false
+          this.showcomplete = false
+          this.showshare = false
+          this.showhelphe = false  
+          this.showaward = false
+          this.showsuccess = false
+          this.gettaskinfo()
+        } else {
+          this.showkaijiang = false
+          this.showmengban = true
+          this.showcomplete = false
+          this.showshare = false
+          this.showhelphe = false  
+          this.showaward = false
+          this.showsuccess = false
+          this.getRWstatus()
+        }
+      },
+      // 获取任务信息
+      gettaskinfo(open){
+        if(open){
+          getTaskInfo({openid: open}).then(res=>{
+            console.log('分享者的信息',res)
+            this.fenxiangImg = res.data.headurl
+          })
+        } else {
+          let timestamp = Date.parse(new Date()) + "0"
+          let xianziatime = timestamp.substring(0,10)
+          let that = this
+          wx.getStorage({
+            key:'openID',
+            success:function(res){  
+              getTaskInfo({openid: res.data.openId}).then(res=>{
+                console.log('活动信息',res)
+                that.award = res.data.coin
+                that.startTime = res.data.stime
+                that.userImg = res.data.headurl
+                that.peoplenum = res.data.peoples
+                that.userName = decodeURI(res.data.usname)
+                that.tixianNum = res.data.coin / 100
+                that.mob = res.data.mob
+                if(res.data.peoplesinfo != ' '){
+                  let json = JSON.parse(res.data.peoplesinfo)
+                  for(let i = 0; i< json.length; i++){
+                    that.userArr[i].name = decodeURI(json[i].fname)
+                    that.userArr[i].img = json[i].fheadurl
+                  }
+                  // console.log(that.userArr)
+                } 
+                
+                if(res.data.peoples >= 5){
+                  that.haicharenshu = 0
+                  that.showmengban = true
+                  that.showcomplete = true
+                  that.showaward = false
+                  that.showkaijiang = false
+                  that.showshare = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                } else {  
+                  that.haicharenshu = 5 - res.data.peoples
+                  that.showmengban = true
+                  that.showshare = true
+                  that.showaward = false
+                  that.showkaijiang = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                  let times = xianziatime - that.startTime
+                  that.times.secs = parseInt(times%60) 
+                  that.times.mins = parseInt(times/60%60)
+                  that.times.hours = parseInt(times/3600%24)
+                  that.times.days = parseInt(times/86400)
+                  if(that.times.secs<10){
+                    that.times.secs = "0" + that.times.secs
+                  }
+                  if(that.times.mins<10){
+                    that.times.mins = "0" + that.times.mins
+                  }
+                  if(that.times.hours<10){
+                    that.times.hours = "0" + that.times.hours
+                  }
+                  that.computetime = setInterval(()=>{
+                    // this.times.secs += 1
+                    that.times.secs = parseInt(that.times.secs) + 1
+                    if(that.times.secs<10){
+                      that.times.secs = "0"+that.times.secs
+                    } else if(that.times.secs > 59){
+                      that.times.secs = '00'
+                      that.times.mins = parseInt(that.times.mins) + 1
+                      if(that.times.mins<10){
+                        that.times.mins = "0"+that.times.mins
+                      }else if(that.times.mins > 59){
+                        that.times.mins = '00'
+                        that.times.hours = parseInt(that.times.secs) + 1
+                        if(that.times.hours<10){
+                          that.times.hours = "0"+that.times.hours
+                        }
+                      }
+                    }
+                  },1000)
+                }
+              })
+            }
+          })
+        }
+      },
       // 获取任务状态
-      gettaskstatus(){
-        console.log('111')
+      getRWstatus(){       
         let that = this
         // 获取任务状态
         wx.getStorage({
           key:'openID',
-          success:function(res){   
-            console.log(res)
+          success:function(res){    
+            // console.log(res)
             if(res.data.openId){
               let openID = res.data.openId
               // 获取任务状态
               getRWInfo({openid: res.data.openId}).then(res => {  
-                console.log('任务状态',res) 
+                // console.log('任务状态',res) 
+                // 未授权状态
                 if(res.data.peoplestatus == 0){
+                  // console.log('isshouquan',res.data.peoplestatus)
                   that.isshouquan = false
+                  that.showmengban = true
+                  that.showkaijiang = true
+                  that.showaward = false
+                  that.showshare = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
                 } else {
                   that.isshouquan = true
                   // 若任务未激活
@@ -963,15 +1141,16 @@
                     that.showhelphe = false
                     that.showsuccess = false
                     // 任务已激活
-                  } else if(res.data.status == 1){   
+                  } else if(res.data.status == 1){  
+                    clearInterval(that.computetime) 
                       that.showkaijiang = false
                       that.showaward = false
-                      that.showshare = true
+                      that.showshare = false
                       that.showcomplete = false
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showmengban = true
-                      that.gettaskinfo(openID)
+                      that.gettaskinfo()
                     // 任务已完成
                   } else if(res.data.status == 2){
                     that.showmengban = false
@@ -991,40 +1170,57 @@
                     that.showhelphe = false
                     that.showsuccess = false
                   } 
-                }
-                
+                }     
               })
             }else{
-              that.showmengban = true
-              this.showkaijiang = true
-              this.showaward = false
-              this.showshare = false
-              this.showcomplete = false
-              this.showhelphe = false
-              this.showsuccess = false
+              // that.showmengban = true
+              // this.showkaijiang = true
+              // this.showaward = false
+              // this.showshare = false
+              // this.showcomplete = false
+              // this.showhelphe = false
+              // this.showsuccess = false
             }
           },
         })
       },
       // 从浮窗进入活动页
-      toactive(){
+      toactive(optiom){
+        // console.log(this.computetime)
         clearInterval(this.computetime)
+        // 助力人，走一波逻辑
         if(this.iszhuli){
+          // 助力完成，显示它自己的任务状态
           if(this.completezhuli){
-            this.gettaskstatus()
-          } else {
-            // that.showkaijiang = false
+            // console.log('助力完成')
+            clearInterval(this.computetime)
             this.showmengban = true
+            this.showkaijiang = false  
+            this.showshare = false
+            this.showhelphe = false
+            this.showaward = false
+            this.showcomplete = false
+            this.showsuccess = false
+            this.getRWstatus()
+          // 助力未完成，显示帮好友助力页面
+          } else {
+            this.showmengban = true
+            this.showkaijiang = false  
             this.showshare = false
             this.showhelphe = true
+            this.showkaijiang = false
+            this.showaward = false
+            this.showcomplete = false
+            this.showsuccess = false
           }
+        // 非助力人，获取任务状态
         } else {
-          this.showkaijiang = true
+          // this.showkaijiang = true
           this.showmengban = true
           // 获取任务状态
-          this.gettaskstatus()
+          this.getRWstatus()
+          // this.gettaskinfo()
         }
-        
       },
       // 取消显示活动页面
       quxiao(){
@@ -1035,6 +1231,26 @@
         this.showcomplete = false
         this.showhelphe = false
         this.showsuccess = false
+        this.showtixian = false
+        this.showphone = false
+      },
+      // 去提现页面
+      totixian(){
+        this.showmengban= true, // 控制开奖页显隐
+        this.showkaijiang= false,
+        this.showaward= false,
+        this.showshare= false,
+        this.showcomplete= false,
+        this.showhelphe= false,
+        this.showsuccess= false
+
+        if(this.mob == ' '){
+          this.showtixian= true
+          this.showphone = false
+        } else {
+          this.showphone = true
+          this.showtixian= false
+        }
       },
       // 提现页验证码计时
       getcode(){
@@ -1067,6 +1283,7 @@
           },1000)
         }  
       },  
+      // 绑定电话号码
       bindphone(){
         let params ={
           openid: '',
@@ -1085,13 +1302,16 @@
           })
         } else {
           bandPhone(params).then(res => {
-            // console.log(res)
-            if(res.code == 1000){
+            console.log(res)
+            if(res.result.code == 10000){
               wx.showToast({
                 title: '绑定成功',
                 icon: 'success',
                 duration: 500
               })
+              wx.navigateTo({ 
+                url: "/pages/jiakefu/main" 
+              });
             } else {
               wx.showToast({
                 title: '手机号或验证码错误',
@@ -1101,6 +1321,24 @@
             }
           })
         } 
+      },
+      // 跳转到加客服页
+      tojiakefu(){
+        wx.navigateTo({ 
+          url: "/pages/jiakefu/main" 
+        });
+      },
+      // 跳转到活动详情
+      toactiveshuoming() {
+        wx.navigateTo({ 
+          url: "/pages/activeshuoming/main" 
+        });
+      },
+      // 跳转到助力人详情页
+      tozhulixiangqing(){
+        wx.navigateTo({ 
+          url: "/pages/zhulixiangqing/main" 
+        });
       },
       // 跳转到代还页
       toOnbehalf() {
@@ -1121,6 +1359,7 @@
           url: "/pages/activation/main" 
         });
       },
+
       // 跳转到信用卡中心
       tofiltercard(){
         wx.navigateTo({ 
@@ -1263,22 +1502,23 @@
             url: `/pages/link/main?title=${title}`
         });
       },  
-      getcontent(){
-        getContent().then(data => {
-          // console.log('222')
-          this.SHOWText = data
-          let timestamp = Date.parse(new Date()) + "0"
-          let xianziatime = timestamp.substring(0,10)
-          wx.setStorage({
-            key: 'time',
-            data: {
-              "time": xianziatime
-            }
-          })
-          // console.log(this.SHOWText)
+      // getcontent(){
+      //   getContent().then(data => {
+      //     console.log(data)
+      //     // console.log('222')
+      //     this.SHOWText = data
+      //     let timestamp = Date.parse(new Date()) + "0"
+      //     let xianziatime = timestamp.substring(0,10)
+      //     wx.setStorage({
+      //       key: 'time',
+      //       data: {
+      //         "time": xianziatime
+      //       }
+      //     })
+      //     // console.log(this.SHOWText)
           
-        })  
-      },
+      //   })  
+      // },
       // 未显示的跳转到养卡攻略详情页
       tocardraidersdetails(titles,bankNum){
         // console.log(titles,bankNum)
@@ -1294,159 +1534,295 @@
       }
     },
     onLoad(options) {  
-      this.iszhuli = options.userId;  
+      console.log('option',options)
       let that = this
-      this.getcontent()
-      wx.login({
-        success (res) {       
-          if (res.code) {
-            //发起网络请求,获取用户openid           
-            getUserOpenid(res.code).then(data => {  
-              that.userInfo.openid = data.result.msg                   
-              wx.setStorage({
-                key: 'openID',
-                data: {
-                  "openId":data.result.msg
-                }
-              }) 
-              // that.gettaskstatus() 
-              // that.gettaskinfo(openID)
-            })      
-          } else {            
-           
+      this.iszhuli = options.userId;  
+      this.from = options.from
+
+      //  ???????????????????????????????????是助力人
+      if(this.iszhuli){
+        wx.login({
+          success (res) {       
+            if (res.code) {
+              //发起网络请求,获取用户openid           
+              getUserOpenid(res.code).then(data => {  
+                // that.userInfo.openid = data.result.msg                   
+                wx.setStorage({
+                  key: 'openID',
+                  data: {
+                    "openId":data.result.msg
+                  }
+                }) 
+                wx.getStorage({
+                  key:'openID',
+                  success:function(res){
+                    console.log('获取的storage',res)
+                    // 助力人点击自己的分享
+                    if(res.data.openId == that.iszhuli){
+                      that.showmengban = false
+                      that.showcomplete = false
+                      that.showaward = false
+                      that.showkaijiang = false
+                      that.showshare = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.completezhuli = true
+                    } else {
+                      // 获取助力人的授权状态
+                      getRWInfo({openid: res.data.openId}).then(res => { 
+                        console.log('aaa')
+                        if(res.data.peoplestatus == 0){
+                          // console.log('isshouquan',res.data.peoplestatus)
+                          that.isshouquan = false
+                          that.showmengban = true
+                          that.showkaijiang = false
+                          that.showaward = false
+                          that.showshare = false
+                          that.showcomplete = false
+                          that.showhelphe = true
+                          that.showsuccess = false
+                        } else if(res.data.peoplestatus == 1){
+                          that.isshouquan = true
+                          that.showmengban = true
+                          that.showshare = false
+                          that.showhelphe = true
+                          that.showaward = false
+                          that.showkaijiang = false
+                          that.showshare = false
+                          that.showsuccess = false
+                          console.log('助力人的openid',that.iszhuli)
+                          that.gettaskinfo(that.iszhuli)
+                        }
+                      })
+                    }
+                  }
+                })  
+              })      
+            } else {            
+              console.log('助力人openid获取失败')
+            }   
+          }   
+        })
+      } else {
+        wx.login({
+          success (res) {       
+            if (res.code) {
+              //发起网络请求,获取新用户openid           
+              getUserOpenid(res.code).then(data => {  
+                that.userInfo.openid = data.result.msg                   
+                wx.setStorage({
+                  key: 'openID',
+                  data: {
+                    "openId":data.result.msg
+                  }
+                }) 
+                that.getRWstatus()
+              })      
+            } else {               
+            }
           }
-        }
-      })
+        })
+      }     
+      this.getcontent()     
     },
     //页面设置转发功能
     onShareAppMessage: function (res) {
       return {
-        title: "这可能是2018年你最不想错过的红包活动>>>",
-        imageUrl: '../../assets/active/4_1.png',
-        path: `/pages/index/main?userId=${this.userInfo.openId}`
+        title: "天气越来越冷，帮我点个红包温暖一下",
+        imageUrl: 'http://tongxiaomai.com/share_pic.png',
+        path: `/pages/index/main?userId=${this.userInfo.openid}&from=1`
       }
     },
     onShow(){
-      this.gettaskinfo()
-      clearInterval(this.computetime)
-      this.showkaijiang = true
+      // if(this.iszhuli){
+      // } else {
+      //   this.showhelphe = false
+      //    this.getRWstatus()
+      // }
+      // clearInterval(this.computetime)
+      // this.showkaijiang = true
       let that = this
-      // 判断是通过帮助别人助力进来的或者不是
-      if(this.iszhuli){
-        // that.showkaijiang = false
-        this.showmengban = true
-        this.showshare = false
-        this.showhelphe = true
-      } else {
-        // that.showkaijiang = false
-        this.showhelphe = false
-        // 获取任务状态
-        // this.gettaskstatus()
-      }
       // 用于tabbar判断
       this.selectNavIndex = 0
       // 判断每过两个小时请求是否显示真实内容
-      let timestamp = Date.parse(new Date()) + "0"
-      let nowtime = timestamp.substring(0,10)   
-      wx.getStorage({
-        key: 'time',
-        success(res) {
-          let lasttime = ''
-          lasttime = res.data.time
-          console.log("nowtime",nowtime)
-          console.log("lasttime",lasttime)
-          if(nowtime - lasttime > 7200){
-            that.getcontent()
-            console.log('111')
-          } 
-        }
-      })    
-      if(this.SHOWText === 'abcdefg'){
-        this.SHOW = true
-      } else {
-        this.SHOW = false
-        this.showGD = false
-        this.showAll = false
-        this.showList = []
-        // 页面展示时，清空热门信用卡数据，并重新请求
-        this.isLoading_hotCard = false
-        this.pageList = []
-        this.loadPageList();
-        this.word= '更多'
-        this.isLoading_hotBank = true
-        this.imgUrl= require('../../assets/gengduo@2x.png')
-        // 获取热门银行所需数据
-        getHotBankInfoList().then(data => {
-          if(data.result.code == 10000){
-            this.hotBanks = data.data;
-            // 第一次请求页面，给热门银行6个值
-            if(this.hotBanks.length > 6){
-              for(let i = 0; i < 6; i++){
-                this.showList.push(this.hotBanks[i]);
+      getContent().then(data => {
+        this.SHOWText = data
+        // console.log(this.SHOWText)
+        if(this.SHOWText === 'abcdefg'){
+          this.SHOW = true
+        } else {
+          this.SHOW = false
+          this.showGD = false
+          this.showAll = false
+          this.showList = []
+          // 页面展示时，清空热门信用卡数据，并重新请求
+          this.isLoading_hotCard = false
+          this.pageList = []
+          this.loadPageList();
+          this.word= '更多'
+          this.isLoading_hotBank = true
+          this.imgUrl= require('../../assets/gengduo@2x.png')
+          // 获取热门银行所需数据
+          getHotBankInfoList().then(data => {
+            if(data.result.code == 10000){
+              this.hotBanks = data.data;
+              // 第一次请求页面，给热门银行6个值
+              if(this.hotBanks.length > 6){
+                for(let i = 0; i < 6; i++){
+                  this.showList.push(this.hotBanks[i]);
+                }
+              }else{
+                this.showList = this.hotBanks;
               }
-            }else{
-              this.showList = this.hotBanks;
+              this.isLoading_hotBank = false;
+            }else {
+              this.isLoading_hotBank = false;
+              // Toast({message:'正在加载中。。。',duration: 500});
             }
+          }).catch(err=>{
+            console.log(err)
             this.isLoading_hotBank = false;
-          }else {
-            this.isLoading_hotBank = false;
             // Toast({message:'正在加载中。。。',duration: 500});
-          }
-        }).catch(err=>{
-          console.log(err)
-          this.isLoading_hotBank = false;
-          // Toast({message:'正在加载中。。。',duration: 500});
-        });
-        // this.isLoading_hotBank = true  
-        //加载主题精选时所需数据
-        getTopicSelect().then(data => {
-          if(data.result.code == 10000){
-            this.noviceCard = data.data[0];
-            this.bigQuota = data.data[1];
-            this.fastApproval = data.data[2];
-            this.politeCard = data.data[3];
-            this.isLoading_theme = false;
-          }else {
-            this.isLoading_theme = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          }
-        }).catch(err => {
-          console.log(err);
-          this.isLoading_theme = false;
-          // Toast({message:'正在加载中。。。',duration: 500});
-        })
-        //加载轮播图时所需数据
-        getBannerImg().then(data => {
-          if(data.result.code == 10000){
-            this.bannerData = data.data;
-            // console.log(this.bannerData)
-            this.isLoading_banner = false;
-          }else {
-            this.isLoading_banner = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          }
-        }).catch(err => {
-          console.log(err);
-          this.isLoading_banner = false;
-          // Toast({message:'正在加载中。。。',duration: 500});
-        })
+          });
+          // this.isLoading_hotBank = true
 
-        //加载轮播文字时所需数据
-        getBannerTxt().then(data => {
-          if(data.result.code == 10000){
-            this.bannerDataTxt = data.data;
-            // console.log(this.bannerDataTxt)
-            this.isLoading_banner = false;
-          }else {
+         
+          //加载主题精选时所需数据
+          getTopicSelect().then(data => {
+            if(data.result.code == 10000){
+              this.noviceCard = data.data[0];
+              this.bigQuota = data.data[1];
+              this.fastApproval = data.data[2];
+              this.politeCard = data.data[3];
+              this.isLoading_theme = false;
+            }else {
+              this.isLoading_theme = false;
+              // Toast({message:'正在加载中。。。',duration: 500});
+            }
+          }).catch(err => {
+            console.log(err);
+            this.isLoading_theme = false;
+            // Toast({message:'正在加载中。。。',duration: 500});
+          })
+          //加载轮播图时所需数据
+          getBannerImg().then(data => {
+            if(data.result.code == 10000){
+              this.bannerData = data.data;
+              // console.log(this.bannerData)
+              this.isLoading_banner = false;
+            }else {
+              this.isLoading_banner = false;
+              // Toast({message:'正在加载中。。。',duration: 500});
+            }
+          }).catch(err => {
+            console.log(err);
             this.isLoading_banner = false;
             // Toast({message:'正在加载中。。。',duration: 500});
-          }
-        }).catch(err => {
-          console.log(err);
-          this.isLoading_banner = false;
-          // Toast({message:'正在加载中。。。',duration: 500});
-        }) 
-      }
+          })
+
+          //加载轮播文字时所需数据
+          getBannerTxt().then(data => {
+            if(data.result.code == 10000){
+              this.bannerDataTxt = data.data;
+              // console.log(this.bannerDataTxt)
+              this.isLoading_banner = false;
+            }else {
+              this.isLoading_banner = false;
+              // Toast({message:'正在加载中。。。',duration: 500});
+            }
+          }).catch(err => {
+            console.log(err);
+            this.isLoading_banner = false;
+            // Toast({message:'正在加载中。。。',duration: 500});
+          }) 
+        }
+      })   
+      // if(this.SHOWText == 'abcdefg'){
+      //   this.SHOW = true
+      // } else {
+      //   this.SHOW = false
+      //   this.showGD = false
+      //   this.showAll = false
+      //   this.showList = []
+      //   // 页面展示时，清空热门信用卡数据，并重新请求
+      //   this.isLoading_hotCard = false
+      //   this.pageList = []
+      //   this.loadPageList();
+      //   this.word= '更多'
+      //   this.isLoading_hotBank = true
+      //   this.imgUrl= require('../../assets/gengduo@2x.png')
+      //   // 获取热门银行所需数据
+      //   getHotBankInfoList().then(data => {
+      //     if(data.result.code == 10000){
+      //       this.hotBanks = data.data;
+      //       // 第一次请求页面，给热门银行6个值
+      //       if(this.hotBanks.length > 6){
+      //         for(let i = 0; i < 6; i++){
+      //           this.showList.push(this.hotBanks[i]);
+      //         }
+      //       }else{
+      //         this.showList = this.hotBanks;
+      //       }
+      //       this.isLoading_hotBank = false;
+      //     }else {
+      //       this.isLoading_hotBank = false;
+      //       // Toast({message:'正在加载中。。。',duration: 500});
+      //     }
+      //   }).catch(err=>{
+      //     console.log(err)
+      //     this.isLoading_hotBank = false;
+      //     // Toast({message:'正在加载中。。。',duration: 500});
+      //   });
+      //   // this.isLoading_hotBank = true  
+      //   //加载主题精选时所需数据
+      //   getTopicSelect().then(data => {
+      //     if(data.result.code == 10000){
+      //       this.noviceCard = data.data[0];
+      //       this.bigQuota = data.data[1];
+      //       this.fastApproval = data.data[2];
+      //       this.politeCard = data.data[3];
+      //       this.isLoading_theme = false;
+      //     }else {
+      //       this.isLoading_theme = false;
+      //       // Toast({message:'正在加载中。。。',duration: 500});
+      //     }
+      //   }).catch(err => {
+      //     console.log(err);
+      //     this.isLoading_theme = false;
+      //     // Toast({message:'正在加载中。。。',duration: 500});
+      //   })
+      //   //加载轮播图时所需数据
+      //   getBannerImg().then(data => {
+      //     if(data.result.code == 10000){
+      //       this.bannerData = data.data;
+      //       // console.log(this.bannerData)
+      //       this.isLoading_banner = false;
+      //     }else {
+      //       this.isLoading_banner = false;
+      //       // Toast({message:'正在加载中。。。',duration: 500});
+      //     }
+      //   }).catch(err => {
+      //     console.log(err);
+      //     this.isLoading_banner = false;
+      //     // Toast({message:'正在加载中。。。',duration: 500});
+      //   })
+
+      //   //加载轮播文字时所需数据
+      //   getBannerTxt().then(data => {
+      //     if(data.result.code == 10000){
+      //       this.bannerDataTxt = data.data;
+      //       // console.log(this.bannerDataTxt)
+      //       this.isLoading_banner = false;
+      //     }else {
+      //       this.isLoading_banner = false;
+      //       // Toast({message:'正在加载中。。。',duration: 500});
+      //     }
+      //   }).catch(err => {
+      //     console.log(err);
+      //     this.isLoading_banner = false;
+      //     // Toast({message:'正在加载中。。。',duration: 500});
+      //   }) 
+      // }
     },  
     // 触底刷新
     onReachBottom() {
@@ -1513,10 +1889,11 @@
   }
   .kaijiang{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    // max-width: 600rpx;
+    width: 600rpx;
+    height: 953rpx;
     position: fixed;
-    left: 125rpx;
+    left: 75rpx;
     top: 10%;
     overflow: hidden;
     display: block;
@@ -1529,12 +1906,12 @@
       left: 0;
     }
     .kaijiang_btn {
-      width: 172rpx;
-      height: 172rpx;
+      width: 200rpx;
+      height: 200rpx;
       position: absolute;
-      top: 320rpx;
+      top: 395rpx;
       // bottom: 0;
-      left: 164rpx;
+      left: 200rpx;
       // right: 0;
       z-index: 11;
       button{
@@ -1783,7 +2160,7 @@
     }
     .complete_title{
       position: relative;
-      margin-top: 135rpx;
+      margin-top: 54rpx;
       p{
         color: #F3392A;
         font-weight: 700;
@@ -1801,11 +2178,57 @@
         margin-top: 10rpx;
       }
     }
+    .complete_zhuli{
+      position: relative;
+      margin-top: 15rpx;
+      height: 160rpx;
+      width: 100%;
+      text-align: center;
+      li:nth-of-type(1){
+        margin-left:30rpx; 
+      }
+      li:nth-of-type(5){
+        margin-right:30rpx; 
+      }
+      li{
+        float: left;
+        margin-left: 10rpx;
+        width: 80rpx;
+        height: 80rpx;
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+        span{
+          display: inline-block;
+          font-size: 11px;
+          color: #a9a9a9;
+          width: 66rpx;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+      .howpeople{
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        // text-align: center;
+        p{
+          width: 100%;
+          text-align: center;
+          font-size: 11px;
+          color: #F3392A;
+        }
+      }
+    }
     .complete_btn {
       width: 373rpx;
       height: 77rpx;
       position: absolute;
-      top: 57%;
+      top: 62%;
       left: 63.5rpx;
       z-index: 11;
       button{
@@ -1824,7 +2247,7 @@
     }
     .complete_tips{
       position: relative;
-      margin-top: 260rpx;
+      margin-top: 226rpx;
       color: gold;
       font-size: 13px;
       .complete_left{
@@ -1892,13 +2315,17 @@
       z-index: 12;
       img{
         width: 100rpx;
-        height: 10rpx;
+        height: 100rpx;
         margin-top: 50rpx;
+        border-radius: 50%;
       }
       p{
         color: #333;
-        font-size: 12px;
+        font-size: 16px;
         margin-top: 20rpx;
+        span{
+          font-weight: bold;
+        }
       }
     }
     .helphe_btn {
@@ -1973,7 +2400,7 @@
       width: 373rpx;
       height: 77rpx;
       position: absolute;
-      top: 60%;
+      top: 62%;
       left: 63.5rpx;
       z-index: 11;
       button{
@@ -1996,10 +2423,10 @@
   }
   .tixian{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 600rpx;
+    height: 951rpx;
     position: fixed;
-    left: 125rpx;
+    left: 75rpx;
     top: 10%;
     overflow: hidden;
     display: block;
@@ -2024,6 +2451,7 @@
         font-size: 26px;
         font-weight: 600;
         color: #F3392A;
+        margin-bottom: 30rpx;
       }
     }
     .tixian_input{
@@ -2034,9 +2462,9 @@
         .getcode{
           position: absolute;
           z-index: 9;
-          height: 60rpx;
-          right: 44rpx;
-          bottom: -12rpx;
+          height: 100rpx;
+          right: 66rpx;
+          bottom: -42rpx;
           color: #7370FF;
           font-size: 12px;
         }
@@ -2044,8 +2472,9 @@
       input{
         text-align: left;
         width: 80%;
-        height: 60rpx;
-        font-size: 12px;
+        height: 80rpx;
+        line-height: 80rpx;
+        font-size: 14px;
         color: #666;
         padding-left: 10rpx;
         border-radius: 5px;
@@ -2055,22 +2484,122 @@
       }
     }
     .tixian_tips{
+      width: 500rpx;    
+      text-align: center;
       position: absolute;
       z-index: 9;
-      text-align: left;
-      bottom: 170rpx;
+      box-sizing: border-box;
+      // height: 200rpx;
+      bottom: 230rpx;
+      left: 64rpx;
       padding: 0 40rpx;
-      span{
-        font-size: 10px;
-        color: gold;
-      }
+      // span{
+      //   font-size: 10px;
+      //   color: gold;
+      // }
       p{
-        font-size: 8px;
+        font-size: 14px;
         line-height: 1.8;
         color: gold;
       }
     }
     .tixian_btn {
+      width: 447rpx;
+      height: 92rpx;
+      position: absolute;
+      top: 49%;
+      left: 85.5rpx;
+      z-index: 11;
+      button{
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      .tixian_button{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .quxiao{
+      position: absolute;
+      bottom: 0;
+      left: 40%;
+      width: 20%;
+      height: 16%;
+    }
+  }
+  .phone{
+    z-index: 10;
+    width: 500rpx;
+    height: 794rpx;
+    position: fixed;
+    left: 125rpx;
+    top: 10%;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    .phone_num{
+      position: relative;
+      margin-top: 40rpx;
+      p:nth-of-type(1){
+        font-size: 12px;
+        color: #888;
+      }
+      p:nth-of-type(2){
+        margin-top: 20rpx;
+        font-size: 20px;
+        color: #000;
+        font-weight: 600;
+      }
+    }
+    .phone_title{
+      position: relative;
+      padding-top: 80rpx;
+      z-index: 9;
+      p:nth-of-type(1){
+        font-size: 12px;
+        font-weight: 600;
+      }
+      p:nth-of-type(2){
+        margin-top: 20rpx;
+        font-size: 26px;
+        font-weight: 600;
+        color: #F3392A;
+      }
+    }
+   
+    .phone_tips{
+       width: 500rpx;
+      
+      text-align: center;
+      position: absolute;
+      z-index: 9;
+      box-sizing: border-box;
+      // height: 200rpx;
+      bottom: 188rpx;
+      padding: 0 40rpx;
+      // span{
+      //   font-size: 10px;
+      //   color: gold;
+      // }
+      p{
+        font-size: 14px;
+        line-height: 1.8;
+        color: gold;
+      }
+    }
+    .phone_btn {
       width: 373rpx;
       height: 77rpx;
       position: absolute;
@@ -2086,7 +2615,7 @@
         left: 0;
         opacity: 0;
       }
-      .tixian_button{
+      .phone_button{
         width: 100%;
         height: 100%;
       }
@@ -2326,6 +2855,7 @@
     }  
   }
   .hotCard {
+    padding-bottom: 50rpx;
     .hotCard_p{
       padding: 50rpx 30rpx;
       margin-top: -40rpx;

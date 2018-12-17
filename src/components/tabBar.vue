@@ -34,7 +34,7 @@
             pagePath: "/pages/downloadApp/main",
             iconPath: "/static/shoukuanweidianji@3x.png",
             selectedIconPath: "/static/shoukuan@3x.png",
-            text: "账户收益"
+            text: "更多收益"
           },       
         ],
       }

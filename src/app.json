@@ -13,7 +13,10 @@
     "pages/cardraidersdetails/main",
     "pages/filtercard/main",
     "pages/politecard/main",
-    "pages/downloadApp/main"
+    "pages/downloadApp/main",
+    "pages/jiakefu/main",
+    "pages/zhulixiangqing/main",
+    "pages/activeshuoming/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
