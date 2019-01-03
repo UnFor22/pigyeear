@@ -2,7 +2,7 @@
   "name": "xinyongka-wx",
   "version": "1.0.0",
   "description": "A Mpvue project",
-  "author": "yangyongsheng@sudaizhijia.com",
+  "author": "liuwenxue@sudaizhijia.com",
   "private": true,
   "scripts": {
     "dev:wx": "node build/dev-server.js wx",
@@ -16,9 +16,10 @@
     "build": "node build/build.js wx"
   },
   "dependencies": {
+    "flyio": "^0.5.9",
     "mpvue": "^1.0.11",
     "vuex": "^3.0.1",
-    "flyio": "^0.5.9"
+    "wxa-plugin-canvas": "^1.1.8"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

@@ -1,312 +1,139 @@
 <template>
   <!-- 主页 -->
-  <div>
-    <!-- 新版用户授权获取信息按钮 -->
-    <!-- <div v-if="isLogin">
-      <button @getuserinfo="onGotUserInfo" @click="tologin" open-type='getUserInfo'>登录</button>
-    </div>    -->
-    <!-- <open-data type="userNickName"></open-data> -->
-    <!-- 不必显示的养卡攻略 -->
-    <div v-if="SHOW">
-      <div class="cardraiders">
-        <div class="header">
-          <img src="http://ioskamidownload.oss-cn-qingdao.aliyuncs.com/yangkabeijing%402x.9d34970.png" mode="widthFix" alt="">
-        </div>
-        <div class="articleList">
-	          <!--科普 | 信用卡到底有什么用？-->
-          <div @click="tocardraidersdetails('科普 | 信用卡到底有什么用？',11)">
-            <div class="content">
-              <div class="content_left">
-                <p>科普 | 信用卡到底有什么用？</p>
-                <p>想象一下，看上一款尼康相机，但手里没有钱买。于是，你开始拼命存钱，等终于存够了钱，这款相机停产了</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
-              </div>
-              <div class="content_right">
-                <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3879099796,3374544206&fm=26&gp=0.jpg" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>	
-	          <!--科普 | 什么样的卡是一张"好卡"？-->
-          <div @click="tocardraidersdetails('什么样的卡是一张好卡',12)">
-            <div class="content">
-              <div class="content_left">
-                <p>什么样的卡是一张"好卡"？</p>
-                <p>对于不同的人来说，好卡的标准是不一样的。通常没有十全十美的情况，纠结于找一张完美的卡的结果很可能是犹豫不决最后..</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
-              </div>
-              <div class="content_right">
-                <img src="https://mmbiz.qpic.cn/mmbiz_jpg/5zmuhB1W64buIRHvQgwsU6YVjicm7WaLLMV8JQF1KeLg6Xx5hZibNE2fQ3TU3eiaM4AtxngBawprMZnWlMYcfAIPA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-	          <!-- 银行下0额度信用卡，该不该愤而销卡？ -->
-          <div @click="tocardraidersdetails('银行下0额度信用卡，该不该愤而销卡？',13)">
-            <div class="content">
-              <div class="content_left">
-                <p>银行下0额度信用卡，该不该愤而销卡？</p>
-                <p>有些小伙伴会有这样的经历：自己申请了个工行信用卡，本以为怎么也能下个几千额度，结果.</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
-              </div>
-              <div class="content_right">
-                <img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1879652293,3757964995&fm=26&gp=0.jpg" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-          <!--交通银行-->
-          <div @click="tocardraidersdetails(jt_title,1)">
-            <div class="content">
-              <div class="content_left">
-                <p>交通银行信用卡养卡攻略</p>
-                <p>1.  金额数量尽量多，半年内消费总金额至少在额度30% 以上；</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 3530</span>
-              </div>
-              <div class="content_right">
-                <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151057-269.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--建设银行-->
-          <div  @click="tocardraidersdetails(js_title,2)">
-            <div class="content">
-              <div class="content_left">
-                <p>建设银行信用卡养卡技巧</p>
-                <p>1、 经常刷卡消费，次数越多越好，最好每个月刷完差不多所有额度。</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 6680</span>
-              </div>
-              <div class="content_right">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1530103741&di=f9639e4e2b06ca0eedd9d4680fd99b32&src=http://imgsrc.baidu.com/forum/pic/item/7e3e6709c93d70cf4f46d499f8dcd100bba12be1.jpg" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--工商银行-->
-          <div @click="tocardraidersdetails(gs_title,3)">
-            <div class="content">
-              <div class="content_left">
-                <p>工商银行-养卡攻略</p>
-                <p>1. 多笔消费，比例25/2/1 25笔500元以下，2笔5000 左右，1笔达总卡额度百分之70。（额度太小或者额度较大具体对待）</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 4846</span>
-              </div>
-              <div class="content_right">
-                <img src="http://image.sudaizhijia.com/production/20171012/bank/20171012201435-573.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--农业银行-->
-          <div @click="tocardraidersdetails(ny_title,4)">
-            <div class="content">
-              <div class="content_left">
-                <p>农业银行养卡攻略</p>
-                <p>由于某些历史原因，农行申卡成功率低，额度普遍偏低，而且提额很难，这已经成为卡右的一大共识。好多卡友咨询如何才能提高农行信用卡的额度，今天给大家分享下农行提额的最实用的几个技巧：</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5721</span>
-              </div>
-              <div class="content_right">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113879491&di=5d05f10bd9592aafbb385086f3c39d36&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316ca9789ee.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--光大银行-->
-          <div @click="tocardraidersdetails(gd_title,5)">
-            <div class="content">
-              <div class="content_left">
-                <p>光大银行养卡技巧</p>
-                <p>所谓养卡，就是通过一些"技术手段" ，把信用卡额度提上去。一般来说，初始额度1万的信用卡养到5万的额度就自然〃毕业""了。如果手中有几张额度5万元的信用卡，总额 度也能达到几十万。那么，如何正确地养卡提额呢？下面， 就跟大家分享一些养卡的技巧。</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5541</span>
-              </div>
-              <div class="content_right">
-                <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151123-331.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--广发银行-->
-          <div @click="tocardraidersdetails(gf_title,6)">
-            <div class="content">
-              <div class="content_left">
-                <p>广发银行养卡技巧</p>
-                <p>以卡养卡，就是A卡消费后，从B卡种来获得现金来还A 卡，等到B卡要还款了，再从A卡获得现金来还B卡，如此循环。信用卡以卡养卡，看起来似乎很简单，但是要注意的地方也还是不少，所以想要卡养得好，就得掌握一些养卡技巧。</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 3096</span>
-              </div>
-              <div class="content_right">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113917489&di=34b853bae2e32f903e336b34020d24db&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316cbf452df.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--中国银行-->
-          <div @click="tocardraidersdetails(zg_title,7)">
-            <div class="content">
-              <div class="content_left">
-                <p>中国银行提额方法</p>
-                <p>信用卡申请之初，持卡人的信用额度都不是很高的，很多人一张卡用了很久还是初始的倍用额度。实际上呢，信用额度是可以提高的，随着收入、资产条件的提高，完全可以提高信用卡额度，以下八种方式助你成功信用卡提额。</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 11562</span>
-              </div>
-              <div class="content_right">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113946255&di=934a7aeb4e34dafb00b70b7fb004927f&imgtype=0&src=http%3A%2F%2Fe.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2F8326cffc1e178a82e50ad11afd03738da977e852.jpg" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--兴业银行-->
-          <div @click="tocardraidersdetails(xy_title,8)">
-            <div class="content">
-              <div class="content_left">
-                <p>兴业银行信用卡养卡技巧</p>
-                <p>刷好第一笔，多元化消费，真实消费，少套。按时还兴业银行的卡片要多点真实消费，少用鸡，养卡开商户15-20户左右， 一个月能有10到20笔之间，多刷优质商户。这个优质商户的定义包括银行特约商户和高端知名商户</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 5569</span>
-              </div>
-              <div class="content_right">
-                <img src="http://image.sudaizhijia.com/production/20170920/bank/20170920151004-923.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--民生银行-->
-          <div @click="tocardraidersdetails(ms_title,9)">
-            <div class="content">
-              <div class="content_left">
-                <p>民生银行信用卡提额攻略</p>
-                <p>首次申请提高额度需要使用信用卡满半年以上，保持良好的还款记录，方可申请。首次提额后需要过了6个月以后才可再次申请。对成功提额有帮助的消费方式有：</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 7462</span>
-              </div>
-              <div class="content_right">
-                <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530113977790&di=713e4c302531ff87b4783dcdfade2120&imgtype=0&src=http%3A%2F%2Fpic.90sjimg.com%2Fdesign%2F00%2F07%2F85%2F23%2F59316cc45bac5.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-
-          <!--华夏银行-->
-          <div @click="tocardraidersdetails(hx_title,10)">
-            <div class="content">
-              <div class="content_left">
-                <p>华夏银行养卡</p>
-                <p>信用卡养卡，就是有技巧地刷卡，积累良好的刷卡记录，并遵循银行信用卡提额的规则，逐渐提升信用卡额度的过程。信用卡刷卡养卡的目的是为了提升信用卡额度，把低额度信用卡变成大额信用卡，这样持卡人可使用的信用资金就多了，能够满足持卡人资金周转的需求。那么信用卡养卡有哪些技巧呢？</p>
-                <span>2018-06-08</span>
-                <span><img style="width:30rpx;" src="../../assets/liulan@2x.png" mode="widthFix" alt=""> 9845</span>
-              </div>
-              <div class="content_right">
-                <img src="http://image.sudaizhijia.com/production/20171229/bank/20171229171255-146.png" mode="widthFix" alt="">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if='!SHOW' class="card">
-      <div class="active_fuchuang" @click="toactive(1)">
-        <img src="../../assets/active/active_img.png" alt="">
-      </div>
+  <div> 
+    <div class="card">
+      <!-- 用于iphone不显示问题 -->
+      <div id="zhanwei"></div>
       <!-- 蒙版  -->
-      <div class="mengban" v-if="showmengban"></div>
+      <div class="mengban"></div>
       <!-- 开奖页 -->
       <div class="kaijiang" v-if="showkaijiang">
-        <img class="main_img" src="../../assets/active/1_1.png" mode="widthFix" alt="">
+        <img class="main_img" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/kaijiang.png" mode="widthFix" alt="">
+        
         <div class="kaijiang_btn">
           <button v-if="isshouquan" @click="toaward"></button>
           <button v-else open-type='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo"></button>
-          <img class="kaijiang_button" mode="widthFix" src="../../assets/active/1_1_open.png" alt="">          
+          <img class="kaijiang_button" mode="widthFix" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/open_money.gif" alt="">          
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        <div class="kaijiang_title1">
+          <p>哇 第一个猪年红包</p>
+        </div>
+        <div class="kaijiang_title2">
+          <p>由您开启!</p>
+        </div>
+       
       </div>
       <!-- 奖品页 -->
       <div class="award" v-if="showaward">
-        <img class="main_img" src="../../assets/active/2_1.png" mode="widthFix" alt="">
-        <div class="award_edu">
-          <p>￥{{award}}</p>
+        <img class="main_img" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/award.png" mode="widthFix" alt="">
+        <div class="award_title">
+          <p>恭喜您获得￥{{award}}</p>
+          <p>100金币=1元红包,可提现</p>
         </div>
         <div class="award_btn" @click="tofenxiang">
-          <img class="award_button" mode="widthFix" src="../../assets/active/2_1_btn.png" alt=""> 
+          <img class="award_button" mode="widthFix" src="../../assets/active/award_btn.png" alt=""> 
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        <div class="award_rule" @click="toactiveshuoming">
+          <p>查看活动规则>></p>
+        </div>
       </div>
       <!-- 分享好友助力页 -->
       <div class="share" v-if="showshare">
+        <img class="main_img" src="../../assets/active/bg.jpg" mode="widthFix" alt="">
         <div class="share_swiper">
           <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
             <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in tixianUser" :key="index">
               <img :src="item.img" alt="">
-              <span style="font-size:11px;">{{item.name}}通过好友助力成功提现</span>
+              <span style="font-size:10px; color:#F22216;">{{item.name}}通过好友助力成功提现</span>
             </swiper-item>
           </swiper>
         </div>
         <div class="to_share_right">
           <button class="share_button" open-type='share'></button>
-          <img class="share_right" mode="widthFix" src="../../assets/active/3_1_send.png" alt="">
+          <img class="share_right" mode="widthFix" src="../../assets/active/share_btn1.png" alt="">
+        </div>
+        <div class="share_userInfo">
+          <div class="share_userimg">
+            <img class="user_img" :src="userImg" alt="">
+            <p>邀请<span style="font-size:26px;">{{haicharenshu}}</span>人</p>
+            <p>即可获得￥{{award}}</p>
+          </div>
         </div>
         <div class="share_main">
-          <p>还差<span style="color:red;">{{haicharenshu}}</span>人即可领红包</p>
-          <img class="user_img" :src="userImg" alt="">
-          <p>助力计时 {{times.days}}天<span class="time">{{times.hours}}</span>:<span class="time">{{times.mins}}</span>:<span class="time">{{times.secs}}</span></p>
-          <p>{{peoplenum}}人已免费领取</p>
+          <p>距结束：<span class="time">{{times.days}}</span>天<span class="time">{{times.hours}}</span>时<span class="time">{{times.mins}}</span>分<span class="time">{{times.secs}}</span></p>
+          <p>{{peoplenum}}人已经兑换提现</p>
         </div>
-        <img class="main_img" src="../../assets/active/3_1.png" mode="widthFix" alt="">
-        <div class="share_user">
+        <div class="share_user" @click="tozhulixiangqing">
           <li v-for="(item,index) in userArr" :key="index">
-            <img style="width:72rpx;" mode="widthFix" :src="item.img" alt="">
-            <span style="color:#a9a9a9;">{{item.name}}</span>
+            <img mode="widthFix" :src="item.img" alt="">
           </li>
         </div>
         <div class="share_btn" @click="tofenxiang">
           <button open-type='share'></button>
-          <img class="share_button" mode="widthFix" src="../../assets/active/3_1_btn.png" alt=""> 
+          <img class="share_button" mode="widthFix" src="../../assets/active/share_btn.png" alt=""> 
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        <div class="share_tips">
+          <p>超过5人后，每增加1位好友可累积获得5-60金币不等，分享越多，提现金额越多</p>
+        </div>
+        
       </div>
       <!-- 助力完成页 -->
       <div class="complete" v-if="showcomplete">
-        <img class="main_img" src="../../assets/active/zhuliwancheng.png" mode="widthFix" alt="">
+        <img class="main_img" src="../../assets/active/bg.jpg" mode="widthFix" alt="">
+        <div class="share_swiper">
+          <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
+            <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in tixianUser" :key="index">
+              <img :src="item.img" alt="">
+              <span style="font-size:10px; color:#F22216;">{{item.name}}通过好友助力成功提现</span>
+            </swiper-item>
+          </swiper>
+        </div>
+        <div class="to_share_right">
+          <button class="share_button" open-type='share'></button>
+          <img class="share_right" mode="widthFix" src="../../assets/active/share_btn1.png" alt="">
+        </div>
         <div class="complete_title">
-          <p>你的朋友果然给力</p>
+          <p>{{complete_ttt}}</p>
+          <p>累积获得<span style="font-size:24px;  font-weight:600;">￥{{award}}</span>金币</p>
+          <img src="../../assets/active/complete_tips.png" mode="widthFix" alt="">
         </div>
-        <div class="complete_main">
-          <p style="font-size:30px; ">￥{{award}}</p>
-          <!-- <p style="font-size:12px; color:#888;">红包已到达您的账户</p> -->
+        <div class="share_main">
+          <p>距结束：<span class="time">{{times.days}}</span>天<span class="time">{{times.hours}}</span>时<span class="time">{{times.mins}}</span>分<span class="time">{{times.secs}}</span>秒</p>
         </div>
-        <div class="complete_zhuli" @click="tozhulixiangqing">
-          <li v-for="(item, index) in userArr" :key="index">
-            <img :src="item.img" mode="widthFix" alt="">
-            <span>{{item.name}}</span>
+        <div class="share_user" @click="tozhulixiangqing">
+          <li v-for="(item,index) in userArr" :key="index">
+            <img mode="widthFix" :src="item.img" alt="">
+            <!-- <span>{{item.name}}</span> -->
           </li>
-          <div class="howpeople">
-            <p>{{peoplenum}}位好友帮你助力&nbsp;&nbsp;查看>></p>
-          </div>
+        </div>
+        <div class="complete_more" @click="tozhulixiangqing">
+          <p>共有<span style='font-weight: 700;'>{{helpNum}}</span>位好友和你一起接龙</p>
+          <p>查看>></p>
         </div>
         <div class="complete_btn">
-          <button class="complete_button" open-type='share'></button>
-          <img class="complete_button" src="../../assets/active/qianjin.png" alt="">
+          <button open-type='share'></button>
+          <img class="totixian_button" @click="totixian" mode="widthFix" src="../../assets/active/tixian_button.png" alt="">
+          <img class="complete_button" mode="widthFix" src="../../assets/active/complete_btn.png" alt="">
+          
         </div>
         <div class="complete_tips">
-          <!-- <button class="complete_left" open-type='share'></button> -->
-          <button class="complete_right" @click="totixian"></button>
-          <span>余额:{{award}}金币</span>
-          <span>兑换红包</span>
+          <p>账户余额：{{award}}金币</p>
+          
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+      
       </div>
       <!-- 帮助好友助力页 -->
       <div class="helphe" v-if="showhelphe">
-        <img class="main_img" src="../../assets/active/5_1.png" mode="widthFix" alt="">
+        <img class="main_img" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/helphe.png" mode="widthFix" alt="">
         <div class="helphe_title">
-          <p>帮Ta助力！</p>
+          <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/helphe_title.png" mode="widthFix" alt="">
+          <!-- <p>快来和我一起玩接龙</p> -->
         </div>
         <div class="helphe_user">
-          <img :src="fenxiangImg" mode="widthFix" alt="">
-          <p>还差<span style="color:#F3392A">1</span>人</p>
+          <img class="helphe_userimg" :src="fenxiangImg" mode="widthFix" alt="">
+          <p class="helphe_username">{{fenxiangname}}</p>
+          <p class="helphe_usertitle">还差<span>1</span>人</p>
+          <p class="helphe_usertitle">就可以兑换提现啦</p>
         </div>
         <div class="helphe_btn">  
           <button class="helphe_btn1" v-if="isshouquan"  @click="tosuccess"></button>
@@ -315,24 +142,43 @@
           <button class="helphe_btn2" @click="tokaijiang"></button>
           <img class="helphe_button2" src="../../assets/active/helphe_btn2.png" mode="widthFix" alt="">
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+      
       </div>
       <!-- 助力成功 -->
       <div class="success" v-if="showsuccess">
         <img class="main_img" src="../../assets/active/success.png" mode="widthFix" alt="">
-        <div class="success_btn">
-          <!-- <button open-type='share'></button> -->
-          <button @click="tokaijiang(1)"></button>
-          <!-- <img class="success_button" mode="widthFix" src="../../assets/active/2_1_btn.png" alt="">  -->
+        <div class="success_title">
+          <p>接龙成功啦</p>
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        <div class="success_tips">
+          <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/success_tips.png" mode="widthFix" alt="">
+          <p>小手抖一抖，红包就到手</p>
+        </div>
+        <div class="success_btn">
+          <button @click="tokaijiang(1)"></button>
+          <img class="success_button" mode="widthFix" src="../../assets/active/success_btn.png" alt=""> 
+        </div>
+       
       </div>
       <!-- 提现 -->
       <div class="tixian" v-if="showtixian">
-        <img src="../../assets/active/duihuan.png" mode="widthFix" class="main_img" alt="">
+        <img src="../../assets/active/bg.jpg" mode="widthFix" class="main_img" alt="">
+        <div class="share_swiper">
+          <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
+            <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in tixianUser" :key="index">
+              <img :src="item.img" alt="">
+              <span style="font-size:10px; color:#F22216;">{{item.name}}通过好友助力成功提现</span>
+            </swiper-item>
+          </swiper>
+        </div>
+        <div class="to_share_right">
+          <button class="share_button" open-type='share'></button>
+          <img class="share_right" mode="widthFix" src="../../assets/active/share_btn1.png" alt="">
+        </div>
         <div class="tixian_title">
-          <p>可兑换红包</p>
+          <p>可兑换现金</p>
           <p>{{tixianNum}}元</p>
+          <img src="../../assets/active/tixian_tips.png" mode="widthFix" alt="">
         </div>
         <div class="tixian_input">
           <div class="tixian_input_phone">
@@ -346,202 +192,74 @@
         </div>
         <div class="tixian_btn">
           <button class="tixian_button" @click="bindphone"></button>
-          <img mode="widthFix" class="tixian_button" src="../../assets/active/2_1_btn.png" alt="">
+          <img mode="widthFix" class="tixian_button" src="../../assets/active/phone_btn.png" alt="">
         </div>
         <div class="tixian_tips" @click="toactiveshuoming">
-          <!-- <span>注意事项</span> -->
+          <p>小提示：好友接龙越多，金币越多，兑换现金越多</p>
           <p>查看活动说明 >></p>
-          <!-- <p>2、为保证资金安全，金额大于10元时，需身份认证；</p> -->
-          <!-- <p>3、客服提现48小时内到账，系统提现2小时内到账。</p> -->
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        
       </div>
       <!-- 提现页有手机 -->
       <div class="phone" v-if="showphone">
-        <img src="../../assets/active/duihuan.png" mode="widthFix" class="main_img" alt="">
-        <div class="phone_title">
-          <p>可兑换红包</p>
-          <p>￥{{tixianNum}}元</p>
+        <img src="../../assets/active/bg.jpg" mode="widthFix" class="main_img" alt="">
+        <div class="share_swiper">
+          <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
+            <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in tixianUser" :key="index">
+              <img :src="item.img" alt="">
+              <span style="font-size:10px; color:#F22216;">{{item.name}}通过好友助力成功提现</span>
+            </swiper-item>
+          </swiper>
+        </div>
+        <div class="to_share_right">
+          <button class="share_button" open-type='share'></button>
+          <img class="share_right" mode="widthFix" src="../../assets/active/share_btn1.png" alt="">
+        </div>
+        <div class="tixian_title">
+          <p>可兑换现金</p>
+          <p>{{tixianNum}}元</p>
         </div>
         <div class="phone_num">
-          <p>已绑手机号</p>
+          <img src="../../assets/active/havephone_duihao.png" alt="">
+          <p>已绑定手机号</p>
           <p>{{mob}}</p>
         </div>
         <div class="phone_btn">
           <button class="phone_button" @click="tojiakefu"></button>
-          <img mode="widthFix" class="phone_button" src="../../assets/active/2_1_btn.png" alt="">
+          <img mode="widthFix" class="phone_button" src="../../assets/active/phone_btn.png" alt="">
         </div>
-        <div class="phone_tips" @click="toactiveshuoming">
+        <div class="tixian_tips" @click="toactiveshuoming">
+          <p>小提示：好友接龙越多，金币越多，兑换现金越多</p>
           <p>查看活动说明 >></p>
         </div>
-        <div class="quxiao" @click="quxiao"></div>
+        
       </div>
-      <!-- 功能导航 -->
-      <div class="funList">     
-        <div @click="toGonglue" style="display: inline-block;">
-            <img src='../../assets/yangka.png' alt="">
-            <p style="font-size: 14px; color: #333;">养卡攻略</p>
+      <!-- 加客服页 -->
+      <div class="jiakefu" v-if="showjiakefu">
+        <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/jiakefu.png" mode="widthFix" class="main_img" alt="">
+        <div class="jiakefu_title">
+          <p>添加客服微信给您发红包</p>
         </div>
-        <div v-if="isCredit==true" class="funListMiddle" @click="toProgresscheck" style="display: inline-block;">
-            <img src='../../assets/quxian.png' alt="">
-            <img src='../../assets/hot.gif' alt="" class="hotGif">
-            <p style="font-size: 14px; color: #333;">取现</p>
+        <div class="jiakefu_erweima">
+          <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/jiekefu_qrcode.png" @tap="previewImage" mode="widthFix" alt="">
         </div>
-        <div class="funListMiddle" @click="toprogresscheck" style="display: inline-block;">
-            <img src='../../assets/chaxun.png' alt="">
-            <p style="font-size: 14px; color: #333;">进度查询</p>
+        <div class="jiakefu_methods">
+          <p>领取方式</p>
         </div>
-        <div class="funListMiddle" @click="toActivation" style="display: inline-block;">
-          <img src='../../assets/jihuo.png' alt="">
-          <p style="font-size: 14px; color: #333;">激活</p>
+        <div class="jiakefu_tips">
+          <li>
+            <img src="../../assets/active/jiakefu_coin.png" mode="widthFix" alt="">
+            <p>点击二维码 -> 长按图片保存 -> 添加客服</p>
+          </li>
+          <li>
+            <img src="../../assets/active/jiakefu_coin.png" mode="widthFix" alt="">
+            <p>添加时备注手机号+金额</p>
+          </li>
         </div>
-        <div v-if="!SHOW" @click="toOnbehalf" style="display: inline-block;">
-            <img src='../../assets/daihuan@2x.png' alt="">
-            <p style="font-size: 14px; color: #333;">代还</p>
-        </div>
-      </div>  
-      <!-- 分割线 -->
-      <div class="splitLine" style="margin: 0;"></div>   
-      <!-- 需要显示的主体部分 -->
-      <div>
-      <!-- <div v-if="true"> -->
-        <!-- 热门银行 -->
-        <div class="hotBanks">
-          <div class="hotBanks_header">
-            <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>热门银行</p>          
-            <span @click="tofiltercard" style="color: #7370FF;font-size: 12px;">全部卡片<img src="../../assets/cardCenterMore.png" alt="" style="width: 12rpx; height:22rpx; vertical-align: middle; margin-left: 6rpx;margin-top: -2rpx;"></span>
-          </div>
-          <div class="hotBanks_content">
-            <!-- loading图 -->
-            <div class="loading" v-if=isLoading_hotBank>
-              <img src="../../assets/loading22.gif" alt="">
-            </div>
-            <ul>             
-              <li v-for="(item,index) in showList" @click="toHotbank(item)" :key="index">                
-                  <span v-if="item.banktips!=''"  :class="{tips}">{{item.banktips}}</span>
-                  <div>
-                    <img :src=item.banklogo alt="">
-                    <p>{{item.bankname}}</p>
-                    <p style="color: #999;">{{item.bankcontent}}</p>
-                  </div>                
-              </li> 
-            </ul>
-            <div v-if="!showGD" class="moreItem" style="height:64rpx" @click="toggleShowList">{{word1}}<img :src=gengduo style="width: 28rpx; height:15rpx; vertical-align: middle; margin-left: 10rpx" alt=""></div>
-            <div v-else class="moreItem" style="height:64rpx" @click="toggleShowList">{{word2}}<img :src=shouqi style="width: 28rpx; height:15rpx; vertical-align: middle; margin-left: 10rpx" alt=""></div>
-          </div>
-        </div>
-        <!-- 分割线 -->
-        <div class="splitLine2" ></div>
-        <!--主题精选-->
-        <div class="theme">
-          <p class="theme_p" style="color: #363636;"><span class="leftBorder"></span>主题精选</p>
-          <!-- loading -->
-          <div class="loading" v-if=isLoading_banner>
-            <img src="../../assets/loading22.gif" alt="">
-          </div>
-          <div class="theme_content">
-            <div class="theme_div" style="display: inline-block;" @click="toNovicecard">
-                <div style="display: inline-block; margin-left:8rpx; margin-top: 6rpx;">
-                  <p>{{noviceCard.topicname}}</p>
-                  <p style="color: #9a9a9a; font-size: 11px">{{noviceCard.topiccontent}}</p>
-                </div>
-                <img src='../../assets/xinshoubanka@3x.png' alt="" style="width:margin-right: 14rpx;">
-            </div>
-            <div class="theme_verticalline"></div>
-            <div class="theme_div" style="display: inline-block;" @click="tolargemonute">
-                <div style="display: inline-block;margin-top: 6rpx;">
-                  <p>{{bigQuota.topicname}}</p>
-                  <p style="color: #9a9a9a; font-size: 11px">{{bigQuota.topiccontent}}</p>
-                </div>
-                <img src='../../assets/daedu@3x.png' alt="">
-            </div>
-              <div class="theme_transverseline" style="margin-left: 2%;"></div>
-              <div class="theme_transverseline" style="margin-right: 2%;"></div>
-
-            <div class="theme_div" style="display: inline-block;" @click="tofastproval">
-                <div style="display: inline-block;margin-left:8rpx;margin-top: 6rpx;">
-                  <p>{{fastApproval.topicname}}</p>
-                  <p style="color: #9a9a9a; font-size: 11px">{{fastApproval.topiccontent}}</p>
-                </div>
-                <img src='../../assets/shenpikuai@3x.png' alt="" style="margin-right: 14rpx;">
-            </div>
-            <div class="theme_verticalline" style="margin-top: -10rpx;"></div>
-            <div class="theme_div" style="display: inline-block;" @click="topolitecard">
-                <div style="display: inline-block;margin-top: 6rpx;">
-                  <p>{{politeCard.topicname}}</p>
-                  <p style="color: #9a9a9a; font-size: 11px">{{politeCard.topiccontent}}</p>
-                </div>
-                <img src='../../assets/liwu@3x.png' alt="">
-            </div>
-
-          </div>
-        </div>
-        <!--轮播图-->
-        <div class="banner">
-          <div class="loading" v-if=isLoading_hotBank>
-              <img src="../../assets/loading22.gif" alt="">
-          </div>
-          <swiper style="height:150rpx" autoplay='true' interval="2000">
-            <swiper-item class="banneritem" v-for="(item, index) in bannerData" :key="index" >
-              <a @click="tokefu('办信用卡',item.picurl)">
-                <img style="width:740rpx; height:150rpx;" :src=item.pic_url alt="">
-              </a>         
-            </swiper-item>
-          </swiper>
-
-          <div class="lamititleswiper" style="width: 100%; height: 30rpx;margin-top:30rpx">
-            <!--<span class="todayTitle">卡秘头条</span>-->
-            <div style="float:left">
-              <img id="kamiTitlePic" src="../../assets/kamititle.png">
-            </div>
-            <div style="margin-left:160rpx;">
-              <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
-                <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in bannerDataTxt" :key="index">
-                  <a @click="toswiperdetails(item.url,index,'光大银行信用卡')">
-                    <span>{{item.title}}</span>
-                  </a>
-                </swiper-item>
-              </swiper>
-            </div>
-          </div>
-        </div>
-
-        <div class="splitLine"></div>
-        <!--热门信用卡-->
-        <div class="hotCard" ref="test">
-          <p class="hotCard_p" style="color: #363636;"><span class="leftBorder"></span>热门信用卡</p>
-          <div class="hotCard_content">
-            <div class="loading" v-if=isLoading_hotCard>
-                <img src="../../assets/loading22.gif" alt="">
-            </div>
-              <ul>
-                <li v-for="(item, index) in pageList" :key="index" @click="tokefu(item.creditname,item.crediturl)">   
-                  <a style="width: 100%; height: 100%">
-                    <img :src=item.creditphotourl mode="widthFix" alt="">
-                    <div class="bankContent">
-                      <p>{{item.creditname}}</p>
-                      <p>{{item.creditcontent}}</p>
-                      <span class="itemTipsCss" v-for="(itemTips, i) in cardTips[index]" :key="i">{{itemTips}}</span>
-                      <div class="cardNum">
-                        <span><span style="color:#ff5b3d">{{item.cardcount}}</span>人申请</span>
-                      </div>  
-                    </div>
-                  </a>
-                  <div class="imgBox">
-                    <img v-if="index==0" :src=back_img1 alt="">
-                    <img v-if="index==1" :src=back_img2 alt="">
-                    <img v-if="index==2" :src=back_img3 alt="">
-                  </div>      
-                </li>
-              </ul>
-          </div>       
-          <div class="noMore" v-if="!ReachBotton">
-            <p>{{bottomText}}</p>
-          </div>
-        </div>
-      </div>     
+      </div>
+        
     </div>
-    <vue-tab-bar v-if='!SHOW'
+    <vue-tab-bar 
       @fetch-index="clickIndexNav"
       :selectNavIndex=selectNavIndex
       :needButton="needButton"
@@ -560,22 +278,22 @@
   export default {
     data(){
       return {
-        showmengban: true, // 控制开奖页显隐
-        showkaijiang: false,
-        showaward: false,
-        showshare: false,
-        showcomplete: false,
-        showhelphe: false,
-        showsuccess: false,
-        showtixian: false,
-        showphone: false,
-        helpNum: 0,
-        screenHeight:'',
+        showmengban: false, // 控制蒙版页显隐
+        showkaijiang: false, // 控制开奖页显隐
+        showaward: false,  // 控制奖品页显隐
+        showshare: false,  // 控制分享好友页显隐
+        showcomplete: false,  // 控制助力完成页显隐
+        showhelphe: false,  // 控制帮助助力页显隐
+        showsuccess: false,  // 控制助力成功页显隐
+        showtixian: false,  // 控制提现页显隐
+        showphone: false,  // 控制绑定手机页显隐
+        showjiakefu: false,  // 控制加客服页显隐
+        helpNum: 0,  // 帮助助力人数
         title: '',
-        url:'',
+        url:'', 
         Url: '',
         urlStr:'',
-        startTime: '',
+        startTime: '',   // 记录任务开始时间，暂时没用到
         times:{
           days: '00',
           hours: '',
@@ -583,43 +301,48 @@
           secs: ''
         },  // 助力计时
         award: '', // 奖金
-        userImg: '', // 用户头像
+        userImg: require('../../assets/active/moren.png'), // 用户头像
         userName: '', // 用户昵称
-        iszhuli: '',
+        fenxiangname: '', // 分享者昵称
+        iszhuli: '',  // 记录分享者的openid，并根据这个判断是否为帮别人助力的
+        complete_ttt: '', // 记录助力完成，根据人数显示不同标语
         peoplenum: '', // 已取现人数
         completezhuli: false, // 记录助力人的活动状态，是否已经帮助力过
+        secondxianshi: false, // 记录是否助力完成，并确定是否显示
         isshouquan: false, // 记录用户是否授过权
         phoneNum: '',  // 记录用户电话号码
         QRcode: '',  // 记录用户验证码
-        codeTime: 60,
+        codeTime: 60, 
         codetime: '', // 验证码计时器
-        codejishi: true,
-        tixianNum: '', //可提现金额数
-        haicharenshu: 5,
+        endtime: '',  // 活动结束时间
+        codejishi: true, 
+        tixianNum: 8.8, //可提现金额数
+        haicharenshu: 5,  // 还有几人可以提现
         from: '', // 记录分享者来源
         // 记录帮助助力人信息
         userArr:[
           {
-            img: require('../../assets/active/morentouxiang.png'),
+            img:require('../../assets/active/morentouxiang.png'),
             name: '待邀请'
           },
           {
-            img: require('../../assets/active/morentouxiang.png'),
+            img:require('../../assets/active/morentouxiang.png'),
             name: '待邀请'
           },
           {
-            img: require('../../assets/active/morentouxiang.png'),
+            img:require('../../assets/active/morentouxiang.png'),
             name: '待邀请'
           },
           {
-            img: require('../../assets/active/morentouxiang.png'),
+            img:require('../../assets/active/morentouxiang.png'),
             name: '待邀请'
           },
           {
-            img: require('../../assets/active/morentouxiang.png'),
+            img:require('../../assets/active/morentouxiang.png'),
             name: '待邀请'
           }
         ],
+        // 已提现轮播图用户假数据
         tixianUser:[
           {
             img: require('../../assets/active/face_1.png'),
@@ -663,109 +386,25 @@
             name: '入魔、'
           },
         ],
-        mob: '',
+        mob: '', // 用户手机号
         computetime: '', // 计时器
-        SHOWText: '', // 控制首页显示养卡攻略或真实内容
-        SHOW: true, // 控制首页显示养卡攻略或真实内容
         fenxiangImg : '', // 分享者的头像
-        jt_title: '交通银行提额攻略:',
-        js_title: '建设银行提额攻略',
-        gs_title: '工商银行通用攻略：',
-        ny_title: '农业银行提额攻略',
-        gd_title: '光大银行养卡技巧',
-        gf_title: '广发银行养卡技巧',
-        zg_title: '中国银行提额方法',
-        xy_title: '兴业银行提额方法',
-        ms_title: '民生银行提额方法',
-        hx_title: '华夏银行提额方法',
+        arrCode: [
+          'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/qrcode.jpg'
+        ],  // 点击客服二维码在新窗口打开 所需数据
+       
         isLogin: true,
         isActive :false,
         appear:true,
-        tips:true,
-        phototUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528106264550&di=635bd54844f92c9672485b5d5f6ba3cc&imgtype=0&src=http%3A%2F%2Fwww.xiazaiba.com%2Fuploadfiles%2Fsub_ico%2F2015%2F0417%2F2015041715312182286.png',
-        cardUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528122362532&di=a15d3f52f9a40864816db75d76e4930b&imgtype=0&src=http%3A%2F%2Fs4.sinaimg.cn%2Fmw690%2F006iRLaxzy73UJHuEO763%26690',
-        hotBanks: [], //热门银行
-        noviceCard: [], //新手办卡
-        bigQuota: [],  //大额度
-        fastApproval: [], //审批快
-        politeCard: [], //办卡有礼
-        bannerData: [], //轮播图
-        bannerDataTxt: [], //轮播文字
-        //分页属性      
-        showList:[], //循环显示银行卡
-        cardTips:[], //热门信用卡小标签
-        credittips:[], //热门信用卡小便签未处理
-        searchCondition:{
-          t: '',
-          page: 0,
-          token: '',
-          creditid: '',
-        },
-        pageList: [],
-        bottomAllLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
-        wrapperHeight: 0,
-        bottomText: '上拉加载更多',
-        bottomDropText: '释放更新',
-        showAll: false,　//标记数据是否需要完全显示的属性
-        isLoading_hotBank: false,
-        isLoading_theme: true,
-        isLoading_banner: true,
-        isLoading_hotCard: true,
-        animate:false,
-        translate: 0,
-        scrollIcon:'',
-        isScrollIcon:'',
-        creditHref:'',
-        isCredit:'',
-        ReachBotton:true,
-        regList:{
-          mob:'', //手机号、
-          chan:'', //渠道号、
-          cid:'', //信用卡ID、
-          cname:'', //信用卡名称、
-        },
-        urlList:{    //url拼接参数
-          urlAll:'',             //所有参数
-          urlUtm:'',             //通道
-          urlCredit:'',          //取现
-          urlType:'',            //下载
-          urlMob:'',             //手机号
-          urlKami:'',            //是否为kamiApp跳转标识符
-        },
-        onbehalfsource:0,          //0:办卡页面跳转代还-立即申请非原生跳转
-        isKami:'',          //1:卡秘App-办卡页面-代还-一键导入-账单 0:非卡秘App-办卡页面-代还-一键导入-注册下载页
-        operationList:{   //记录用户操作接口列表
-            type:3,                 //办卡点击(h5),
-            mobile:'',                 //手机号、
-            channelSign:'',         //渠道号、渠道标识(H5)
-            typeId:'',              //相应操作数据id（对应数据的id不存在时可以不传）==>信用卡ID
-            address:'',	            //链接地址（app不需要；H5需要）
-        },
-        backgroundI1:{
-          background:"url("+require('../../assets/1@3x.png')+")",
-        },
-        back_img1: require('../../assets/1@3x.png'),
-        back_img2: require('../../assets/2@3x.png'),
-        back_img3: require('../../assets/3@3x.png'),
-        showGD: false, // 控制更多和收起
-        word1: '更多',
-        word2: '收起',
-        gengduo: require('../../assets/gengduo@2x.png'),
-        shouqi: require('../../assets/shouqi@2x.png'),
+        tips:true,   
         userInfo:{
-          username: '',
-          avatarUrl: '',
-          gender: '',
-          province:'',
-          city: '',
-          openid: '',
-          encrydata: '',
-          iv: ''
-        }
+          openid: ''
+        }  
       }
     },
+    // 底部tabbar注册组件
     components: {
-      vueTabBar
+      vueTabBar,
     },   
     methods: {  
       // 新用户点击开奖获取用户信息，并跳到开奖页
@@ -788,6 +427,7 @@
               if (res.code) {
                 //发起网络请求,获取用户openid           
                 getUserOpenid(res.code).then(data => {  
+                  // console.log(data)
                   that.userInfo.openid = data.result.msg                   
                   wx.setStorage({
                     key: 'openID',
@@ -797,7 +437,7 @@
                   })  
                   // 将用户信息传给后台
                   postUserInfo(that.userInfo).then(res=>{
-                    console.log('上传用户信息返回',res)
+                    // console.log('上传用户信息返回',res)
                     if(res.result.code == 10000){
                       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                          
@@ -809,19 +449,19 @@
                         confirmText: '好的',
                         success: function(res) {
                           if (res.confirm) {
-                            console.log('用户点击确定');
+                            // console.log('用户点击确定');
                           }
                         }
                       })
                     }
                   })
-                  startTask({openid: that.userInfo.openid}).then(res=>{
-                    if(res.result.code == 10000 ){
-                      that.gettaskinfo()
-                      that.showkaijiang = false
-                      that.showaward = true
-                    } 
-                  })           
+                  // startTask({openid: that.userInfo.openid}).then(res=>{
+                  //   if(res.result.code == 10000 ){
+                  //     that.gettaskinfo()
+                  //     that.showkaijiang = false
+                  //     that.showaward = true
+                  //   } 
+                  // })           
                 })      
               } else {                         
                 wx.showModal({
@@ -856,23 +496,39 @@
       },
       // 已授权用户点击开奖，跳转到开奖页
       toaward(){
-        this.showkaijiang = false
-        this.showmengban = true
-        this.showaward = true
-        startTask({openid: this.userInfo.openid}).then(res=>{
-          if(res.result.code == 10000 ){
-            this.gettaskinfo()
-            this.showkaijiang = false
-            this.showaward = true
-          } 
-        }) 
+        let that = this
+        wx.getStorage({
+          key:'openID',
+          success:function(res){ 
+            let id = res.data.openId
+            startTask({openid: id}).then(res=>{
+              // console.log('开始任务',res)
+              if(res.result.code == 10000 ){
+                getTaskInfo({openid: id}).then(res=>{
+                  // console.log('获取任务信息',res)
+                  that.award = res.data.coin
+                  that.showkaijiang = false
+                  that.showmengban = true
+                  that.showaward = true
+                  that.showshare= false
+                  that.showcomplete= false
+                  that.showhelphe= false
+                  that.showsuccess= false
+                  that.showtixian= false
+                  that.showphone= false
+                  that.showjiakefu= false
+                })
+              } 
+            })          
+          }
+        })
+        
       },
       // 跳转到分享好友页
       tofenxiang(){
-        // // 用用户openid请求任务状态
-        // getTaskInfo({openid:this.userInfo.openId}).then(res => {
-        //   console.log('任务状态接口返回',res)
-        // })
+        
+        this.gettaskinfo()
+
         clearInterval(this.computetime)
         this.showaward = false
         this.showshare = true
@@ -891,16 +547,18 @@
           that.userInfo.city= e.mp.detail.userInfo.city
           that.userInfo.encrydata= e.mp.detail.encryptedData
           that.userInfo.iv= e.mp.detail.iv
-          that.isshouquan = true
+          // that.isshouquan = true
           // console.log('that.userinfo',that.userInfo)
           // 将用户信息传给后台
           postUserInfo(that.userInfo).then(res=>{
-            console.log('上传用户信息返回',res)
+            // console.log('上传用户信息返回',res)
             if(res.result.code == 10000){
               // this.showkaijiang = false
               // this.helpHe = true
               // this.showaward = true
               this.isshouquan = true
+
+              // 用户已经上传过信息也会返回99999
             }else if(res.result.code == 99999){
               wx.showModal({
                 title: '提示',
@@ -944,110 +602,209 @@
       // 已授权用户帮别人助力，跳转到助力完成页
       tosuccess(){   
         // console.log('主理人页面的用户信息',this.userInfo)
-        // console.log('分享者的openid',this.iszhuli)
-        this.completezhuli = true
+        // console.log('分享者的openid',this.iszhuli)    
         let that = this  
-        let params = {
-          tarid: this.iszhuli,
-          curid: this.userInfo.openid
-        }
-        helpHe(params).then(res => {
-          console.log(res)
-          if(res.result.code == 10000) {
-            // console.log('助力成功')
-            wx.showToast({
-              title: '助力成功',
-              icon: 'success',
-              duration: 1000
-            })
-            this.showsuccess = true
-            this.showmengban = true         
-          } else if(res.result.code == 99999){
-            wx.showToast({
-              title: '您已经为好友助力过了,自己也要加油哦！',
-              icon: 'none',
-              duration: 1500
-            })
-            this.showhelphe = false
-            this.showmengban = false
-          } else if(res.result.code == 99998) {
-            wx.showToast({
-              title: '不能给自己助力哦！',
-              icon: 'none',
-              duration: 1000
-            })
-            this.showhelphe = false
-            this.showmengban = false   
-          } else {
-            wx.showModal({
-              title: '提示',
-              content: '网络错误，请稍后重试！',
-              showCancel: false,
-              confirmText: '好的',
-              success: function(res) {
-                if (res.confirm) {
-                  console.log('用户点击确定');
-                }
+        wx.getStorage({
+          key: 'openID',
+          success:function(res){
+            let params = {
+              tarid: that.iszhuli,
+              curid: res.data.openId
+            }
+
+            helpHe(params).then(res => {
+              // console.log('帮助好友助力接口返回',res)
+              if(res.result.code == 10000) {
+                // console.log('助力成功')
+                wx.showToast({
+                  title: '助力成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                that.completezhuli = true
+                that.showsuccess = true
+                that.showmengban = true 
+                that.showkaijiang= false
+                that.showaward= false
+                that.showshare= false
+                that.showcomplete= false
+                that.showhelphe= false
+                that.showtixian= false
+                that.showphone= false
+                that.showjiakefu= false     
+                wx.setStorage({
+                  key: that.iszhuli,
+                  data: {
+                    "openId":that.iszhuli
+                  }
+                }) 
+              } else if(res.result.msg == '您已为好友助力过了'){
+                // console.log('帮助好友助力，返回99999，已助力过')
+                wx.showToast({
+                  title: '您已经为好友助力过了,自己也要加油哦！',
+                  icon: 'none',
+                  duration: 1500
+                })
+                that.completezhuli = true
+                that.showmengban= false 
+                that.showkaijiang= false
+                that.showaward= false
+                that.showshare= false
+                that.showcomplete= false
+                that.showhelphe= false
+                that.showsuccess= false
+                that.showtixian= false
+                that.showphone= false
+                that.showjiakefu= false
+                that.gettaskinfo()
+                wx.setStorage({
+                  key: that.iszhuli,
+                  data: {
+                    "openId":that.iszhuli
+                  }
+                }) 
+              } else if(res.result.code == 99998) {
+                wx.showToast({
+                  title: '不能给自己助力哦！',
+                  icon: 'none',
+                  duration: 1000
+                })
+                that.showmengban= false // 控制开奖页显隐
+                that.showkaijiang= false
+                that.showaward= false
+                that.showshare= false
+                that.showcomplete= false
+                that.showhelphe= false
+                that.showsuccess= false
+                that.showtixian= false
+                that.showphone= false
+                that.showjiakefu= false  
+              } else {
+                wx.showModal({
+                  title: '提示',
+                  content: '网络错误，请稍后重试！',
+                  showCancel: false,
+                  confirmText: '好的',
+                  success: function(res) {
+                    if (res.confirm) {
+                      console.log('用户点击确定');
+                    }
+                  }
+                })
               }
             })
           }
         })
       },
+
       // 从助力完成页跳到开奖页
       tokaijiang(params){
-        if(params == 1) {
-          this.isshouquan = true
-          this.showmengban = true
+        // if(params == 1) {
+        //   this.isshouquan = true
+        //   this.showmengban = false
+        //   this.showkaijiang = false
+        //   this.showcomplete = false
+        //   this.showshare = false
+        //   this.showhelphe = false  
+        //   this.showaward = false
+        //   this.showsuccess = false
+        //   this.showtixian= false
+        //   this.showphone= false
+        //   this.showjiakefu= false
+        //   this.gettaskinfo()
+        // } else {
           this.showkaijiang = false
+          // this.showmengban = true
           this.showcomplete = false
           this.showshare = false
           this.showhelphe = false  
           this.showaward = false
           this.showsuccess = false
-          this.gettaskinfo()
-        } else {
-          this.showkaijiang = false
-          this.showmengban = true
-          this.showcomplete = false
-          this.showshare = false
-          this.showhelphe = false  
-          this.showaward = false
-          this.showsuccess = false
-          this.getRWstatus()
-        }
+          this.showtixian= false
+          this.showphone= false
+          this.showjiakefu= false
+          
+          this.getRWstatus(1)
+        // }
       },
       // 获取任务信息
       gettaskinfo(open){
         if(open){
           getTaskInfo({openid: open}).then(res=>{
-            console.log('分享者的信息',res)
+            // console.log('分享者的信息',res)
             this.fenxiangImg = res.data.headurl
+            this.fenxiangname = decodeURI(res.data.usname)
+            // console.log(this.fenxiangname)
           })
         } else {
           let timestamp = Date.parse(new Date()) + "0"
           let xianziatime = timestamp.substring(0,10)
           let that = this
+          // console.log('现在时间',xianziatime)
           wx.getStorage({
             key:'openID',
             success:function(res){  
               getTaskInfo({openid: res.data.openId}).then(res=>{
-                console.log('活动信息',res)
+                // console.log('活动信息',res)
+                wx.getStorage({
+                  key: 'lingqurenshu',
+                  success:function(res){
+                    that.peoplenum = res.data.num
+                    let num1 = parseInt(res.data.num + 5) 
+                    wx.setStorage({
+                      key: 'lingqurenshu',
+                      data: {
+                        "num": num1
+                      }
+                    })
+                  },
+                  fail: function(res){
+                    that.peoplenum = 54687
+                    wx.setStorage({
+                      key: 'lingqurenshu',
+                      data: {
+                        "num": that.peoplenum
+                      }
+                    })
+                  },
+                })
                 that.award = res.data.coin
                 that.startTime = res.data.stime
-                that.userImg = res.data.headurl
-                that.peoplenum = res.data.peoples
+                if(res.data.headurl == ' '|| res.data.headurl==null ||res.data.headurl == ''){
+                  
+                } else {
+                  that.userImg = res.data.headurl     
+                }
+
+                that.helpNum = res.data.peoples
+                if(res.data.peoples == 5){
+                  that.complete_ttt = '你的好友真给力!'
+                } else if(5 <res.data.peoples <= 20) {
+                  that.complete_ttt = '你的好友好多呀！'
+                } else if(20 <res.data.peoples <= 50) {
+                  that.complete_ttt = '哟，你真的很受欢迎！'
+                } else if(50 <res.data.peoples <= 100) {
+                  that.complete_ttt = '你的人气真让人嫉妒！'
+                } else if(100 <res.data.peoples ) {
+                  that.complete_ttt = '你的好友遍布天下！'
+                } 
                 that.userName = decodeURI(res.data.usname)
                 that.tixianNum = res.data.coin / 100
                 that.mob = res.data.mob
                 if(res.data.peoplesinfo != ' '){
                   let json = JSON.parse(res.data.peoplesinfo)
+                  // console.log("json",json)
                   for(let i = 0; i< json.length; i++){
-                    that.userArr[i].name = decodeURI(json[i].fname)
-                    that.userArr[i].img = json[i].fheadurl
+                    if(json[i].fheadurl == null || json[i].fheadurl== ''){
+                      that.userArr[i].img='https://wx.qlogo.cn/mmopen/vi_32/jLqE4FVxYElZoggLrVZWicKy7LibD4zdiaZZ0QTSuUMySvM35lYYkvleEFiaO1TnKicTGNX0FAkf7DdM9nQADzGAXXQ/132'
+                    } else{
+                      that.userArr[i].name = decodeURI(json[i].fname)
+                      that.userArr[i].img = json[i].fheadurl
+                    }
+                    
                   }
-                  // console.log(that.userArr)
+                  // console.log('userArr',that.userArr)
                 } 
-                
                 if(res.data.peoples >= 5){
                   that.haicharenshu = 0
                   that.showmengban = true
@@ -1056,21 +813,20 @@
                   that.showkaijiang = false
                   that.showshare = false
                   that.showhelphe = false
-                  that.showsuccess = false
-                } else {  
-                  that.haicharenshu = 5 - res.data.peoples
-                  that.showmengban = true
-                  that.showshare = true
-                  that.showaward = false
-                  that.showkaijiang = false
-                  that.showcomplete = false
-                  that.showhelphe = false
-                  that.showsuccess = false
-                  let times = xianziatime - that.startTime
+                  that.showsuccess = false 
+                  that.showtixian= false
+                  that.showphone= false
+                  that.showjiakefu= false
+                  if(that.endtime==null ||that.endtime==''){
+                    that.endtime = 1548950399
+                  } 
+                  
+                  let times = that.endtime - xianziatime
                   that.times.secs = parseInt(times%60) 
                   that.times.mins = parseInt(times/60%60)
                   that.times.hours = parseInt(times/3600%24)
                   that.times.days = parseInt(times/86400)
+                 
                   if(that.times.secs<10){
                     that.times.secs = "0" + that.times.secs
                   }
@@ -1080,23 +836,90 @@
                   if(that.times.hours<10){
                     that.times.hours = "0" + that.times.hours
                   }
+
                   that.computetime = setInterval(()=>{
                     // this.times.secs += 1
-                    that.times.secs = parseInt(that.times.secs) + 1
-                    if(that.times.secs<10){
-                      that.times.secs = "0"+that.times.secs
-                    } else if(that.times.secs > 59){
-                      that.times.secs = '00'
-                      that.times.mins = parseInt(that.times.mins) + 1
-                      if(that.times.mins<10){
-                        that.times.mins = "0"+that.times.mins
-                      }else if(that.times.mins > 59){
-                        that.times.mins = '00'
-                        that.times.hours = parseInt(that.times.secs) + 1
-                        if(that.times.hours<10){
+                    that.times.secs = parseInt(that.times.secs) - 1
+                    // console.log('secs',that.times.secs)
+
+                    if(that.times.secs == 0){
+                      // console.log('22222')
+                      that.times.secs = 60
+                      that.times.mins = parseInt(that.times.mins) - 1
+                      if(that.times.mins == 0){
+                        that.times.mins = 60
+                        that.times.hours = parseInt(that.times.hours) - 1
+                        if(that.times.hours = -1){
+                          that.times.hours = 23
+                          that.times.days = parseInt(that.times.days) - 1
+                        } else if(that.times.hours<10){
                           that.times.hours = "0"+that.times.hours
                         }
+                      } else if(that.times.mins<10){
+                        that.times.mins = "0"+that.times.mins
                       }
+                    } else if(that.times.secs<10){
+                      that.times.secs = "0"+that.times.secs
+                    }
+                  },1000)
+                } else {  
+                  that.haicharenshu = 5 - res.data.peoples
+                  that.showmengban = true
+                  that.showshare = true
+                  that.showaward = false
+                  that.showkaijiang = false
+                  that.showcomplete = false
+                  that.showhelphe = false
+                  that.showsuccess = false
+                  that.showtixian= false
+                  that.showphone= false
+                  that.showjiakefu= false
+                  if(that.endtime==null ||that.endtime==''){
+                    that.endtime = 1548950399
+                  } 
+                    let times = that.endtime - xianziatime
+                    that.times.secs = parseInt(times%60) 
+                    that.times.mins = parseInt(times/60%60)
+                    that.times.hours = parseInt(times/3600%24)
+                    that.times.days = parseInt(times/86400)
+                    // console.log('xianzai',xianziatime)
+                    // console.log('times',times)
+                    // console.log('secs',that.times.secs)
+                    // console.log('mins',that.times.mins)
+                    // console.log('hours',that.times.hours)
+                    // console.log('days',that.times.days)
+                    if(that.times.secs<10){
+                      that.times.secs = "0" + that.times.secs
+                    }
+                    if(that.times.mins<10){
+                      that.times.mins = "0" + that.times.mins
+                    }
+                    if(that.times.hours<10){
+                      that.times.hours = "0" + that.times.hours
+                    }
+                    that.computetime = setInterval(()=>{
+                    // this.times.secs += 1
+                    that.times.secs = parseInt(that.times.secs) - 1
+                    // console.log('secs',that.times.secs)
+
+                    if(that.times.secs == 0){
+                      // console.log('22222')
+                      that.times.secs = 60
+                      that.times.mins = parseInt(that.times.mins) - 1
+                      if(that.times.mins == 0){
+                        that.times.mins = 60
+                        that.times.hours = parseInt(that.times.hours) - 1
+                        if(that.times.hours = -1){
+                          that.times.hours = 23
+                          that.times.days = parseInt(that.times.days) - 1
+                        } else if(that.times.hours<10){
+                          that.times.hours = "0"+that.times.hours
+                        }
+                      } else if(that.times.mins<10){
+                        that.times.mins = "0"+that.times.mins
+                      }
+                    } else if(that.times.secs<10){
+                      that.times.secs = "0"+that.times.secs
                     }
                   },1000)
                 }
@@ -1106,33 +929,23 @@
         }
       },
       // 获取任务状态
-      getRWstatus(){       
-        let that = this
-        // 获取任务状态
-        wx.getStorage({
-          key:'openID',
-          success:function(res){    
-            // console.log(res)
-            if(res.data.openId){
-              let openID = res.data.openId
-              // 获取任务状态
-              getRWInfo({openid: res.data.openId}).then(res => {  
-                // console.log('任务状态',res) 
-                // 未授权状态
-                if(res.data.peoplestatus == 0){
-                  // console.log('isshouquan',res.data.peoplestatus)
-                  that.isshouquan = false
-                  that.showmengban = true
-                  that.showkaijiang = true
-                  that.showaward = false
-                  that.showshare = false
-                  that.showcomplete = false
-                  that.showhelphe = false
-                  that.showsuccess = false
-                } else {
-                  that.isshouquan = true
-                  // 若任务未激活
-                  if(res.data.status == 0){
+      getRWstatus(option){    
+        let that = this 
+        if(option){
+          // 获取任务状态
+          wx.getStorage({
+            key:'openID',
+            success:function(res){    
+              // console.log(res)
+              if(res.data.openId){
+                let openID = res.data.openId
+                // 获取任务状态
+                getRWInfo({openid: res.data.openId}).then(res => {  
+                  // console.log('任务状态22',res) 
+                  // 未授权状态
+                  if(res.data.peoplestatus == 0){
+                    // console.log('wei授权')          
+                    that.isshouquan = false
                     that.showmengban = true
                     that.showkaijiang = true
                     that.showaward = false
@@ -1140,49 +953,160 @@
                     that.showcomplete = false
                     that.showhelphe = false
                     that.showsuccess = false
-                    // 任务已激活
-                  } else if(res.data.status == 1){  
-                    clearInterval(that.computetime) 
+                    that.showjiakefu= false
+                    that.showtixian= false
+                    that.showphone= false
+                    // console.log('showkaijiang',that.showkaijiang)
+                  } else if(res.data.peoplestatus == 1){
+                    // console.log('执行 已授权')
+                    that.isshouquan = true
+                    // 若任务未激活
+                    if(res.data.status == 0){
+                      that.showmengban = true
+                      that.showkaijiang = true
+                      that.showaward = false
+                      that.showshare = false
+                      that.showcomplete = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                      // 任务已激活
+                    } else if(res.data.status == 1){  
+                      // console.log('aaa')
+                        clearInterval(that.computetime) 
+                        that.showmengban = false
+                        that.showkaijiang = false
+                        that.showaward = false
+                        that.showshare = false
+                        that.showcomplete = false
+                        that.showhelphe = false
+                        that.showsuccess = false
+                        that.showjiakefu= false
+                        that.showtixian= false
+                        that.showphone= false
+                        that.gettaskinfo()
+                      // 任务已完成
+                    } else if(res.data.status == 2){
+                      that.showmengban = false
                       that.showkaijiang = false
                       that.showaward = false
                       that.showshare = false
                       that.showcomplete = false
                       that.showhelphe = false
                       that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                      // 活动已结束
+                    } else if(res.data.status == 3){
+                      that.showmengban = false
+                      that.showkaijiang = false
+                      that.showaward = false
+                      that.showshare = false
+                      that.showcomplete = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                    } 
+                  }     
+                })
+              }else{
+            
+              }
+            },
+          })
+        } else {
+          // 获取任务状态
+          wx.getStorage({
+            key:'openID',
+            success:function(res){    
+              // console.log('助力人的openid',res)
+              if(res.data.openId){
+                let openID = res.data.openId
+                // 获取任务状态
+                getRWInfo({openid: res.data.openId}).then(res => {  
+                  // console.log('助力人任务状态',res) 
+                  // 未授权状态
+                  if(res.data.peoplestatus == 0){
+                    // console.log('isshouquan',res.data.peoplestatus)
+                    that.isshouquan = false
+                    that.showmengban = true
+                    that.showkaijiang = true
+                    that.showaward = false
+                    that.showshare = false
+                    that.showcomplete = false
+                    that.showhelphe = false
+                    that.showsuccess = false
+                    that.showjiakefu= false
+                    that.showtixian= false
+                    that.showphone= false
+
+                  } else if(res.data.peoplestatus == 1){
+                    // console.log('bbb')
+                    that.isshouquan = true
+                    // 若任务未激活
+                    if(res.data.status == 0){
                       that.showmengban = true
-                      that.gettaskinfo()
-                    // 任务已完成
-                  } else if(res.data.status == 2){
-                    that.showmengban = false
-                    that.showkaijiang = false
-                    that.showaward = false
-                    that.showshare = false
-                    that.showcomplete = false
-                    that.showhelphe = false
-                    that.showsuccess = false
-                    // 活动已结束
-                  } else if(res.data.status == 3){
-                    that.showmengban = false
-                    that.showkaijiang = false
-                    that.showaward = false
-                    that.showshare = false
-                    that.showcomplete = false
-                    that.showhelphe = false
-                    that.showsuccess = false
-                  } 
-                }     
-              })
-            }else{
-              // that.showmengban = true
-              // this.showkaijiang = true
-              // this.showaward = false
-              // this.showshare = false
-              // this.showcomplete = false
-              // this.showhelphe = false
-              // this.showsuccess = false
-            }
-          },
-        })
+                      that.showkaijiang = true
+                      that.showaward = false
+                      that.showshare = false
+                      that.showcomplete = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                      // 任务已激活
+                    } else if(res.data.status == 1){  
+                      // clearInterval(that.computetime) 
+                        that.showmengban = false
+                        that.showkaijiang = false
+                        that.showaward = false
+                        that.showshare = false
+                        that.showcomplete = false
+                        that.showhelphe = false
+                        that.showsuccess = false
+                        that.showjiakefu= false
+                        that.showtixian= false
+                        that.showphone= false
+                        // that.gettaskinfo()
+                      // 任务已完成
+                    } else if(res.data.status == 2){
+                      that.showmengban = false
+                      that.showkaijiang = false
+                      that.showaward = false
+                      that.showshare = false
+                      that.showcomplete = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                      // 活动已结束
+                    } else if(res.data.status == 3){
+                      that.showmengban = false
+                      that.showkaijiang = false
+                      that.showaward = false
+                      that.showshare = false
+                      that.showcomplete = false
+                      that.showhelphe = false
+                      that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone= false
+                    } 
+                  }     
+                })
+              }else{
+    
+              }
+            },
+          })
+        } 
       },
       // 从浮窗进入活动页
       toactive(optiom){
@@ -1194,14 +1118,17 @@
           if(this.completezhuli){
             // console.log('助力完成')
             clearInterval(this.computetime)
-            this.showmengban = true
+            // this.showmengban = true
             this.showkaijiang = false  
             this.showshare = false
             this.showhelphe = false
             this.showaward = false
             this.showcomplete = false
             this.showsuccess = false
-            this.getRWstatus()
+            this.showjiakefu= false
+            this.showtixian= false
+            this.showphone= false
+            this.getRWstatus(1)
           // 助力未完成，显示帮好友助力页面
           } else {
             this.showmengban = true
@@ -1212,28 +1139,20 @@
             this.showaward = false
             this.showcomplete = false
             this.showsuccess = false
+            this.showjiakefu= false
+            this.showtixian= false
+            this.showphone= false
           }
         // 非助力人，获取任务状态
         } else {
           // this.showkaijiang = true
-          this.showmengban = true
+          // this.showmengban = true
           // 获取任务状态
-          this.getRWstatus()
+          this.getRWstatus(1)
           // this.gettaskinfo()
         }
       },
-      // 取消显示活动页面
-      quxiao(){
-        this.showkaijiang = false
-        this.showaward = false
-        this.showshare = false
-        this.showmengban = false
-        this.showcomplete = false
-        this.showhelphe = false
-        this.showsuccess = false
-        this.showtixian = false
-        this.showphone = false
-      },
+      
       // 去提现页面
       totixian(){
         this.showmengban= true, // 控制开奖页显隐
@@ -1243,6 +1162,9 @@
         this.showcomplete= false,
         this.showhelphe= false,
         this.showsuccess= false
+        this.showtixian = false
+        this.showphone = false
+        this.showjiakefu= false
 
         if(this.mob == ' '){
           this.showtixian= true
@@ -1255,7 +1177,7 @@
       // 提现页验证码计时
       getcode(){
         // console.log(this.phoneNum)
-        let reg=/^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+        let reg=/^((1[3,5,6,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
         if(!reg.test(this.phoneNum)){
           wx.showToast({
             title: '手机号错误',
@@ -1285,6 +1207,7 @@
       },  
       // 绑定电话号码
       bindphone(){
+        let that = this
         let params ={
           openid: '',
           mob: '',
@@ -1293,7 +1216,7 @@
         params.openid = this.userInfo.openid
         params.mob = this.phoneNum
         params.code = this.QRcode
-        console.log(params)
+        // console.log(params)
         if(params.mob=='' ||params.code==''){
           wx.showToast({
             title: '手机号或验证码错误',
@@ -1302,16 +1225,23 @@
           })
         } else {
           bandPhone(params).then(res => {
-            console.log(res)
+            // console.log(res)
             if(res.result.code == 10000){
               wx.showToast({
                 title: '绑定成功',
                 icon: 'success',
                 duration: 500
               })
-              wx.navigateTo({ 
-                url: "/pages/jiakefu/main" 
-              });
+              that.showmengban= true // 控制开奖页显隐
+              that.showkaijiang= false
+              that.showaward= false
+              that.showshare= false
+              that.showcomplete= false
+              that.showhelphe= false
+              that.showsuccess= false
+              that.showtixian= false
+              that.showphone= false
+              that.showjiakefu= true
             } else {
               wx.showToast({
                 title: '手机号或验证码错误',
@@ -1322,10 +1252,62 @@
           })
         } 
       },
-      // 跳转到加客服页
+      // 加客服页
       tojiakefu(){
+        this.showkaijiang= false,
+        this.showaward= false,
+        this.showshare= false,
+        this.showcomplete= false,
+        this.showhelphe= false,
+        this.showsuccess= false,
+        this.showtixian= false,
+        this.showphone= false,
+        this.showjiakefu= true
+
+        // wx.navigateTo({ 
+        //   url: "/pages/jiakefu/main" 
+        // });
+      },
+      // 取消活动页面的显示
+      toquxiao(){
+        this.showmengban= false 
+        this.showkaijiang= false 
+        this.showaward= false
+        this.showshare= false
+        this.showcomplete= false
+        this.showhelphe= false
+        this.showsuccess= false
+        this.showtixian= false
+        this.showphone= false
+        this.showjiakefu= false
+      },
+      // 加客服页点击图片在新窗口打开
+      previewImage: function (e) { 
+        let that = this 
+        let current=e.target.dataset.src;
+        // console.log(current)
+		    wx.previewImage({
+          current: 'http://download.pcuion.com/app2_0/wxqcode.jpg', // 当前显示图片的http链接
+          urls: this.arrCode // 需要预览的图片http链接列表
+        })
+        // wx.getImageInfo({// 获取图片信息（此处可不要）
+        //   src: 'http://download.pcuion.com/app2_0/wxqcode.jpg',
+        //   success: function (res) {
+        //     // console.log(res.width)
+        //     // console.log(res.height)
+        //   }
+        // })
+
+      },
+      // 跳转到新的研究玩卡页
+      toyanjiuwanka(){
         wx.navigateTo({ 
-          url: "/pages/jiakefu/main" 
+          url: "/pages/yanjiuwanka/main" 
+        });
+      },
+      toyongkajingyan(){
+        wx.navigateTo({ 
+          url: "/pages/yongkajingyan/main" 
         });
       },
       // 跳转到活动详情
@@ -1340,156 +1322,7 @@
           url: "/pages/zhulixiangqing/main" 
         });
       },
-      // 跳转到代还页
-      toOnbehalf() {
-        wx.navigateTo({ 
-          url: "/pages/onBehalf/main" + '?utm_source='
-           + this.urlList.urlUtm + '&mob' + this.urlList.urlMob 
-        });
-      },
-      // 跳转到进度查询页
-      toprogresscheck() {
-        wx.navigateTo({ 
-          url: "/pages/progresscheck/main" 
-        });
-      },
-      // 跳转到激活页
-      toActivation() {
-        wx.navigateTo({ 
-          url: "/pages/activation/main" 
-        });
-      },
-
-      // 跳转到信用卡中心
-      tofiltercard(){
-        wx.navigateTo({ 
-          url: "/pages/filtercard/main" 
-        });
-      },
-      // 跳转到热门银行详情页
-      toHotbank(item){
-        wx.navigateTo({ 
-          url: "/pages/hotDetails/main?utm_source=" + this.urlList.urlUtm + '&mob=' + this.urlList.urlMob + '&bankid=' + item.bankid + '&bankname=' + item.bankname + '&bankcontent=' + item.bankcontent + '&logo=' + item.banklogo   
-        });
-      },
-      // 跳转到新手办卡页
-      toNovicecard(){
-        wx.navigateTo({ 
-          url: "/pages/noviceCard/main?utm_source=" + this.urlList.urlUtm + '&mob' + this.urlList.urlMob
-        });
-      },
-      // 跳转到大额度页
-      tolargemonute(){
-        wx.navigateTo({ 
-          url: "/pages/largemounte/main?utm_source=" + this.urlList.urlUtm + '&mob' + this.urlList.urlMob
-        });
-      },
-      // 跳转到审批快页
-      tofastproval(){
-        wx.navigateTo({ 
-          url: "/pages/fastapproval/main?utm_source=" + this.urlList.urlUtm + '&mob' + this.urlList.urlMob
-        });
-      },
-      // 跳转到办卡有礼页
-      topolitecard(){
-        wx.navigateTo({ 
-          url: "/pages/politecard/main?utm_source=" + this.urlList.urlUtm + '&mob' + this.urlList.urlMob
-        });
-      },
-      // 跳转到轮播图详细页
-      toswiperdetails(url,index,title){
-        switch(index)
-        {
-        case 0:
-          wx.navigateTo({ 
-            url: "/pages/activation/main"
-          });
-          break;
-        case 1:
-          let pages = getCurrentPages();
-          let currPage = pages[pages.length - 1];   //当前页面
-          let prevPage = pages[pages.length - 2];  //上一个页面
-          currPage.setData({
-            urlStr: url
-          });
-          wx.navigateTo({ 
-              url: `/pages/link/main?title=${title}`
-          });
-          break;
-        case 2:
-        // console.log(tourl)
-          wx.navigateTo({ 
-            url: "/pages/cardraiders/main"
-          });
-          break;
-        }
-      },
-      // 禁止小的轮播文字滑动
-      stopTouchMove(){
-        return false
-      },
-      // 切换showList的值
-      toggleShowList(){
-        this.showAll=!this.showAll
-        this.showGD = !this.showGD
-        if(this.showAll){
-          this.showList = []
-          this.showList = this.hotBanks
-        }else{
-          if(this.hotBanks.length > 6){
-            this.showList = []
-            for(let i = 0; i < 6; i++){
-              this.showList.push(this.hotBanks[i]);
-            }
-          }else{
-            this.showList = this.hotBanks;
-          }
-        }
-      },
-      // 页面加载时查询数据
-      loadPageList(){
-        this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
-        this.searchCondition.token = md5(md5((new Date()).valueOf() + '@kami2018'));  //生成token
-        this.searchCondition.page = 1;
-        getHotCard(this.searchCondition).then(data => {
-          if(data.result.code == 10000){
-            for(let j = 0; j< data.data.length; j++){
-              this.pageList.push(data.data[j]);
-            }
-            // console.log(this.pageList)
-            this.isLoading_hotCard = false;
-            // 为信用卡的tips赋值
-            for(let i=0;i<this.pageList.length;i++){
-              this.credittips.push(data.data[i].credittips) 
-              this.cardTips.push(this.credittips[i].split(','))
-              // this.cardTips.push(this.pageList.credittips.split(',')) 
-            }
-          }else if(data.result.code == 99996) {
-            this.bottomText = '没有更多了';
-            this.bottomDropText = '没有更多了';
-            this.ReachBotton=false
-          }
-         /* else {
-            Toast({message:'正在加载中。。。',duration: 500});
-          }*/
-        }).catch(err => {
-          console.log(err);
-         /* Toast({message:'正在加载中。。。',duration: 500});*/
-        });
-      },
-      //统计热门银行点击量
-      hotdetailsNum(index){
-          this.regList.mob=this.urlList.urlMob;
-          this.regList.chan=this.urlList.urlUtm;
-          this.regList.cid=this.pageList[index].creditid;
-          this.regList.cname=this.pageList[index].creditname;
-          registerHref(this.regList);
-          this.operationList.mobile=this.$route.query.mob;
-          this.operationList.channelSign=this.$route.query.utm_source;
-          this.operationList.typeId=this.pageList[index].creditid;
-          this.operationList.address=window.location.href;
-          userOperation(this.operationList);
-      },
+     
       // 跳转到中间页
       tokefu(title,url){
         let pages = getCurrentPages();
@@ -1502,51 +1335,139 @@
             url: `/pages/link/main?title=${title}`
         });
       },  
-      // getcontent(){
-      //   getContent().then(data => {
-      //     console.log(data)
-      //     // console.log('222')
-      //     this.SHOWText = data
-      //     let timestamp = Date.parse(new Date()) + "0"
-      //     let xianziatime = timestamp.substring(0,10)
-      //     wx.setStorage({
-      //       key: 'time',
-      //       data: {
-      //         "time": xianziatime
-      //       }
-      //     })
-      //     // console.log(this.SHOWText)
-          
-      //   })  
-      // },
-      // 未显示的跳转到养卡攻略详情页
-      tocardraidersdetails(titles,bankNum){
-        // console.log(titles,bankNum)
-        wx.navigateTo({ 
-          url: "/pages/cardraidersdetails/main?title=" + titles + '&bankNo=' + bankNum
-        });
-      }, 
-      // 未显示的跳转到攻略页
-      toGonglue(){
-        wx.navigateTo({ 
-          url: "/pages/cardraiders/main"
-        });
-      }
+     
+      // 设置已领取红包人数
+      setlingqurenshu(){
+        let that = this
+        wx.getStorage({
+          key: 'lingqurenshu',
+          success:function(res){
+            let num1 = parseInt(res.data.num + 5) 
+            wx.setStorage({
+              key: 'lingqurenshu',
+              data: {
+                "num": num1
+              }
+            })
+          },
+          fail:function(res){
+            let num = Math.floor(Math.random()*50000) +50000
+            // console.log('num',num)
+            // console.log('获取时间失败',res)
+            wx.setStorage({
+              key: 'lingqurenshu',
+              data: {
+                "num": num
+              }
+            })
+          }
+        })
+      },  
+      // 判断是否超过两小时
+      judgeTime(){
+        let that = this
+        let timestamp = Date.parse(new Date()) + "0"
+        let xianziatime = timestamp.substring(0,10)
+        // console.log('现在时间',xianziatime)
+        wx.getStorage({
+          key: 'time',
+          success:function(res){
+            // console.log('获取时间storage',res)
+            if(xianziatime - res.data.time > 1200) {
+              // console.log('超过二十分钟，重新请求')
+              wx.setStorage({
+                key: 'time',
+                data: {
+                  "time": xianziatime
+                }
+              })
+              that.getcontent()
+            } else {
+              // console.log('未超过2小时')
+            }
+          },
+          fail:function(res){
+            // console.log('获取时间失败',res)
+            that.getcontent()
+            wx.setStorage({
+              key: 'time',
+              data: {
+                "time": xianziatime
+              }
+            })
+          }
+        })
+      },
+      // 判断是否显示真正内容
+      getcontent(){
+        let that = this
+        getContent().then(data => {
+          // console.log('调用一次',data)
+          if(data.end == '' || data.end == null){
+            this.endtime = 1548950399
+          } else {
+            this.endtime = data.end
+          }
+          wx.setStorage({
+            key: 'ENDTIME',
+            data: {
+              "time": this.endtime
+            }
+          })
+        })   
+      },
+      
     },
     onLoad(options) {  
-      console.log('option',options)
       let that = this
-      this.iszhuli = options.userId;  
-      this.from = options.from
-
-      //  ???????????????????????????????????是助力人
-      if(this.iszhuli){
+      // console.log('option',options)
+      if(options.scene){
+        // let scene=decodeURIComponent(options.scene);
+        this.iszhuli= options.scene
+        //&是我们定义的参数链接方式
+        // this.iszhuli=options.scene.split("&")[0];
+        // let recommendId=options.scene.split('&')[1];
+        //其他逻辑处理。。。。。
+      } else {
+        this.iszhuli = options.userId; 
+        this.from = options.from
+      }  
+      this.secondxianshi = false 
+      this.setlingqurenshu()
+      this.judgeTime()
+                
+    },
+    //页面设置转发功能
+    onShareAppMessage: function (res) {
+      return {
+        title: `你的好友正在红包接龙，他已抢到${this.tixianNum}元，快来支援他！`,
+        imageUrl: 'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/share_pig.jpg',
+        path: `/pages/index/main?userId=${this.userInfo.openid}&from=1`
+      }
+    },
+    onShow(){ 
+     
+      let that = this
+      clearInterval(that.computetime)
+      this.showmengban = false  
+      this.showkaijiang = false
+      this.showaward = false
+      this.showshare = false
+      this.showcomplete = false
+      this.showhelphe = false
+      this.showsuccess = false
+      this.showjiakefu= false
+      this.showtixian= false
+      this.showphone = false
+      
+      // 是助力人
+      if(this.iszhuli){   
         wx.login({
           success (res) {       
             if (res.code) {
               //发起网络请求,获取用户openid           
               getUserOpenid(res.code).then(data => {  
-                // that.userInfo.openid = data.result.msg                   
+                that.userInfo.openid = data.result.msg                   
                 wx.setStorage({
                   key: 'openID',
                   data: {
@@ -1556,7 +1477,6 @@
                 wx.getStorage({
                   key:'openID',
                   success:function(res){
-                    console.log('获取的storage',res)
                     // 助力人点击自己的分享
                     if(res.data.openId == that.iszhuli){
                       that.showmengban = false
@@ -1566,11 +1486,16 @@
                       that.showshare = false
                       that.showhelphe = false
                       that.showsuccess = false
+                      that.showjiakefu= false
+                      that.showtixian= false
+                      that.showphone = false
                       that.completezhuli = true
+                      that.gettaskinfo()
                     } else {
                       // 获取助力人的授权状态
                       getRWInfo({openid: res.data.openId}).then(res => { 
-                        console.log('aaa')
+                        // console.log('主理人',res)
+                        // 助力人未授权
                         if(res.data.peoplestatus == 0){
                           // console.log('isshouquan',res.data.peoplestatus)
                           that.isshouquan = false
@@ -1581,18 +1506,73 @@
                           that.showcomplete = false
                           that.showhelphe = true
                           that.showsuccess = false
+                          that.showjiakefu= false
+                          that.showtixian= false
+                          that.showphone = false
+                          that.gettaskinfo(that.iszhuli)
+                          // 助力人已授权
                         } else if(res.data.peoplestatus == 1){
                           that.isshouquan = true
-                          that.showmengban = true
-                          that.showshare = false
-                          that.showhelphe = true
-                          that.showaward = false
-                          that.showkaijiang = false
-                          that.showshare = false
-                          that.showsuccess = false
-                          console.log('助力人的openid',that.iszhuli)
-                          that.gettaskinfo(that.iszhuli)
+                          // console.log('secondxianshi',that.secondxianshi)   
+                          if(that.secondxianshi  == true){
+                            that.showmengban = false
+                            that.showkaijiang = false
+                            that.showaward = false
+                            that.showshare = false
+                            that.showcomplete = false
+                            that.showhelphe = false
+                            that.showsuccess = false
+                            that.showjiakefu= false
+                            that.showtixian= false
+                            that.showphone = false
+                            that.gettaskinfo()
+                          } else {               
+                            wx.getStorage({ 
+                              key: that.iszhuli,
+                              // 找到了 说明已经帮他授权过
+                              success:function(res){
+                                // console.log('onload助力')
+                                wx.showToast({
+                                  title: '您已经为好友助力过了,自己也要加油哦！',
+                                  icon: 'none',
+                                  duration: 1500
+                                })
+                                that.isshouquan = true
+                                that.showmengban = false
+                                that.showshare = false
+                                that.showhelphe = false
+                                that.showaward = false
+                                that.showkaijiang = false
+                                that.showsuccess = false
+                                that.showjiakefu= false
+                                that.showtixian= false
+                                that.showphone = false
+                                that.completezhuli = true
+                                that.secondxianshi = true  
+                                that.gettaskinfo()
+                                // console.log('',that.secondxianshi)
+                              },
+                              // 没找到，说明未帮人助力过，或缓存被清空
+                              fail:function(res){
+                                that.isshouquan = true
+                                that.showmengban = true
+                                that.showshare = false
+                                that.showhelphe = true
+                                that.showaward = false
+                                that.showkaijiang = false
+                                that.showshare = false
+                                that.showsuccess = false
+                                that.showjiakefu= false
+                                that.showtixian= false
+                                that.showphone = false
+                                // console.log('助力人的openid',that.iszhuli)
+                                that.gettaskinfo(that.iszhuli)
+
+                              } 
+                            })  
+                          }
                         }
+                        
                       })
                     }
                   }
@@ -1603,12 +1583,14 @@
             }   
           }   
         })
+      // 不是助力人
       } else {
         wx.login({
           success (res) {       
             if (res.code) {
               //发起网络请求,获取新用户openid           
               getUserOpenid(res.code).then(data => {  
+                // console.log(data)
                 that.userInfo.openid = data.result.msg                   
                 wx.setStorage({
                   key: 'openID',
@@ -1616,268 +1598,35 @@
                     "openId":data.result.msg
                   }
                 }) 
-                that.getRWstatus()
+                that.getRWstatus(1)
               })      
             } else {               
             }
           }
         })
-      }     
-      this.getcontent()     
-    },
-    //页面设置转发功能
-    onShareAppMessage: function (res) {
-      return {
-        title: "天气越来越冷，帮我点个红包温暖一下",
-        imageUrl: 'http://tongxiaomai.com/share_pic.png',
-        path: `/pages/index/main?userId=${this.userInfo.openid}&from=1`
-      }
-    },
-    onShow(){
-      // if(this.iszhuli){
-      // } else {
-      //   this.showhelphe = false
-      //    this.getRWstatus()
-      // }
-      // clearInterval(this.computetime)
-      // this.showkaijiang = true
-      let that = this
+      }  
+     
       // 用于tabbar判断
       this.selectNavIndex = 0
-      // 判断每过两个小时请求是否显示真实内容
-      getContent().then(data => {
-        this.SHOWText = data
-        // console.log(this.SHOWText)
-        if(this.SHOWText === 'abcdefg'){
-          this.SHOW = true
-        } else {
-          this.SHOW = false
-          this.showGD = false
-          this.showAll = false
-          this.showList = []
-          // 页面展示时，清空热门信用卡数据，并重新请求
-          this.isLoading_hotCard = false
-          this.pageList = []
-          this.loadPageList();
-          this.word= '更多'
-          this.isLoading_hotBank = true
-          this.imgUrl= require('../../assets/gengduo@2x.png')
-          // 获取热门银行所需数据
-          getHotBankInfoList().then(data => {
-            if(data.result.code == 10000){
-              this.hotBanks = data.data;
-              // 第一次请求页面，给热门银行6个值
-              if(this.hotBanks.length > 6){
-                for(let i = 0; i < 6; i++){
-                  this.showList.push(this.hotBanks[i]);
-                }
-              }else{
-                this.showList = this.hotBanks;
-              }
-              this.isLoading_hotBank = false;
-            }else {
-              this.isLoading_hotBank = false;
-              // Toast({message:'正在加载中。。。',duration: 500});
-            }
-          }).catch(err=>{
-            console.log(err)
-            this.isLoading_hotBank = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          });
-          // this.isLoading_hotBank = true
-
-         
-          //加载主题精选时所需数据
-          getTopicSelect().then(data => {
-            if(data.result.code == 10000){
-              this.noviceCard = data.data[0];
-              this.bigQuota = data.data[1];
-              this.fastApproval = data.data[2];
-              this.politeCard = data.data[3];
-              this.isLoading_theme = false;
-            }else {
-              this.isLoading_theme = false;
-              // Toast({message:'正在加载中。。。',duration: 500});
-            }
-          }).catch(err => {
-            console.log(err);
-            this.isLoading_theme = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          })
-          //加载轮播图时所需数据
-          getBannerImg().then(data => {
-            if(data.result.code == 10000){
-              this.bannerData = data.data;
-              // console.log(this.bannerData)
-              this.isLoading_banner = false;
-            }else {
-              this.isLoading_banner = false;
-              // Toast({message:'正在加载中。。。',duration: 500});
-            }
-          }).catch(err => {
-            console.log(err);
-            this.isLoading_banner = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          })
-
-          //加载轮播文字时所需数据
-          getBannerTxt().then(data => {
-            if(data.result.code == 10000){
-              this.bannerDataTxt = data.data;
-              // console.log(this.bannerDataTxt)
-              this.isLoading_banner = false;
-            }else {
-              this.isLoading_banner = false;
-              // Toast({message:'正在加载中。。。',duration: 500});
-            }
-          }).catch(err => {
-            console.log(err);
-            this.isLoading_banner = false;
-            // Toast({message:'正在加载中。。。',duration: 500});
-          }) 
-        }
-      })   
-      // if(this.SHOWText == 'abcdefg'){
-      //   this.SHOW = true
-      // } else {
-      //   this.SHOW = false
-      //   this.showGD = false
-      //   this.showAll = false
-      //   this.showList = []
-      //   // 页面展示时，清空热门信用卡数据，并重新请求
-      //   this.isLoading_hotCard = false
-      //   this.pageList = []
-      //   this.loadPageList();
-      //   this.word= '更多'
-      //   this.isLoading_hotBank = true
-      //   this.imgUrl= require('../../assets/gengduo@2x.png')
-      //   // 获取热门银行所需数据
-      //   getHotBankInfoList().then(data => {
-      //     if(data.result.code == 10000){
-      //       this.hotBanks = data.data;
-      //       // 第一次请求页面，给热门银行6个值
-      //       if(this.hotBanks.length > 6){
-      //         for(let i = 0; i < 6; i++){
-      //           this.showList.push(this.hotBanks[i]);
-      //         }
-      //       }else{
-      //         this.showList = this.hotBanks;
-      //       }
-      //       this.isLoading_hotBank = false;
-      //     }else {
-      //       this.isLoading_hotBank = false;
-      //       // Toast({message:'正在加载中。。。',duration: 500});
-      //     }
-      //   }).catch(err=>{
-      //     console.log(err)
-      //     this.isLoading_hotBank = false;
-      //     // Toast({message:'正在加载中。。。',duration: 500});
-      //   });
-      //   // this.isLoading_hotBank = true  
-      //   //加载主题精选时所需数据
-      //   getTopicSelect().then(data => {
-      //     if(data.result.code == 10000){
-      //       this.noviceCard = data.data[0];
-      //       this.bigQuota = data.data[1];
-      //       this.fastApproval = data.data[2];
-      //       this.politeCard = data.data[3];
-      //       this.isLoading_theme = false;
-      //     }else {
-      //       this.isLoading_theme = false;
-      //       // Toast({message:'正在加载中。。。',duration: 500});
-      //     }
-      //   }).catch(err => {
-      //     console.log(err);
-      //     this.isLoading_theme = false;
-      //     // Toast({message:'正在加载中。。。',duration: 500});
-      //   })
-      //   //加载轮播图时所需数据
-      //   getBannerImg().then(data => {
-      //     if(data.result.code == 10000){
-      //       this.bannerData = data.data;
-      //       // console.log(this.bannerData)
-      //       this.isLoading_banner = false;
-      //     }else {
-      //       this.isLoading_banner = false;
-      //       // Toast({message:'正在加载中。。。',duration: 500});
-      //     }
-      //   }).catch(err => {
-      //     console.log(err);
-      //     this.isLoading_banner = false;
-      //     // Toast({message:'正在加载中。。。',duration: 500});
-      //   })
-
-      //   //加载轮播文字时所需数据
-      //   getBannerTxt().then(data => {
-      //     if(data.result.code == 10000){
-      //       this.bannerDataTxt = data.data;
-      //       // console.log(this.bannerDataTxt)
-      //       this.isLoading_banner = false;
-      //     }else {
-      //       this.isLoading_banner = false;
-      //       // Toast({message:'正在加载中。。。',duration: 500});
-      //     }
-      //   }).catch(err => {
-      //     console.log(err);
-      //     this.isLoading_banner = false;
-      //     // Toast({message:'正在加载中。。。',duration: 500});
-      //   }) 
-      // }
-    },  
+    }, 
     // 触底刷新
     onReachBottom() {
-        if(this.isLoading_hotCard){
-          this.loadPageList()
-          return false
-        }else{  
-          this.searchCondition.page = parseInt(this.searchCondition.page + 1);
-        }   
-      //查询数据
-        this.searchCondition.t = (new Date()).valueOf();  //获取当前时间戳
-        this.searchCondition.token = md5(md5((new Date()).valueOf() + '@kami2018')); 
-        // 获取热门信用卡的信息
-        getHotCard(this.searchCondition).then(data => {    
-          // console.log(data)  
-          if(data.result.code == 10000){
-            for(let j = 0; j< data.data.length; j++){
-              this.pageList.push(data.data[j]);
-              this.credittips.push(data.data[j].credittips)
-            }
-            // console.log('111',this.pageList)
-            // 为信用卡的tips赋值
-            for(let i=0;i<this.pageList.length;i++){
-              this.cardTips.push(this.credittips[i].split(','))
-              // this.cardTips.push(this.pageList.credittips.split(',')) 
-            }
-            this.isLoading_hotCard = false;
-            // console.log(this.credittips)
-            // console.log(this.cardTips)
-          }else if(data.result.code == 99996) {
-            this.bottomText = '没有更多了';
-            this.bottomDropText = '没有更多了';
-            this.ReachBotton=false
-          }
-          else if(data.result.code == 99999){
-            // this.loadPageList()
-          }
-        }).catch(err => {
-          console.log(err);
-         /* Toast({message:'正在加载中。。。',duration: 500});*/
-        });    
+        
     },   
   } 
 </script>
 
 <style lang='scss' scoped>
+
 .card {
   overflow: auto;
-  background: #fff;
+  background: #760A00;
   -webkit-overflow-scrolling: touch;
   padding: 0;
   margin-bottom: 100rpx;
   .active_fuchuang{
     position: fixed;
-    right: 0;
+    right: 20rpx;
     bottom: 15%;
     width: 176rpx;
     height: 186rpx;
@@ -1890,28 +1639,29 @@
   .kaijiang{
     z-index: 10;
     // max-width: 600rpx;
-    width: 600rpx;
-    height: 953rpx;
+    width: 750rpx;
+    height: 966rpx;
     position: fixed;
-    left: 75rpx;
-    top: 10%;
+    // left: 75rpx;
+    top: 24rpx;
     overflow: hidden;
     display: block;
     clear: both;
     text-align: center;
     .main_img{
       position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
+      width: 102%;
+      top: -12rpx;
+      left: -8rpx;
     }
+    
     .kaijiang_btn {
-      width: 200rpx;
-      height: 200rpx;
+      width: 256rpx;
+      height: 268rpx;
       position: absolute;
-      top: 395rpx;
+      top: 384rpx;
       // bottom: 0;
-      left: 200rpx;
+      left: 248rpx;
       // right: 0;
       z-index: 11;
       button{
@@ -1925,7 +1675,33 @@
         opacity: 0;
       }
       .kaijiang_button {
-        width: 172rpx;
+        // width: 160rpx;
+        // height: 165rpx;
+        width: 80%;
+      }
+    }
+    .kaijiang_title1{
+      position: absolute;
+      width: 350rpx;
+      height: 40rpx;
+      left: 202rpx;
+      top: 630rpx;
+      p{
+        color: #FCD514;
+        font-size: 21px;
+      }
+    }
+    .kaijiang_title2{
+      position: absolute;
+      width: 226rpx;
+      height: 51rpx;
+      left: 264rpx;
+      top: 694rpx;
+      p{
+        color: #FCD514;
+        font-family:PingFangSC-Semibold;
+        font-weight:500;
+        font-size: 26px;
       }
     }
     .quxiao{
@@ -1938,24 +1714,59 @@
   }
   .award{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 613rpx;
+    height: 971rpx;
     position: fixed;
-    left: 125rpx;
-    top: 10%;
+    left: 66rpx;
+    top: 41rpx;
     overflow: hidden;
     display: block;
     clear: both;
     text-align: center;
-    .award_edu{
+    .award_title{
       position: absolute;
-      width: 100%;
-      top: 24%;
-      // left: 40%;
+      width: 452rpx;
+      top: 570rpx;
+      left: 93rpx;
+      // right: 93rpx;
+      
+      p:nth-of-type(1){
+        font-size: 29px;
+        color: #FCD514;
+      }
+      p:nth-of-type(2){
+        margin-top: 10rpx;
+        font-size: 11px;
+        color: #FCD514;
+      }
+    }
+    .award_rule{
+      position: absolute;
+      top: 299rpx;
+      left: 506rpx;
+      width: 104rpx;
+      height: 61rpx;
+      img{
+        width: 100%;
+      }
+    }
+    .award_rule {
+      position: absolute;
+      top: 841rpx;
+      left: 96rpx;
+      width: 453rpx;
+      height: 86rpx;
       p{
-        font-size: 32px;
-        color: #000;
-        font-weight: 700;
+        display: block;
+        position: absolute;
+        top: 25rpx;
+        left: 0rpx;
+        width: 100%;
+        font-weight: 500;
+        height: 20rpx;
+        color: #9C0202;
+        font-size: 13px;
+        // font-weight: 700;
       }
     }
     .main_img{
@@ -1965,11 +1776,11 @@
       left: 0;
     }
     .award_btn {
-      width: 373rpx;
-      height: 77rpx;
+      width: 434rpx;
+      height: 76rpx;
       position: absolute;
-      top: 60%;
-      left: 63.5rpx;
+      top: 724rpx;
+      left: 98rpx;
       z-index: 11;
       .award_button{
         width: 100%;
@@ -1985,20 +1796,21 @@
   }
   .share{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 604rpx;
+    height: 1003rpx;
     position: fixed;
-    left: 125rpx;
-    top: 10%;
+    left: 79rpx;
+    top: 5rpx;
     overflow: hidden;
     display: block;
     clear: both;
     text-align: center; 
     .share_swiper{
-      position: relative;
-      font-size: 12px;
-      margin-top: 10rpx;
-      margin-left: 20rpx;
+      position: absolute;
+      font-size: 10px;
+      color: #F22216;
+      top: 80rpx;
+      left: 60rpx;
       width: 350rpx;
       height: 42rpx;
       z-index: 12;
@@ -2017,15 +1829,251 @@
       }
     }
     .to_share_right{
-      margin-top: 10rpx;
-      float: right;
+      position: absolute;
+      top: 62rpx;
+      right: 23rpx;
+      width: 106rpx;
+      height: 70rpx;
       z-index: 12;
-      width: 98rpx;
-      position: relative;
       .share_button{
         z-index: 12;
         position: absolute;
-        top: -10rpx;
+        top: 0;
+        right: 0; 
+        height: 60rpx;
+        width: 100rpx; 
+        opacity: 0;    
+        padding: 0;    
+      }
+      .share_right{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: -1rpx;
+      }
+    }
+    .share_userInfo{
+      position: absolute;
+      width: 350rpx;
+      height: 260rpx;
+      left: 140rpx;
+      top: 128rpx;
+      .user_img{
+        width: 126rpx;
+        height: 126rpx;
+        border-radius: 50%;
+        margin-bottom: 20rpx;
+      }
+      p{
+        font-size: 24px;
+        color: #F22216;
+        font-weight: 600;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      p:nth-of-type(1){
+        margin-top: -15rpx;
+        font-size: 24px;
+        color: #F22216;
+        margin-bottom: 8rpx;
+      }
+      p:nth-of-type(2){
+        // margin-top: -5rpx;
+        font-size: 24px;
+        color: #F22216;
+      }
+    }
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    .share_main{
+      text-align: center;
+      width: 400rpx;
+      height: 120rpx;
+      left: 76rpx;
+      top: 532rpx;
+      z-index: 12;
+      position: absolute;
+      p:nth-of-type(1){
+        font-size: 12px;
+        color: #9C0202;
+        .time{
+          box-sizing: border-box;
+          display: inline-block;
+          font-size: 11px;
+          width: 44rpx;
+          height: 44rpx;
+          line-height: 44rpx;
+          color: #D71206;
+          background-image: url(../../assets/active/timebg.png);
+          background-size: 44rpx;
+        }  
+      }
+      p:nth-of-type(2){
+        text-align: center;
+        padding-left: 36rpx;
+        margin-top: 20rpx; 
+        color: #9C0202;
+        font-size: 11px;
+      }
+      // .user_img{
+      //   border-radius: 50%;
+      //   width: 112rpx;
+      //   height: 112rpx;
+      //   margin: 30rpx 0 25rpx;
+      // }
+      // p:nth-of-type(2){
+      //   color: #333;
+      //   font-size: 11px;
+      //   .time{
+      //     padding: 5rpx 0;
+      //     box-sizing: border-box;
+      //     margin: 0rpx 10rpx;
+      //     display: inline-block;
+      //     width: 34rpx;
+      //     height: 34rpx;
+      //     color: #fff;
+      //     background-image: url(../../assets/active/3_1_timebg.png);
+      //     // background-size: 20rpx;
+      //   }
+      // }
+      // p:nth-of-type(3){
+      //   font-size: 11px;
+      //   margin-top: 10rpx;
+      //   color: #a9a9a9;
+        
+      // }
+    }
+    
+    .share_user{
+      position: absolute;
+      z-index: 8;
+      top: 645rpx;
+      left: 76rpx;
+      width: 452rpx;
+      height: 80rpx;
+      li:nth-of-type(1){
+        margin: 0; 
+      }
+      li:nth-of-type(5){
+        // margin: 0; 
+      }
+      li{
+        float: left;
+        margin-left: 12rpx;
+        width: 80rpx;
+        height: 80rpx;
+        img{
+          display: block;
+          width: 80rpx;
+          border-radius: 50%;
+        }
+        // span{
+        //   display: inline-block;
+        //   font-size: 11px;
+        //   color: #a9a9a9;
+        //   width: 66rpx;
+        //   overflow: hidden;
+        //   white-space: nowrap;
+        //   text-overflow: ellipsis;
+        // }
+      }
+    }
+    .share_btn {
+      width: 469rpx;
+      height: 101rpx;
+      position: absolute;
+      top: 757rpx;
+      left: 65rpx;
+      z-index: 11;
+      button{
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+      }
+      .share_button{     
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .share_tips{
+      position: absolute;
+      bottom: 50rpx;
+      left: 75rpx;
+      width: 450rpx;
+      height: 55rpx;
+      text-align: left;
+      p{
+        line-height: 1.5;
+        font-size: 11px;
+        color:#FCD514;
+      }
+    }
+    .quxiao{
+      position: absolute;
+      bottom: -8%;
+      left: 40%;
+      width: 20%;
+      height: 16%;
+    }
+  }
+  .complete{
+    z-index: 10;
+    width: 604rpx;
+    height: 1010rpx;
+    position: fixed;
+    left: 73rpx;
+    top: 4rpx;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    .share_swiper{
+      position: absolute;
+      font-size: 10px;
+      color: #F22216;
+      top: 80rpx;
+      left: 61rpx;
+      width: 350rpx;
+      height: 42rpx;
+      z-index: 12;
+      text-align: left;
+      float: left;    
+      swiper-item{
+        height: 42rpx;
+      }
+      img{
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: top;
+        width: 30rpx;
+        height: 30rpx;
+        margin-right: 8rpx;
+      }
+    }
+    .to_share_right{
+      position: absolute;
+      top: 62rpx;
+      right: 21rpx;
+      width: 106rpx;
+      height: 70rpx;
+      z-index: 12;
+      .share_button{
+        z-index: 12;
+        position: absolute;
+        top: 0;
         right: 0; 
         height: 60rpx;
         width: 100rpx; 
@@ -2041,130 +2089,175 @@
     }
     .share_main{
       text-align: center;
+      width: 400rpx;
+      height: 50rpx;
+      left: 108rpx;
+      top: 522rpx;
       z-index: 12;
-      position: relative;
+      position: absolute;
       p:nth-of-type(1){
-        font-size: 14px;
-        margin-top: 100rpx;
-        font-weight: 600;
-        color: #000;
-      }
-      .user_img{
-        border-radius: 50%;
-        width: 112rpx;
-        height: 112rpx;
-        margin: 30rpx 0 25rpx;
+        font-size: 12px;
+        color: #9C0202;
+        .time{
+          box-sizing: border-box;
+          display: inline-block;
+          font-size: 11px;
+          width: 44rpx;
+          height: 44rpx;
+          line-height: 44rpx;
+          color: #D71206;
+          background-image: url(../../assets/active/timebg.png);
+          background-size: 44rpx;
+        }  
       }
       p:nth-of-type(2){
-        color: #333;
+        margin-top: 20rpx;
+        color: #9C0202;
         font-size: 11px;
-        .time{
-          padding: 5rpx 0;
-          box-sizing: border-box;
-          margin: 0rpx 10rpx;
-          display: inline-block;
-          width: 34rpx;
-          height: 34rpx;
-          color: #fff;
-          background-image: url(../../assets/active/3_1_timebg.png);
-          // background-size: 20rpx;
-        }
       }
-      p:nth-of-type(3){
-        font-size: 11px;
-        margin-top: 10rpx;
-        color: #a9a9a9;
+      // .user_img{
+      //   border-radius: 50%;
+      //   width: 112rpx;
+      //   height: 112rpx;
+      //   margin: 30rpx 0 25rpx;
+      // }
+      // p:nth-of-type(2){
+      //   color: #333;
+      //   font-size: 11px;
+      //   .time{
+      //     padding: 5rpx 0;
+      //     box-sizing: border-box;
+      //     margin: 0rpx 10rpx;
+      //     display: inline-block;
+      //     width: 34rpx;
+      //     height: 34rpx;
+      //     color: #fff;
+      //     background-image: url(../../assets/active/3_1_timebg.png);
+      //     // background-size: 20rpx;
+      //   }
+      // }
+      // p:nth-of-type(3){
+      //   font-size: 11px;
+      //   margin-top: 10rpx;
+      //   color: #a9a9a9;
         
-      }
+      // }
     }
-    .main_img{
-      position: absolute;
-      width: 100%;
-      top: 0;
-      left: 0;
-    }
+    
     .share_user{
-      position: relative;
-      margin-top: 15rpx;
+      position: absolute;
+      top: 600rpx;
+      left: 86rpx;
+      width: 453rpx;
+      height: 80rpx;
       li:nth-of-type(1){
-        margin-left:30rpx; 
+        margin: 0; 
       }
       li:nth-of-type(5){
-        margin-right:30rpx; 
+        // margin: 0; 
       }
       li{
         float: left;
-        margin-left: 10rpx;
+        margin-left: 12rpx;
         width: 80rpx;
+        height: 80rpx;
         img{
           display: block;
+          width: 80rpx;
           border-radius: 50%;
         }
-        span{
-          display: inline-block;
-          font-size: 11px;
-          color: #a9a9a9;
-          width: 66rpx;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
+        // span{
+        //   display: inline-block;
+        //   font-size: 11px;
+        //   color: #a9a9a9;
+        //   width: 66rpx;
+        //   overflow: hidden;
+        //   white-space: nowrap;
+        //   text-overflow: ellipsis;
+        // }
       }
     }
-    .share_btn {
-      width: 373rpx;
-      height: 77rpx;
+    .complete_more{
       position: absolute;
-      top: 75%;
-      left: 63.5rpx;
-      z-index: 11;
+      top: 634rpx;
+      left: 86rpx;
+      width: 453rpx;
+      height: 146rpx;
+      p:nth-of-type(1){
+        display: block;
+        position: absolute;
+        top: 79rpx;
+        left: 0rpx;
+        width: 100%;
+        font-weight: 500;
+        height: 20rpx;
+        color: #9C0202;
+        font-size: 13px;
+        // font-weight: 700;
+      }
+      p:nth-of-type(2){
+        font-weight: 700;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 118rpx;
+        // left: 147rpx;
+        font-size: 14px;
+        color:#FDCD00;
+      }
+    }
+    .complete_btn{
+      position: absolute;
+      width: 472rpx;
+      height: 101rpx;
+      top: 824rpx;
+      left: 77rpx;
       button{
         padding: 0;
-        width: 100%;
+        width: 220rpx;
         height: 100%;
         position: absolute;
         top: 0;
-        left: 0;
+        right: 0;
         opacity: 0;
       }
-      .share_button{
-        
-        width: 100%;
-        height: 100%;
+      .complete_button{
+        width: 220rpx;
+        margin-left: 32rpx;
+      }
+      .totixian_button{
+        width: 220rpx;
+       
       }
     }
-    .quxiao{
-      position: absolute;
-      bottom: -8%;
-      left: 40%;
-      width: 20%;
-      height: 16%;
-    }
-  }
-  .complete{
-    z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
-    position: fixed;
-    left: 125rpx;
-    top: 10%;
-    overflow: hidden;
-    display: block;
-    clear: both;
-    text-align: center;
-    .main_img{
+    .complete_title{
       position: absolute;
       width: 100%;
-      top: 0;
-      left: 0;
-    }
-    .complete_title{
-      position: relative;
-      margin-top: 54rpx;
-      p{
-        color: #F3392A;
-        font-weight: 700;
-        font-size: 20px;
+      top: 172rpx;
+      // left: 65rpx;
+      p:nth-of-type(1){
+        color: #F22216;
+        font-weight: 600;
+        padding-left: 40rpx;
+        font-size: 22px;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      p:nth-of-type(2){
+        margin-top: 14rpx;
+        color: #F22216;
+        font-weight: 400;
+        font-size: 11px;
+        span{
+          display: inline-block;
+          margin-bottom: -4rpx;
+          margin-left: -4rpx;
+          // letter-spacing:-2rpx
+        }
+      }
+      img{
+        z-index: 10;
+        width: 334rpx;
+        margin-top: 14rpx;
       }
     }
     .complete_main{
@@ -2224,57 +2317,49 @@
         }
       }
     }
-    .complete_btn {
-      width: 373rpx;
-      height: 77rpx;
-      position: absolute;
-      top: 62%;
-      left: 63.5rpx;
-      z-index: 11;
-      button{
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-      }
-      .complete_button{
-        width: 100%;
-        height: 100%;
-      }
-    }
+    
     .complete_tips{
-      position: relative;
-      margin-top: 226rpx;
-      color: gold;
-      font-size: 13px;
-      .complete_left{
-        position: absolute;
-        left: 0;
-        bottom: -60rpx;
-        height: 80rpx;
-        width: 120rpx;
-        z-index: 9;
-        opacity: 0;
-      }
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      top: 928rpx;
+      font-weight: 600;
+      color: #9C0202;
+      font-size: 15px;
+      // .complete_left{
+      //   position: absolute;
+      //   left: 0;
+      //   bottom: -60rpx;
+      //   height: 80rpx;
+      //   width: 120rpx;
+      //   z-index: 9;
+      //   opacity: 0;
+      // }
       .complete_right{
         position: absolute;
-        right: 0;
-        bottom: -60rpx;
+        left: 440rpx;
+        bottom: -77rpx;
         height: 80rpx;
-        width: 120rpx;
+        width: 160rpx;
         z-index: 9;
         opacity: 0;
       }
       span:nth-of-type(1){
-        float: left;
-        margin-left: 40rpx;
+        position: absolute;
+        display: inline-block;
+        left: 103rpx;
+        bottom: -67rpx;
+        height: 40rpx;
+        width: 120rpx;
+        z-index: 9;
       }
       span:nth-of-type(2){
-        float: right;
-        margin-right: 40rpx;
+        position: absolute;
+        display: inline-block;
+        left: 440rpx;
+        bottom: -67rpx;
+        height: 40rpx;
+        width: 160rpx;
       }
     }
     .quxiao{
@@ -2287,11 +2372,11 @@
   }
   .helphe{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 614rpx;
+    height: 1076rpx;
     position: fixed;
-    left: 125rpx;
-    top: 10%;
+    left: 81rpx;
+    top: 17rpx;
     overflow: hidden;
     display: block;
     clear: both;
@@ -2302,48 +2387,93 @@
       top: 0;
       left: 0;
     }
-    .helphe_title{
-      margin-top: 80rpx;
-      position: relative;
+    .helphe_title{  
+      position: absolute;
       z-index: 12;
-      font-size: 28px;
-      font-weight: 700;
-      color: #F3392A;
+      width: 428rpx;
+      height: 56rpx;   
+      top: 113rpx;
+      left: 83rpx; 
+      img{
+        width: 100%;
+      }
+      // position: absolute;
+      // width: 428rpx;
+      // height: 56rpx;
+      // top: 113rpx;
+      // left: 83rpx;
+      // z-index: 12;
+      // font-size: 28px;
+      // font-weight: 700;
+      // color: #F3392A;
     }
     .helphe_user{
-      position: relative;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      height: 168rpx;
+      top: 209rpx;
+      // left: 176rpx;
       z-index: 12;
-      img{
-        width: 100rpx;
-        height: 100rpx;
-        margin-top: 50rpx;
+      .helphe_userimg{
+        width: 118rpx;
+        height: 118rpx;
         border-radius: 50%;
+        margin-bottom: 10rpx;
       }
-      p{
-        color: #333;
-        font-size: 16px;
-        margin-top: 20rpx;
-        span{
-          font-weight: bold;
-        }
+      .helphe_username{
+        position: absolute;
+        top: 124rpx;
+        left: 196rpx;
+        width: 212rpx;
+        height: 45rpx;
+        line-height: 45rpx;
+        z-index: 14;
+        color:#FFFFFF;
+        font-size: 11px;
+        background-image: url(../../assets/active/help_username.png);
+        background-size: 212rpx 45rpx;
+        // align-items: center;
+        // margin-bottom: 20rpx;
+      }
+      p:nth-of-type(2){
+        position: absolute;
+        width: 100%;
+        top: 172rpx;
+        // left: 176rpx;
+        font-weight: 600;
+        color: #F22216;
+        font-size: 15px;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      p:nth-of-type(3){
+        position: absolute;
+        width: 100%;
+        top: 206rpx;
+        // left: 176rpx;
+        font-weight: 600;
+        color: #F22216;
+        font-size: 15px;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
       }
     }
     .helphe_btn {
-      width: 373rpx;
+      width: 468rpx;
+      height: 216rpx;
       position: absolute;
-      top: 450rpx;
-      left: 63.5rpx;
+      top: 678rpx;
+      left: 61rpx;
       z-index: 11;
       .helphe_button1 {
-        width: 373rpx;
+        width: 100%;
       }
       .helphe_button2 {
         margin-top: 16rpx;
-        width: 373rpx;
+        width: 100%;
       }
       .helphe_btn1{
         width: 100%;
-        height: 46%;
+        height: 100rpx;
         padding: 0;
         position: absolute;
         top: 0;
@@ -2352,7 +2482,7 @@
       }
       .helphe_btn2{
         width: 100%;
-        height: 46%;
+        height: 100rpx;
         padding: 0;
         position: absolute;
         bottom: 0;
@@ -2370,38 +2500,68 @@
   }
   .success{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 614rpx;
+    height: 1076rpx;
     position: fixed;
-    left: 125rpx;
-    top: 10%;
+    left: 81rpx;
+    top: 17rpx;
     overflow: hidden;
     display: block;
     clear: both;
     text-align: center;
-    // .award_edu{
-    //   position: absolute;
-    //   width: 100%;
-    //   top: 24%;
-    //   // left: 40%;
-    //   p{
-    //     font-size: 32px;
-    //     color: #000;
-    //     font-weight: 700;
-    //   }
-    // }
     .main_img{
       position: absolute;
+      width: 614rpx;
+      // height: 1334rpx;
+      top: 0rpx;
+      left: 0rpx;
+      // z-index: 998;
+    }
+    .success_title{
+      position: absolute;
+      top: 246rpx;
+      left: 103rpx;
+      width: 400rpx;
+      height: 76rpx;
+      font-weight: 700;
+      p{
+        font-size: 36px;
+        font-weight: 700;
+        color: #F22216;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      
+    }
+    .success_tips{
+      position: absolute;
       width: 100%;
-      top: 0;
-      left: 0;
+      height: 120rpx;
+      // left: 60rpx;
+      text-align: center;
+      top: 350rpx;    
+      img{
+        position: absolute;
+        width: 443rpx;
+        // height: 1334rpx;
+        top: -0rpx;
+        left: 84rpx;
+      }
+      p{
+        margin-top: 20rpx;
+        position: absolute;
+        font-weight: 600;
+        width: 100%;
+        font-size: 15px;
+        color:#F22216;
+      }
+      // background-size: 1976rpx;
     }
     .success_btn {
-      width: 373rpx;
-      height: 77rpx;
+      width: 468rpx;
+      height: 100rpx;
       position: absolute;
-      top: 62%;
-      left: 63.5rpx;
+      top: 777rpx;
+      left: 60rpx;
       z-index: 11;
       button{
         width: 100%;
@@ -2411,6 +2571,10 @@
         top: 0;
         left: 0;
         opacity: 0;
+      }
+      img{
+        width: 468rpx;
+        height: 100rpx;
       }
     }
     .quxiao{
@@ -2423,11 +2587,11 @@
   }
   .tixian{
     z-index: 10;
-    width: 600rpx;
-    height: 951rpx;
+    width: 616rpx;
+    height: 1030rpx;
     position: fixed;
-    left: 75rpx;
-    top: 10%;
+    left: 67rpx;
+    top: 13rpx;
     overflow: hidden;
     display: block;
     clear: both;
@@ -2438,77 +2602,144 @@
       top: 0;
       left: 0;
     }
+    .share_swiper{
+      position: absolute;
+      font-size: 10px;
+      color: #F22216;
+      top: 80rpx;
+      left: 61rpx;
+      width: 350rpx;
+      height: 42rpx;
+      z-index: 12;
+      text-align: left;
+      float: left;    
+      swiper-item{
+        height: 42rpx;
+      }
+      img{
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: top;
+        width: 30rpx;
+        height: 30rpx;
+        margin-right: 8rpx;
+      }
+    }
+    .to_share_right{
+      position: absolute;
+      top: 62rpx;
+      right: 23rpx;
+      width: 106rpx;
+      height: 70rpx;
+      z-index: 12;
+      .share_button{
+        z-index: 12;
+        position: absolute;
+        top: 0;
+        right: 0; 
+        height: 60rpx;
+        width: 100rpx; 
+        opacity: 0;    
+        padding: 0;    
+      }
+      .share_right{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: -1rpx;
+      }
+    }
     .tixian_title{
-      position: relative;
-      padding-top: 80rpx;
+      position: absolute;
+      top: 154rpx;
+      left: 19rpx;
+      width: 100%;
+      text-align: center;
       z-index: 9;
       p:nth-of-type(1){
-        font-size: 12px;
+        font-size: 28px;
+        line-height: 57rpx;
+        font-family:PingFangSC-Semibold;
+        color:rgba(242,34,22,1);
         font-weight: 600;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
       }
       p:nth-of-type(2){
-        margin-top: 20rpx;
-        font-size: 26px;
+        margin-top: 14rpx;
+        font-size: 35px;
         font-weight: 600;
-        color: #F3392A;
-        margin-bottom: 30rpx;
+        color: #F22216;
+        margin-bottom: 6rpx;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      img{
+        width: 300rpx;
       }
     }
     .tixian_input{
-      position: relative;
+      position: absolute;
+      top: 553rpx;
+      left: 97rpx;
       z-index: 9;
+      width: 426rpx;
       .tixian_input_code{
         position: relative;
         .getcode{
           position: absolute;
           z-index: 9;
+          line-height: 100rpx;
           height: 100rpx;
-          right: 66rpx;
-          bottom: -42rpx;
-          color: #7370FF;
-          font-size: 12px;
+          right: 22rpx;
+          bottom: -11rpx;
+          color: #666;
+          font-size: 13px;
         }
       }
       input{
         text-align: left;
-        width: 80%;
-        height: 80rpx;
+        width: 100%;
+        height: 77rpx;
         line-height: 80rpx;
+        padding-left: 20rpx;
+        box-sizing: border-box;
         font-size: 14px;
-        color: #666;
-        padding-left: 10rpx;
+        background: #fff;
+        color: #999;
+        // padding-left: 10rpx;
         border-radius: 5px;
-        border: 2px solid #ccc;
+        // border: 2px solid #ccc;
         margin-top: 20rpx;
-        margin-left: 10%;
+        // margin-left: 10%;
       }
     }
     .tixian_tips{
-      width: 500rpx;    
+      width: 440rpx;    
       text-align: center;
       position: absolute;
       z-index: 9;
       box-sizing: border-box;
       // height: 200rpx;
-      bottom: 230rpx;
-      left: 64rpx;
-      padding: 0 40rpx;
-      // span{
-      //   font-size: 10px;
-      //   color: gold;
-      // }
-      p{
-        font-size: 14px;
+      top: 886rpx;
+      left: 91rpx;
+      // padding: 0 40rpx;
+      p:nth-of-type(1){
+        font-size: 10px;
         line-height: 1.8;
-        color: gold;
+        color: #E9C011;
+      }
+      p:nth-of-type(2){
+        font-size: 12px;
+        line-height: 1.8;
+        font-weight: 700;
+        color: #E9C011;
       }
     }
     .tixian_btn {
-      width: 447rpx;
-      height: 92rpx;
+      width: 297rpx;
+      height: 89rpx;
       position: absolute;
-      top: 49%;
-      left: 85.5rpx;
+      top: 774rpx;
+      left: 164rpx;
       z-index: 11;
       button{
         padding: 0;
@@ -2534,11 +2765,11 @@
   }
   .phone{
     z-index: 10;
-    width: 500rpx;
-    height: 794rpx;
+    width: 616rpx;
+    height: 1030rpx;
     position: fixed;
-    left: 125rpx;
-    top: 10%;
+    left: 67rpx;
+    top: 13rpx;
     overflow: hidden;
     display: block;
     clear: both;
@@ -2549,18 +2780,91 @@
       top: 0;
       left: 0;
     }
-    .phone_num{
-      position: relative;
-      margin-top: 40rpx;
+     .share_swiper{
+      position: absolute;
+      font-size: 10px;
+      color: #F22216;
+      top: 80rpx;
+      left: 61rpx;
+      width: 350rpx;
+      height: 42rpx;
+      z-index: 12;
+      text-align: left;
+      float: left;    
+      swiper-item{
+        height: 42rpx;
+      }
+      img{
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: top;
+        width: 30rpx;
+        height: 30rpx;
+        margin-right: 8rpx;
+      }
+    }
+    .to_share_right{
+      position: absolute;
+      top: 62rpx;
+      right: 23rpx;
+      width: 106rpx;
+      height: 70rpx;
+      z-index: 12;
+      .share_button{
+        z-index: 12;
+        position: absolute;
+        top: 0;
+        right: 0; 
+        height: 60rpx;
+        width: 100rpx; 
+        opacity: 0;    
+        padding: 0;    
+      }
+      .share_right{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: -1rpx;
+      }
+    }
+    .tixian_title{
+      position: absolute;
+      top: 163rpx;
+      left: 179rpx;
+      z-index: 9;
       p:nth-of-type(1){
-        font-size: 12px;
-        color: #888;
+        font-size: 29px;
+        color:#F22216;
+        font-weight: 600;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
       }
       p:nth-of-type(2){
         margin-top: 20rpx;
-        font-size: 20px;
-        color: #000;
+        font-size: 35px;
         font-weight: 600;
+        color: #F22216;
+        margin-bottom: 30rpx;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+    }
+    .phone_num{
+      position: absolute;
+      width: 190rpx;
+      left: 213rpx;
+      top: 525rpx;
+      img{
+        width: 139rpx;
+        height: 106rpx;
+      }
+      p:nth-of-type(1){
+        margin-top: 16rpx;
+        font-size: 15px;
+        color: #FFCE00;
+      }
+      p:nth-of-type(2){ 
+        font-size: 15px;
+        margin-top: 4rpx;
+        color: #FFCE00;
       }
     }
     .phone_title{
@@ -2579,32 +2883,34 @@
       }
     }
    
-    .phone_tips{
-       width: 500rpx;
-      
+    .tixian_tips{
+      width: 440rpx;    
       text-align: center;
       position: absolute;
       z-index: 9;
       box-sizing: border-box;
       // height: 200rpx;
-      bottom: 188rpx;
-      padding: 0 40rpx;
-      // span{
-      //   font-size: 10px;
-      //   color: gold;
-      // }
-      p{
-        font-size: 14px;
+      top: 886rpx;
+      left: 91rpx;
+      // padding: 0 40rpx;
+      p:nth-of-type(1){
+        font-size: 10px;
         line-height: 1.8;
-        color: gold;
+        color: #E9C011;
+      }
+      p:nth-of-type(2){
+        font-size: 12px;
+        line-height: 1.8;
+        color: #E9C011;
+        font-weight: 700;
       }
     }
     .phone_btn {
-      width: 373rpx;
-      height: 77rpx;
+      width: 297rpx;
+      height: 89rpx;
       position: absolute;
-      top: 49%;
-      left: 63.5rpx;
+      top: 750rpx;
+      left: 164rpx;
       z-index: 11;
       button{
         padding: 0;
@@ -2620,6 +2926,98 @@
         height: 100%;
       }
     }
+    .quxiao{
+      position: absolute;
+      bottom: 0;
+      left: 40%;
+      width: 20%;
+      height: 16%;
+    }
+  }
+  .jiakefu{
+    z-index: 10;
+    width: 610rpx;
+    height: 1009rpx;
+    position: fixed;
+    left: 69rpx;
+    top: 4rpx;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    .jiakefu_title{
+      position: absolute;
+      width: 314rpx;
+      height: 29rpx;
+      font-size: 14px;
+      color: #F22216;
+      top: 100rpx;
+      left: 144rpx;
+      font-weight: 600;
+      font-family: PingFangSC-Semibold;
+    }
+    .jiakefu_erweima{
+      position: absolute;
+      top: 145rpx;
+      left: 144rpx;
+      width: 336rpx;
+      height: 318rpx;
+      img{
+        display: block;
+        width: 100%;
+      }
+    }
+    .jiakefu_methods{
+      position: absolute;
+      top: 692rpx;
+      left: 226rpx;
+      width: 152rpx;
+      height: 35rpx;
+      p {
+        font-size: 18px;
+        color:#FFFFFF;
+        font-weight: 600;
+      }
+    }
+    .jiakefu_tips{
+      position: absolute;
+      top: 763rpx;
+      left: 110rpx;
+      width: 405rpx;
+      height: 67rpx;
+      text-align: left;
+      li{
+        margin-bottom: 20rpx;
+        img{
+          float: left;
+          width: 19rpx;
+          display: inline-block;
+          height: 19rpx;
+          vertical-align: middle;
+          margin-top: 5rpx;
+          margin-right: 4rpx;
+        }
+      }
+      p:nth-of-type(1){
+        font-size: 12px;
+        width: 400rpx;
+        margin-left: 26rpx;
+        color: #fefefe;
+        line-height: 1.5;
+      }
+      p:nth-of-type(2){
+        font-size: 12px;
+        color: #fefefe;
+        line-height: 1.5;
+      }
+    }
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    
     .quxiao{
       position: absolute;
       bottom: 0;
@@ -2822,17 +3220,7 @@
       position: relative;
       
     }
-    // .lamititleswiper{
-    //   clear: both;
-    //   overflow: hidden;
-    //   display: block;
-    //   .kamiTtile {
-    //     float: left;
-    //   }
-    //   .swiperwrap {
-    //     float: right;
-    //   }
-    // }
+   
 
     .todayTitle{
       text-align: center;
@@ -3016,7 +3404,7 @@
     transform: scale(0.5);
 }
 .loading{
-    margin-bottom: 100rpx;
+    margin-bottom: 200rpx;
     display: flex;
     justify-content: center;
     img{
@@ -3050,6 +3438,82 @@
 }
 .cardraiders{
   background: #F6F6F6;
+  // padding-bottom: 100rpx;
+  .funList{
+    background: #fff;
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 40rpx 60rpx 40rpx 0 ;
+    text-align: center;
+    color: #999;
+    margin:  0 0 0rpx 0;
+    div{
+      width: 100%;
+      
+    } 
+    img{
+      width: 100rpx;
+      height: 100rpx;
+      margin-bottom: 16rpx;
+    }    
+    .funListMiddle{
+      position: relative;
+      .hotGif {
+        width: 74rpx;
+        height: 48rpx;
+        margin: 0;
+        position: absolute;
+        top: -10rpx;
+        right: 4rpx;
+      }
+    } 
+  }
+  .hotBanks_chaxun{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin-left: 2.5%;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+    height: 200rpx;
+    // line-height: 160rpx;
+    box-sizing: border-box;
+    padding: 30rpx 0;
+    // margin-left: 20rpx;
+    .funListMiddle{
+      flex: 1;
+      width: 20%;
+      justify-content: space-between;
+      text-align: center;
+      img{
+        width: 100rpx;
+        height: 100rpx;
+      }
+      p{
+        widows: 100rpx;
+        height: 40rpx;
+        line-height: 40rpx;
+      }
+    }
+  }
+  .hotBanks_header{
+      display: flex;
+      justify-content: space-between;
+      height: 110rpx;
+      line-height: 110rpx;
+      padding: 0 30rpx;
+      .theme_p{
+        /*font-weight bold*/
+      } 
+      .leftBorder{
+        display: inline-block;
+        position: relative;
+        top: 4rpx;
+        height: 30rpx;
+        border-left: 6rpx solid #7370FF;
+        margin-right: 20rpx;
+      }
+    }  
   .header{
     text-align: center;
     padding: 20rpx;
@@ -3069,7 +3533,7 @@
       padding: 50rpx;
       background: #fff;
       .content_left{
-        width: 60%;
+        width: 100%;
         p:nth-of-type(1){
           color: #363636;
           font-size: 16px;
@@ -3094,7 +3558,8 @@
         }
           
         span:nth-of-type(2){
-            margin-left: 100rpx;
+          float: right;
+            margin-right: 30rpx;
           /*font-family pingFangSC-Medium*/
         }
           
@@ -3117,7 +3582,27 @@
   bottom: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: #760A00 ;
   z-index: 8;
+  .toquxiao{
+    position: absolute;
+    top: 1015rpx;
+    left: 326rpx;
+    width: 100rpx;
+    height: 100rpx;
+    opacity: 0;
+    z-index: 16;
+  }
+  img{
+    position: absolute;
+    top: 1040rpx;
+    left: 351rpx;
+    width: 48rpx;
+    height: 48rpx;
+  }
+}
+#zhanwei{
+  width: 750rpx;
+  height: 1334rpx;
 }
 </style>

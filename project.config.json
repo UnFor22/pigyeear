@@ -5,12 +5,13 @@
 		"es6": false,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx73ee2d2406a9d30a",
-	"projectname": "xinyongka-wx",
+	"appid": "wxdb00808a0a0e5cea",
+	"projectname": "pigyear",
 	"condition": {
 		"search": {
 			"current": -1,

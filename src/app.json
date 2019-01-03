@@ -1,27 +1,16 @@
 {
   "pages": [
+    
     "pages/index/main",
-    "pages/hotDetails/main",
-    "pages/onBehalf/main",
     "pages/link/main",
-    "pages/noviceCard/main",
-    "pages/largemounte/main",
-    "pages/fastapproval/main",
-    "pages/progresscheck/main",
-    "pages/activation/main",
-    "pages/cardraiders/main",
-    "pages/cardraidersdetails/main",
-    "pages/filtercard/main",
-    "pages/politecard/main",
     "pages/downloadApp/main",
-    "pages/jiakefu/main",
     "pages/zhulixiangqing/main",
     "pages/activeshuoming/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#7370FF",
-    "navigationBarTitleText": "大神玩卡",
+    "navigationBarBackgroundColor": "#ff4a2a",
+    "navigationBarTitleText": "猪年接龙",
     "navigationBarTextStyle": "#fff",
     "onReachBottomDistance": 50
   }

@@ -160,89 +160,15 @@ fly.interceptors.response.use(
 // export const loginAPI = params => {
 //     return fly.post(`${baseURL}/rest/api/v1/loginByWXApplet/wxapplet`, {code: params}).then(res => res.data);
 // };
-//热门银行
-export const getHotBankInfoList = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/gethotbankinfolist`,  {params: {}}).then(res => res.data);
-};
-//主题精选
-export const getTopicSelect = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/TopicSelect`, {params: {}}).then(res => res.data);
-  };
-  
-  //轮播图
-  export const getBannerImg = params => {
-    return fly.post(`${baseURL}/api.php/lbtimage/index?mid=11`).then(res => res.data);
-  };
-  
-  //轮播文字
-  export const getBannerTxt = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/KamiNews`).then(res => res.data);
-  };
-  
-  
-  //热门信用卡
-  export const getHotCard = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/HotCredit?t=${params.t}&page=${params.page}&token=${params.token}`).then(res => res.data);
-  };
-  
-  
-  //热门银行的所有信用卡详情getHotBankInfoList
-  export const getHotBankInfoListDetails = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/GetCreditCardDetails?bankid=${params.bankid}&t=${params.t}&page=${params.page}&token=${params.token}`).then(res => res.data);
-  };
-  
-  //筛选银行
-  export const getFilterHotBank = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/FilterCredit?bid=${params.bid}&yp=${params.yp}&level=${params.level}&type=${params.type}&page=${params.page}&token=${params.token}`).then(res => res.data);
-  };
-  
-  //贷款筛选
-  export const getFilterLoan = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/ShowLoanInfo?minm=${params.minm}&maxm=${params.maxm}&mind=${params.mind}&maxd=${params.maxd}&t=${params.t}&page=${params.page}&token=${params.token}`).then(res => res.data);
-  };
-  
-  //进度查询
-  export const getProgress = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/Proact?type=1`).then(res => res.data);
-  };
-  
-  //激活查询
-  export const getActivation = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/Proact?type=2`).then(res => res.data);
-  };
-  
-  //代还查询
-  export const getOnBehalf = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/Repayment?page=${params.page}`).then(res => res.data);
-  };
-  
-  //第三方跳转统计
-  export const registerHref = params => {
-      return fly.post(`${baseURL}/api.php/CreditPage/sendCreditStatics`, Qs.stringify(params)).then(res => res.data);
-  };
-  
-  //记录用户操作接口
-  export const userOperation = params => {
-      return fly.post(`${baseURL}/api.php/user/userOperation`, Qs.stringify(params)).then(res => res.data);
-  };
-  
-  
-  export const getApplyOn = params => {
-    return fly.post(`${baseURL}/api.php/CreditPage/Repayment?page=1`).then(res => res.data);
-  };
-  //统计立即购买creditid&bankid
-  export const postHotdetailsNum = params => {
-      /*console.log(params);*/
-    return fly.post(`${baseURL}/api.php/CreditPage/GetCreditStatics?creditid=${params.creditid}&bankid=${params.bankid}`).then(res => res.data);
-  };
+
   //统计立即购买creditid&bankid
   export const getContent = params => {
     /*console.log(params);*/
-    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?test=2`).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/CreditPage/getcontent?test=4`).then(res => res.data);
   };
-  //统计立即购买creditid&bankid
+  // 获取用户openid
   export const getUserOpenid = params => {
-    return fly.post(`${baseURL}/api.php/msg/getwxcode?code=${params}`).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/msg/getwxcode_pigyear?code=${params}`).then(res => res.data);
   };
 
   // 点击 开 激活任务
@@ -250,15 +176,9 @@ export const getTopicSelect = params => {
     // console.log('点击开激活任务参数',params)
     return fly.post(`${baseURL}/api.php/userwx/starttask`,  Qs.stringify(params)).then(res => res.data);
   };
-  // function urlencode (str) {  
-  //   str = (str + '').toString();   
-  //   return encodeURIComponent(str).replace(/!/g, '%21').replace(/'/g, '%27').replace(/\(/g, '%28').  
-  //   replace(/\)/g, '%29').replace(/\*/g, '%2A').replace(/%20/g, '+');  
-  // } 
   // 小程序用户信息上传
-  export const postUserInfo = params => {
-    
-    console.log('上传信息参数',params)
+  export const postUserInfo = params => {  
+    // console.log('上传信息参数',params)
     return fly.post(`${baseURL}/api.php/userwx/savewxuserinfo`, Qs.stringify(params)).then(res => res.data);
   };  
   // 获取活动进度，状态
@@ -279,7 +199,7 @@ export const getTopicSelect = params => {
   // 获取验证码
   export const getCode = params => {
     // console.log('获取任务进度参数',params)
-    return fly.post(`${baseURL}/api.php/userwx/getwxsms`, Qs.stringify(params)).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/userwx/getwxsms_pigyear`, Qs.stringify(params)).then(res => res.data);
   };
   // 绑定手机
   export const bandPhone = params => {
@@ -290,6 +210,11 @@ export const getTopicSelect = params => {
   export const getMore = params => {
     // console.log('获取任务进度参数',params)
     return fly.post(`${baseURL}/api.php/userwx/getmorefriend`, Qs.stringify(params)).then(res => res.data);
+  };
+  // 获取用户二维码
+  export const getQRcode = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`https://main.pcuion.com/api.php/userwx/create_qrcode_pigyear`, Qs.stringify(params)).then(res => res.data);
   };
   // function urlencode (str) {  
   //   str = (str + '').toString();   

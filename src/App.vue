@@ -16,6 +16,14 @@ export default {
   //     path: `/pages/hotDetails/index`
   //   }
   // },
+  // previewImage: function (e) {  
+  //       console.log(e)
+	// 	var current=e.target.dataset.src;
+	// 	wx.previewImage({
+	// 	  	current: current, // 当前显示图片的http链接
+	// 	  	// urls: this.data.imgalist // 需要预览的图片http链接列表
+	// 	})
+	// },
 }
 </script>
 

@@ -28,13 +28,13 @@
             pagePath: "/pages/index/main",
             iconPath: "/static/bankaNoactive.png",
             selectedIconPath: "/static/bankaActive.png",
-            text: "猪年接龙"
+            text: "养卡攻略"
           },
           {
-            pagePath: "/pages/downloadApp/main",
+            pagePath: "/pages/wanka/main",
             iconPath: "/static/shoukuanweidianji@3x.png",
             selectedIconPath: "/static/shoukuan@3x.png",
-            text: "更多收益"
+            text: "玩卡"
           },       
         ],
       }

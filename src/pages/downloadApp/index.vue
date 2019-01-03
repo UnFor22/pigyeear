@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
-    <img class="logo" src="../../assets/zhanghushouyi.jpg" mode="widthFix" alt="">
-    <div class="download" @click="tokefu('下载APP','http://app.mi.com/details?id=com.assistant.credit&ref=search')">
+    <img class="logo" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/invit.jpg" mode="widthFix" alt="">
+    <div class="download" @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')">
       <img class="down" src="../../assets/zhanghushouyi_btn.png" mode="widthFix" alt="">
     </div>
     <vue-tab-bar v-if='!SHOW'
@@ -30,7 +30,7 @@ import vueTabBar from '../../components/tabBar'
     //页面设置转发功能
     onShareAppMessage: function (res) {
       return {
-        title: `轻轻松松下了张5万的白金卡，你也来试试？
+        title: `轻轻松松下了张5万的白金，你也来试试？
 `,
         imageUrl: 'http://download.pcuion.com/app2_0/lijiban.png',
         path: '/pages/index/index'

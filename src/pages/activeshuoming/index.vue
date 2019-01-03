@@ -5,18 +5,18 @@
         <p>活动说明</p>
       </div>
       <div class="time"> 
-        <span>活动时间：</span>
-        <span>2018.12.15 - 2018.12.31</span>
+        <span>活动截止时间：</span>
+        <span>{{Year}}{{Month}}{{Day}}</span>
       </div> <br>
       <div class="main">
-        <p>1、抢得红包金币后，需分享5名好友助力拆开，5名好友助力后即可兑换提现~</p>
+        <p>1、抢得红包金币后，需分享5名好友点击拆开，5名好友接龙后即可提现~</p>
         <br>
-        <p>2、当助力人数超过5人后，每增加1位好友助力可随机获得1-10金币，自动到账，好友多多，金币多多。</p> <br>
-        <p>3、活动期间内，可持续分享助力，账户收益金币可累加，助力人不可重复。</p> <br>
-        <p>4、如遇参与人数高峰，提现红包发放可能会延迟（72小时到账），详情咨询客服。</p> <br>
-        <p>5、活动页面可随时关闭并正常使用小程序内其他功能，点击浮窗可随时观看获利情况。</p>
-      </div>
-      
+        <p>2、当接龙人数超过5人后，每增加1位好友可随机获得5-60金币，自动到账，好友越多，金币越多，可随时提现。</p> <br>
+        <p>3、活动期间内，可持续分享，账户金额可累加，接龙好友不可重复。</p> <br>
+        <p>4、提现红包发放72小时内到账，如遇参与人数过多或假期，可能会延迟，详情咨询客服。</p> <br>
+        <p>5、活动页面可随时关闭，点击浮动图标可查看账户金额。</p> 
+        <p>6、由于元旦假期间人数过多，请未提现成功好友再次添加小秘微信进行提现。</p>
+      </div> 
     </div>
   </div>
 </template>
@@ -24,7 +24,41 @@
 <script>
 import {getTaskInfo,getMore} from '../../requestAPI/requestAPI';
   export default {
-    
+    data(){
+      return {
+        time: '',
+        Year: '',
+        Month: '',
+        Day: ''
+      }
+      
+    },
+    onLoad(){
+      let that = this
+      wx.getStorage({
+        key:'ENDTIME',
+        success:function(res){
+          // console.log(res)
+          if(res.data == ''||res.data == null ||res.data == {} ){
+            // console.log('没找到')
+            // that.Year ='2018'
+            // that.Month = '12'
+            // that.Day = '31'
+            that.time = 1548950399
+          } else {
+            that.time = res.data.time      
+          }
+          let date = parseInt(that.time *1000) 
+          let time = new Date(date);
+
+          that.Year = time.getFullYear() + '-'
+          that.Month = (time.getMonth()+1 < 10 ? '0'+(time.getMonth()+1) : time.getMonth()+1) + '-';
+          that.Day = (time.getDate() < 10 ? '0' + (time.getDate()) : time.getDate()) + ' ';
+        },
+        fail: function(){      
+        }
+      })
+    }
   
   }
 </script>

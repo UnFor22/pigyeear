@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <img src="../../assets/zhezhao.png" alt="">
-    <button class="tobutton" open-type='contact' @click="tokefu" :session-from="title + ':' + url">  
+    <button class="tobutton" open-type='contact' @contact="handleContact" @click="tokefu" :session-from="title + ':' + url">  
     </button>
   </div>
 </template>
@@ -25,7 +25,7 @@
     },
     onShareAppMessage: function (res) {
       return {
-        title: `论下卡成功率，我没服过谁！`,
+        title: `论成功率，我没服过谁！`,
         imageUrl: 'http://download.pcuion.com/app2_0/songxianj.png',
         path: '/pages/index/index'
       }
@@ -37,15 +37,13 @@
           data: this.url,
           success (res) {  
               wx.hideToast() // 隐藏默认的Toast提示框
-              // wx.showModal({
-              //   title: '提示',
-              //   content: '您要办理的信用卡链接已复制，请到手机浏览器地址栏粘贴打开即可申请办卡。',
-              //   showCancel: false, //不显示取消按钮     
-              //   confirmText: '知道了'   
-              // })            
+                    
             }
         })
-      }
+      },
+      // handleContact(e){
+      //   console.log(e)
+      // }
     }
   }
 </script>
