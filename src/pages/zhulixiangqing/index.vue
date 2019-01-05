@@ -588,7 +588,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                                                 for(let j=res.data.peopleinfo.length+84; j<= 93; j++ ){
                                                     that.userimg.push('https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/app2_0/moren.png')
                                                 }
-                                                console.log(that.userimg)
+                                                // console.log(that.userimg)
                                                 that.oneLayout = false
                                                 that.twoLayout = false
                                                 that.threeLayout = false
@@ -1344,13 +1344,13 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             ctx.font = '45px 思源黑体';
             ctx.fillText(that.tixiannum, 141, 165);
 
-            ctx.setFillStyle('#CD3F06');
-            ctx.font = '18px 思源黑体';
-            ctx.fillText(that.pm, 212, 194);
+            ctx.setFillStyle('#C1160F');
+            ctx.font = '20px 思源黑体';
+            ctx.fillText(that.pm, 209, 194);
 
-            ctx.setFillStyle('#C18A37');
-            ctx.font = '13px 思源黑体';
-            ctx.fillText(that.zhulinum, 172, 268);
+            ctx.setFillStyle('#C1160F');
+            ctx.font = '18px 思源黑体';
+            ctx.fillText(that.zhulinum, 167, 268);
 
             // // 画二维码
             ctx.drawImage(res[0].path, 131, 475,100, 100);
@@ -1843,13 +1843,14 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
         }
         .second{
             position: absolute;
+            padding-left: 74rpx; 
             width: 400rpx;
             left: -4rpx;
             top: 145rpx;
             li:last-of-type{
                 // background: #000;
                 margin-top: 47rpx;
-                margin-right: -15rpx;
+                margin-right: -17rpx;
             }
         }
         .third {
@@ -1859,8 +1860,8 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             top: 238rpx;
             li:last-of-type{
                 // background: #000;
-                margin-top: 39rpx;
-                margin-left: -7rpx;
+                margin-top: 43rpx;
+                margin-left: -10rpx;
             }
         }
         .four {
@@ -1881,15 +1882,15 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             top: 329rpx;
             li:last-of-type{
                 // background: #000;
-                margin-top: 45rpx;
-                margin-right: -15rpx;
+                margin-top: 47rpx;
+                margin-right: -18rpx;
             }
         }
         .five {
             position: absolute;
             width: 413rpx;
             left: 122rpx;
-            top: 411rpx;
+            top: 416rpx;
             li:last-of-type{
                 // background: #000;
                 margin-top: 39rpx;

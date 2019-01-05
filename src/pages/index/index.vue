@@ -94,7 +94,7 @@
         </div>
         <div class="complete_title">
           <p>{{complete_ttt}}</p>
-          <p>累积获得<span style="font-size:24px;  font-weight:600;">￥{{award}}</span>金币</p>
+          <p>累积获得<span style="font-size:24px;  font-weight:600;">￥{{count}}</span>金币</p>
           <img src="../../assets/active/complete_tips.png" mode="widthFix" alt="">
         </div>
         <div class="share_main">
@@ -112,22 +112,19 @@
         </div>
         <div class="complete_btn">
           <button open-type='share'></button>
-          <img class="totixian_button" @click="totixian" mode="widthFix" src="../../assets/active/tixian_button.png" alt="">
+          <img class="totixian_button" @click="tochoose" mode="widthFix" src="../../assets/active/tixian_button.png" alt="">
           <img class="complete_button" mode="widthFix" src="../../assets/active/complete_btn.png" alt="">
           
         </div>
         <div class="complete_tips">
-          <p>账户余额：{{award}}金币</p>
-          
-        </div>
-      
+          <p>账户余额：{{award}}金币</p>    
+        </div>   
       </div>
       <!-- 帮助好友助力页 -->
       <div class="helphe" v-if="showhelphe">
         <img class="main_img" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/helphe.png" mode="widthFix" alt="">
         <div class="helphe_title">
           <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/helphe_title.png" mode="widthFix" alt="">
-          <!-- <p>快来和我一起玩接龙</p> -->
         </div>
         <div class="helphe_user">
           <img class="helphe_userimg" :src="fenxiangImg" mode="widthFix" alt="">
@@ -159,6 +156,40 @@
           <img class="success_button" mode="widthFix" src="../../assets/active/success_btn.png" alt=""> 
         </div>
        
+      </div>
+      <!-- 提现方式选择页 -->
+      <div class="choose" v-if="showchoose">
+        <img class="main_img" src="../../assets/active/choose_bg.jpg" mode="widthFix" alt="">
+        <div class="choose_title">
+          <p>选择提现方式</p>
+        </div>
+        <div class="choose_kefu">
+          <div class="choose_kefu_tips">
+            <p>A.小额提现</p>
+            <p>1. 红包金额小于等于5元；</p>
+            <p>2. 加客服微信，给您发送红包，<span>每天限定100人</span>；</p>
+            <p>2. 有机会成为APP免费权益体验用户。</p>
+          </div>
+          <div class="choose_kefu_button" @click="totixian">
+            <p>剩余名额：<span>{{leftNumber}}</span>人</p>
+            <p class="choose_kefu_btn">小额提现</p>
+            <!-- <button @click="totixian"></button> -->
+          </div>
+        </div>
+        <div class="choose_weixin">
+          <div class="choose_weixin_tips">
+            <p>B.大额提现</p>
+            <p>1. 打开卡秘信用卡APP-我的-猪年接龙-兑换；</p>
+            <p>2. 系统自动支付，最快3秒到账。</p>
+          </div>
+          <div class="choose_weixin_button">
+            <p class="choose_weixin_btn">大额提现</p>
+            <button @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')"></button>
+          </div>
+        </div>
+        <div class="choose_shuoming" @click="toactiveshuoming()">
+          <p>查看活动说明>></p>
+        </div>
       </div>
       <!-- 提现 -->
       <div class="tixian" v-if="showtixian">
@@ -218,6 +249,7 @@
         <div class="tixian_title">
           <p>可兑换现金</p>
           <p>{{tixianNum}}元</p>
+          <img src="../../assets/active/tixian_tips.png" mode="widthFix" alt="">
         </div>
         <div class="phone_num">
           <img src="../../assets/active/havephone_duihao.png" alt="">
@@ -241,7 +273,7 @@
           <p>添加客服微信给您发红包</p>
         </div>
         <div class="jiakefu_erweima">
-          <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/jiekefu_qrcode.png" @tap="previewImage" mode="widthFix" alt="">
+          <img :src="arrCode[0]" @tap="previewImage" mode="widthFix" alt="">
         </div>
         <div class="jiakefu_methods">
           <p>领取方式</p>
@@ -272,7 +304,7 @@
   import md5 from 'js-md5';
   import Qs from 'qs';
   import vueTabBar from '../../components/tabBar'
-  import {getHotBankInfoList, getContent, getTopicSelect, getBannerImg, getHotCard, getBannerTxt, registerHref, userOperation, getUserOpenid, postUser,postUserInfo, getTaskInfo, startTask, getRWInfo, helpHe, getCode, bandPhone} from '../../requestAPI/requestAPI';
+  import {getHotBankInfoList, getContent, getTopicSelect, getBannerImg, getHotCard, getBannerTxt, registerHref, userOperation, getUserOpenid, postUser,postUserInfo, getTaskInfo, startTask, getRWInfo, helpHe, getCode, bandPhone, getLeftNum} from '../../requestAPI/requestAPI';
   import { setInterval, clearInterval } from 'timers';
   import { fail } from 'assert';
   export default {
@@ -285,6 +317,7 @@
         showcomplete: false,  // 控制助力完成页显隐
         showhelphe: false,  // 控制帮助助力页显隐
         showsuccess: false,  // 控制助力成功页显隐
+        showchoose: false,  // 控制选择提现方式页显隐
         showtixian: false,  // 控制提现页显隐
         showphone: false,  // 控制绑定手机页显隐
         showjiakefu: false,  // 控制加客服页显隐
@@ -301,6 +334,8 @@
           secs: ''
         },  // 助力计时
         award: '', // 奖金
+
+        count: '' , // 累计金币
         userImg: require('../../assets/active/moren.png'), // 用户头像
         userName: '', // 用户昵称
         fenxiangname: '', // 分享者昵称
@@ -390,7 +425,6 @@
         computetime: '', // 计时器
         fenxiangImg : '', // 分享者的头像
         arrCode: [
-          'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/qrcode.jpg'
         ],  // 点击客服二维码在新窗口打开 所需数据
        
         isLogin: true,
@@ -399,7 +433,8 @@
         tips:true,   
         userInfo:{
           openid: ''
-        }  
+        },
+        leftNumber: '', // 选择提现方式页，剩余名额数
       }
     },
     // 底部tabbar注册组件
@@ -407,7 +442,7 @@
       vueTabBar,
     },   
     methods: {  
-      // 新用户点击开奖获取用户信息，并跳到开奖页
+      // 新用户点击开奖获取用户信息，并传到服务器
       onGotUserInfo: function(e) {
         let that = this
         // console.log(e)
@@ -454,14 +489,7 @@
                         }
                       })
                     }
-                  })
-                  // startTask({openid: that.userInfo.openid}).then(res=>{
-                  //   if(res.result.code == 10000 ){
-                  //     that.gettaskinfo()
-                  //     that.showkaijiang = false
-                  //     that.showaward = true
-                  //   } 
-                  // })           
+                  })        
                 })      
               } else {                         
                 wx.showModal({
@@ -514,6 +542,7 @@
                   that.showcomplete= false
                   that.showhelphe= false
                   that.showsuccess= false
+                  that.showchoose = false
                   that.showtixian= false
                   that.showphone= false
                   that.showjiakefu= false
@@ -525,15 +554,13 @@
         
       },
       // 跳转到分享好友页
-      tofenxiang(){
-        
+      tofenxiang(){       
         this.gettaskinfo()
-
         clearInterval(this.computetime)
         this.showaward = false
         this.showshare = true
       },
-      // 助力人获取用户信息，并跳转到助力完成页
+      // 助力人获取用户信息，并传到服务器
       GotUserInfo(e) {
         let that = this   
         // console.log(e)
@@ -769,6 +796,7 @@
                   },
                 })
                 that.award = res.data.coin
+                that.count = res.data.addup
                 that.startTime = res.data.stime
                 if(res.data.headurl == ' '|| res.data.headurl==null ||res.data.headurl == ''){
                   
@@ -1152,9 +1180,8 @@
           // this.gettaskinfo()
         }
       },
-      
-      // 去提现页面
-      totixian(){
+      // 去选择提现方式页面
+      tochoose(){
         this.showmengban= true, // 控制开奖页显隐
         this.showkaijiang= false,
         this.showaward= false,
@@ -1165,19 +1192,79 @@
         this.showtixian = false
         this.showphone = false
         this.showjiakefu= false
-
-        if(this.mob == ' '){
-          this.showtixian= true
-          this.showphone = false
+        this.showchoose = true
+        getLeftNum().then(res => { 
+          // console.log('res',res)
+          if(res.result.code == 10000){
+            this.leftNumber = res.data.count
+            this.arrCode.push(res.data.qrcodeurl)
+          } else {
+            this.leftNumber = 0
+            this.arrCode.push('https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/qrcode.jpg')
+          }
+        })
+      },
+      // 去提现页面
+      totixian(){
+        let that  = this
+        if(this.award>500){
+          wx.showModal({
+            title: '温馨提示',
+            content: '您的财富过多（多于5元 ），请使用大额提现~',
+            showCancel : false,
+            confirmText: '立即提现',
+            success(res) {
+              if (res.confirm) {
+                  // console.log('用户点击确定');
+                  that.tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')
+              } else if (res.cancel) {
+                  console.log('用户点击取消')
+              }
+            }
+          })
         } else {
-          this.showphone = true
-          this.showtixian= false
+          if(this.leftNumber==0){
+            wx.showModal({
+              title: '温馨提示',
+              content: '名额已满，继续努力去大额提现吧~',
+              showCancel : false,
+              confirmText: '继续助力',
+              success(res) {
+                if (res.confirm) {
+                    // console.log('用户点击确定');
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+              }
+            })
+          } else {
+            this.showmengban= true, // 控制开奖页显隐
+            this.showkaijiang= false,
+            this.showaward= false,
+            this.showshare= false,
+            this.showcomplete= false,
+            this.showhelphe= false,
+            this.showsuccess= false
+            this.showtixian = false
+            this.showchoose = false
+            this.showphone = false
+            this.showjiakefu= false
+
+            if(this.mob == ' '){
+              this.showtixian= true
+              this.showphone = false
+            } else {
+              this.showphone = true
+              this.showtixian= false
+            }
+          }  
         }
+        
       },
       // 提现页验证码计时
       getcode(){
         // console.log(this.phoneNum)
-        let reg=/^((1[3,5,6,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+        let reg=/^((1[3,5,8][0-9])|(14[5,7])|(166)|(17[0,6,7,8])|(19[7]))\d{8}$/;
         if(!reg.test(this.phoneNum)){
           wx.showToast({
             title: '手机号错误',
@@ -1264,31 +1351,16 @@
         this.showphone= false,
         this.showjiakefu= true
 
-        // wx.navigateTo({ 
-        //   url: "/pages/jiakefu/main" 
-        // });
-      },
-      // 取消活动页面的显示
-      toquxiao(){
-        this.showmengban= false 
-        this.showkaijiang= false 
-        this.showaward= false
-        this.showshare= false
-        this.showcomplete= false
-        this.showhelphe= false
-        this.showsuccess= false
-        this.showtixian= false
-        this.showphone= false
-        this.showjiakefu= false
       },
       // 加客服页点击图片在新窗口打开
       previewImage: function (e) { 
         let that = this 
         let current=e.target.dataset.src;
+        // console.log(this.arrCode)
         // console.log(current)
 		    wx.previewImage({
-          current: 'http://download.pcuion.com/app2_0/wxqcode.jpg', // 当前显示图片的http链接
-          urls: this.arrCode // 需要预览的图片http链接列表
+          current: that.arrCode[0], // 当前显示图片的http链接
+          urls: that.arrCode // 需要预览的图片http链接列表
         })
         // wx.getImageInfo({// 获取图片信息（此处可不要）
         //   src: 'http://download.pcuion.com/app2_0/wxqcode.jpg',
@@ -1299,18 +1371,7 @@
         // })
 
       },
-      // 跳转到新的研究玩卡页
-      toyanjiuwanka(){
-        wx.navigateTo({ 
-          url: "/pages/yanjiuwanka/main" 
-        });
-      },
-      toyongkajingyan(){
-        wx.navigateTo({ 
-          url: "/pages/yongkajingyan/main" 
-        });
-      },
-      // 跳转到活动详情
+      // 跳转到活动说明
       toactiveshuoming() {
         wx.navigateTo({ 
           url: "/pages/activeshuoming/main" 
@@ -1322,7 +1383,9 @@
           url: "/pages/zhulixiangqing/main" 
         });
       },
-     
+      launchAppError(e) {
+        console.log(e.detail.errMsg)
+      },
       // 跳转到中间页
       tokefu(title,url){
         let pages = getCurrentPages();
@@ -1456,9 +1519,12 @@
       this.showcomplete = false
       this.showhelphe = false
       this.showsuccess = false
+      this.showchoose = false
       this.showjiakefu= false
       this.showtixian= false
       this.showphone = false
+
+      this.arrCode = []
       
       // 是助力人
       if(this.iszhuli){   
@@ -2585,6 +2651,162 @@
       height: 16%;
     }
   }
+  .choose{
+    z-index: 10;
+    width: 640rpx;
+    height: 917rpx;
+    position: fixed;
+    left: 57rpx;
+    top: 91rpx;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    .main_img{
+      position: absolute;
+      width: 614rpx;
+      // height: 1334rpx;
+      top: 0rpx;
+      left: 0rpx;
+      // z-index: 998;
+    }
+    .choose_title{
+      position: absolute;
+      top: 106rpx;
+      left: 51rpx;
+      width: 533rpx;
+      height: 88rpx;
+      line-height: 84rpx;
+      background-image: url(../../assets/active/choose_title_bg.png);
+      background-size: 533rpx 88rpx;
+      p{
+        font-size: 18px;
+        font-weight: 500;
+        color: #760A00;
+        font-family:PingFangSC-Regular;
+      }   
+    }
+    .choose_kefu{
+      position: absolute;
+      top: 216rpx;
+      left: 90rpx;
+      width: 483rpx;
+      height: 76rpx;
+      text-align: left;
+      // color: #fff;
+      font-size: 14px;
+      line-height: 1.5;
+      font-family:PingFangSC-Semibold;
+      p{
+        font-size: 11px;
+        color:#7E340C;
+        line-height: 1.8;
+        font-weight: 500;
+      }
+      p:nth-of-type(1){
+        color: #7E340C;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 2;
+      }
+      .choose_kefu_button{
+        position: absolute;
+        top: 173rpx;
+        left: 103rpx;
+        width: 237rpx;
+        text-align: center;
+        p{
+          color:#D22727;
+          font-size: 14px;
+          font-family:PingFangSC-Semibold;
+        }
+        .choose_kefu_btn {
+          width: 237rpx;
+          height: 66rpx;
+          line-height: 60rpx;
+          color: #BA0D08;
+          font-size: 16px;
+          font-family:PingFangSC-Semibold;
+          font-weight: 600;
+          letter-spacing: 2px;
+          background-image: url(../../assets/active/choose_btn.png);
+          background-size: 237rpx 66rpx;
+        }
+        button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          z-index: 20;
+        }
+      }
+    }
+    .choose_weixin{
+      position: absolute;
+      top: 558rpx;
+      left: 90rpx;
+      width: 483rpx;
+      height: 76rpx;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.5;
+      p{
+        font-size: 11px;
+        color:#7E340C;
+        font-weight: 500;
+        line-height: 1.8 ;
+      }
+      p:nth-of-type(1){
+        color: #7E340C;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 2;
+      }
+      .choose_weixin_button{
+        position: absolute;
+        top: 146rpx;
+        left: 103rpx;
+        width: 237rpx;
+        text-align: center;
+        
+        .choose_weixin_btn {
+          width: 237rpx;
+          height: 66rpx;
+          line-height: 60rpx;
+          color: #BA0D08;
+          font-size: 16px;
+          font-family:PingFangSC-Semibold;
+          font-weight: 600;
+          letter-spacing: 2px;
+          background-image: url(../../assets/active/choose_btn.png);
+          background-size: 237rpx 66rpx;
+        }
+        button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          z-index: 15;
+        }
+      }
+    }
+    .choose_shuoming{
+      position: absolute;
+      top: 793rpx;
+      font-size: 13px;
+      width: 80%;
+      height: 100rpx;
+      color: #970202;
+      line-height: 100rpx;
+      left: 9%;
+
+    }
+    
+  }
   .tixian{
     z-index: 10;
     width: 616rpx;
@@ -2839,12 +3061,15 @@
         text-shadow:0px 3px 5px rgba(187,122,122,0.8);
       }
       p:nth-of-type(2){
-        margin-top: 20rpx;
+        margin-top: 14rpx;
         font-size: 35px;
         font-weight: 600;
         color: #F22216;
-        margin-bottom: 30rpx;
+        margin-bottom: 14rpx;
         text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      img{
+        width: 300rpx;
       }
     }
     .phone_num{

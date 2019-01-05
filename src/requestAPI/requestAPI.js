@@ -216,6 +216,11 @@ fly.interceptors.response.use(
     // console.log('获取任务进度参数',params)
     return fly.post(`https://main.pcuion.com/api.php/userwx/create_qrcode_pigyear`, Qs.stringify(params)).then(res => res.data);
   };
+  // 获取提现方式选择页剩余人数及客服头像
+  export const getLeftNum = params => {
+    // console.log('获取任务进度参数',params)
+    return fly.post(`${baseURL}/api.php/userwx/wxpaynum`, Qs.stringify(params)).then(res => res.data);
+  };
   // function urlencode (str) {  
   //   str = (str + '').toString();   
 
