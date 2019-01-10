@@ -112,7 +112,7 @@
         </div>
         <div class="complete_btn">
           <button open-type='share'></button>
-          <img class="totixian_button" @click="tochoose" mode="widthFix" src="../../assets/active/tixian_button.png" alt="">
+          <img class="totixian_button" @click="totixian" mode="widthFix" src="../../assets/active/tixian_button.png" alt="">
           <img class="complete_button" mode="widthFix" src="../../assets/active/complete_btn.png" alt="">
           
         </div>
@@ -157,8 +157,52 @@
         </div>
        
       </div>
+      <!-- 新版提现页 -->
+      <div class="newtixian" v-if="shownewtixian">
+        <img src="../../assets/active/bg.jpg" mode="widthFix" class="main_img" alt="">
+        <div class="share_swiper">
+          <swiper :show-indicators="false" interval="3000" autoplay='true' circular='true' vertical='true' style="font-size:14px; height:30rpx; color:rgba(0,0,0,0.4);">
+            <swiper-item catchtouchmove="stopTouchMove" v-for="(item, index) in tixianUser" :key="index">
+              <img :src="item.img" alt="">
+              <span style="font-size:10px; color:#F22216;">{{item.name}}通过好友助力成功提现</span>
+            </swiper-item>
+          </swiper>
+        </div>
+        <div class="to_share_right">
+          <button class="share_button" open-type='share'></button>
+          <img class="share_right" mode="widthFix" src="../../assets/active/share_btn1.png" alt="">
+        </div>
+        <div class="tixian_title">
+          <p>可兑换现金</p>
+          <p>{{tixianNum}}元</p>
+          <!-- <img src="../../assets/active/tixian_tips.png" mode="widthFix" alt=""> -->
+        </div>
+        <div class="newtixian_tips">
+          <div class="choose_kefu_tips">
+            <!-- <p>A.小额提现</p> -->
+            <p>1. 打开APP-我的-猪年接龙-兑换现金；</p>
+            <p>2. 系统自动支付，最快3秒到账。</p>
+            <p>（加客服微信，有机会获得白金合伙人体验权益）</p>
+          </div>     
+        </div>
+        <div class="newtixian_button">
+          <div class="choose_kefu_button" @click="tojiakefu">
+            <img src="../../assets/active/kefu_img.png" alt="">
+            <p class="choose_kefu_btn">客服咨询</p>       
+          </div>
+          <div class="choose_tixian_button">
+            <p class="choose_tixian_btn">立即提现</p>
+            <button @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')"></button>
+          </div>
+          
+        </div>
+        <div class="choose_shuoming" @click="toactiveshuoming()">
+          <p>查看活动说明>></p>
+        </div>
+        
+      </div>
       <!-- 提现方式选择页 -->
-      <div class="choose" v-if="showchoose">
+      <!-- <div class="choose" v-if="showchoose">
         <img class="main_img" src="../../assets/active/choose_bg.jpg" mode="widthFix" alt="">
         <div class="choose_title">
           <p>选择提现方式</p>
@@ -166,14 +210,13 @@
         <div class="choose_kefu">
           <div class="choose_kefu_tips">
             <p>A.小额提现</p>
-            <p>1. 红包金额小于等于5元；</p>
+            <p>1. 红包金额小于等于5元，48小时内到账；</p>
             <p>2. 加客服微信，给您发送红包，<span>每天限定100人</span>；</p>
             <p>2. 有机会成为APP免费权益体验用户。</p>
           </div>
           <div class="choose_kefu_button" @click="totixian">
             <p>剩余名额：<span>{{leftNumber}}</span>人</p>
             <p class="choose_kefu_btn">小额提现</p>
-            <!-- <button @click="totixian"></button> -->
           </div>
         </div>
         <div class="choose_weixin">
@@ -190,7 +233,7 @@
         <div class="choose_shuoming" @click="toactiveshuoming()">
           <p>查看活动说明>></p>
         </div>
-      </div>
+      </div> -->
       <!-- 提现 -->
       <div class="tixian" v-if="showtixian">
         <img src="../../assets/active/bg.jpg" mode="widthFix" class="main_img" alt="">
@@ -212,6 +255,7 @@
           <img src="../../assets/active/tixian_tips.png" mode="widthFix" alt="">
         </div>
         <div class="tixian_input">
+          <p>小提示：首次提现需要绑定手机号</p>
           <div class="tixian_input_phone">
             <input type="text" v-model="phoneNum" placeholder="输入手机号">
           </div>
@@ -222,11 +266,11 @@
           </div>
         </div>
         <div class="tixian_btn">
-          <button class="tixian_button" @click="bindphone"></button>
-          <img mode="widthFix" class="tixian_button" src="../../assets/active/phone_btn.png" alt="">
+          <button class="phone_button" @click="tonewtixian()"></button>
+          <span>确认</span>
+          <img mode="widthFix" class="phone_button" src="../../assets/active/newtixian_btn.png" alt="">
         </div>
         <div class="tixian_tips" @click="toactiveshuoming">
-          <p>小提示：好友接龙越多，金币越多，兑换现金越多</p>
           <p>查看活动说明 >></p>
         </div>
         
@@ -257,8 +301,9 @@
           <p>{{mob}}</p>
         </div>
         <div class="phone_btn">
-          <button class="phone_button" @click="tojiakefu"></button>
-          <img mode="widthFix" class="phone_button" src="../../assets/active/phone_btn.png" alt="">
+          <button class="phone_button" @click="tonewtixian()"></button>
+          <span>确认</span>
+          <img mode="widthFix" class="phone_button" src="../../assets/active/newtixian_btn.png" alt="">
         </div>
         <div class="tixian_tips" @click="toactiveshuoming">
           <p>小提示：好友接龙越多，金币越多，兑换现金越多</p>
@@ -266,8 +311,23 @@
         </div>
         
       </div>
+      <!-- 新版加客服页 -->
+      <div class="newjiakefu" v-if="showjiakefu">
+        <img src="../../assets/active/newjiakefu_bg.jpg" mode="widthFix" class="main_img" alt="">
+    
+        <div class="newjiakefu_erweima">
+          <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/qrcode.jpg" @tap="previewImage" mode="widthFix" alt="">
+          <!-- <img :src="arrCode[0]" @tap="previewImage" mode="widthFix" alt=""> -->
+          <p>方法一：点击二维码-长按图片保存-添加客服</p>
+        </div>
+
+        <div class="newjiakefu_button">
+          <p @click="copywx">点击复制微信号</p>
+          <p>方法二：点击复制-微信添加朋友</p>
+        </div>
+      </div>
       <!-- 加客服页 -->
-      <div class="jiakefu" v-if="showjiakefu">
+      <!-- <div class="jiakefu" v-if="showjiakefu">
         <img src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/jiakefu.png" mode="widthFix" class="main_img" alt="">
         <div class="jiakefu_title">
           <p>添加客服微信给您发红包</p>
@@ -281,14 +341,15 @@
         <div class="jiakefu_tips">
           <li>
             <img src="../../assets/active/jiakefu_coin.png" mode="widthFix" alt="">
-            <p>点击二维码 -> 长按图片保存 -> 添加客服</p>
+            <p>方法1、点击二维码 -> 长按图片保存 -> 添加客服</p>
           </li>
           <li>
             <img src="../../assets/active/jiakefu_coin.png" mode="widthFix" alt="">
-            <p>添加时备注手机号+金额</p>
+            <p>W-H77777</p>
+            <p>点击复制，添加微信号</p>
           </li>
         </div>
-      </div>
+      </div> -->
         
     </div>
     <vue-tab-bar 
@@ -321,6 +382,7 @@
         showtixian: false,  // 控制提现页显隐
         showphone: false,  // 控制绑定手机页显隐
         showjiakefu: false,  // 控制加客服页显隐
+        shownewtixian: false, // 控制新版提现页显隐
         helpNum: 0,  // 帮助助力人数
         title: '',
         url:'', 
@@ -656,6 +718,7 @@
                 that.showshare= false
                 that.showcomplete= false
                 that.showhelphe= false
+                that.showchoose = false
                 that.showtixian= false
                 that.showphone= false
                 that.showjiakefu= false     
@@ -680,6 +743,7 @@
                 that.showcomplete= false
                 that.showhelphe= false
                 that.showsuccess= false
+                that.showchoose = false
                 that.showtixian= false
                 that.showphone= false
                 that.showjiakefu= false
@@ -703,6 +767,7 @@
                 that.showcomplete= false
                 that.showhelphe= false
                 that.showsuccess= false
+                that.showchoose = false
                 that.showtixian= false
                 that.showphone= false
                 that.showjiakefu= false  
@@ -747,6 +812,7 @@
           this.showhelphe = false  
           this.showaward = false
           this.showsuccess = false
+          this.showchoose = false
           this.showtixian= false
           this.showphone= false
           this.showjiakefu= false
@@ -842,6 +908,7 @@
                   that.showshare = false
                   that.showhelphe = false
                   that.showsuccess = false 
+                  that.showchoose = false
                   that.showtixian= false
                   that.showphone= false
                   that.showjiakefu= false
@@ -870,12 +937,12 @@
                     that.times.secs = parseInt(that.times.secs) - 1
                     // console.log('secs',that.times.secs)
 
-                    if(that.times.secs == 0){
+                    if(that.times.secs == -1){
                       // console.log('22222')
-                      that.times.secs = 60
+                      that.times.secs = 59
                       that.times.mins = parseInt(that.times.mins) - 1
-                      if(that.times.mins == 0){
-                        that.times.mins = 60
+                      if(that.times.mins == -1){
+                        that.times.mins = 59
                         that.times.hours = parseInt(that.times.hours) - 1
                         if(that.times.hours = -1){
                           that.times.hours = 23
@@ -899,6 +966,7 @@
                   that.showcomplete = false
                   that.showhelphe = false
                   that.showsuccess = false
+                  that.showchoose = false
                   that.showtixian= false
                   that.showphone= false
                   that.showjiakefu= false
@@ -982,6 +1050,7 @@
                     that.showhelphe = false
                     that.showsuccess = false
                     that.showjiakefu= false
+                    that.showchoose = false
                     that.showtixian= false
                     that.showphone= false
                     // console.log('showkaijiang',that.showkaijiang)
@@ -998,6 +1067,7 @@
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showjiakefu= false
+                      that.showchoose = false
                       that.showtixian= false
                       that.showphone= false
                       // 任务已激活
@@ -1012,6 +1082,7 @@
                         that.showhelphe = false
                         that.showsuccess = false
                         that.showjiakefu= false
+                        that.showchoose = false
                         that.showtixian= false
                         that.showphone= false
                         that.gettaskinfo()
@@ -1036,6 +1107,7 @@
                       that.showcomplete = false
                       that.showhelphe = false
                       that.showsuccess = false
+                      that.showchoose = false
                       that.showjiakefu= false
                       that.showtixian= false
                       that.showphone= false
@@ -1045,6 +1117,7 @@
               }else{
             
               }
+              
             },
           })
         } else {
@@ -1070,6 +1143,7 @@
                     that.showhelphe = false
                     that.showsuccess = false
                     that.showjiakefu= false
+                    that.showchoose = false
                     that.showtixian= false
                     that.showphone= false
 
@@ -1086,6 +1160,7 @@
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showjiakefu= false
+                      that.showchoose = false
                       that.showtixian= false
                       that.showphone= false
                       // 任务已激活
@@ -1099,6 +1174,7 @@
                         that.showhelphe = false
                         that.showsuccess = false
                         that.showjiakefu= false
+                        that.showchoose = false
                         that.showtixian= false
                         that.showphone= false
                         // that.gettaskinfo()
@@ -1112,6 +1188,7 @@
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showjiakefu= false
+                      that.showchoose = false
                       that.showtixian= false
                       that.showphone= false
                       // 活动已结束
@@ -1124,6 +1201,7 @@
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showjiakefu= false
+                      that.showchoose = false
                       that.showtixian= false
                       that.showphone= false
                     } 
@@ -1154,6 +1232,7 @@
             this.showcomplete = false
             this.showsuccess = false
             this.showjiakefu= false
+            this.showchoose = false
             this.showtixian= false
             this.showphone= false
             this.getRWstatus(1)
@@ -1168,6 +1247,7 @@
             this.showcomplete = false
             this.showsuccess = false
             this.showjiakefu= false
+            this.showchoose = false
             this.showtixian= false
             this.showphone= false
           }
@@ -1180,6 +1260,33 @@
           // this.gettaskinfo()
         }
       },
+      // 去新版提现页面
+      tonewtixian(){
+        let that  = this       
+        this.showmengban= true, // 控制开奖页显隐
+        this.showkaijiang= false,
+        this.showaward= false,
+        this.showshare= false,
+        this.showcomplete= false,
+        this.showhelphe= false,
+        this.showsuccess= false
+        this.showtixian = false
+        this.showchoose = false
+        this.showphone = false
+        this.showjiakefu= false
+        this.shownewtixian = true
+        // 获取剩余金币和客服头像地址
+        getLeftNum().then(res => { 
+          // console.log('res',res)
+          if(res.result.code == 10000){
+            this.leftNumber = res.data.count
+            this.arrCode.push(res.data.qrcodeurl)
+          } else {
+            this.leftNumber = 0
+            this.arrCode.push('https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/qrcode.jpg')
+          }
+        })
+      },
       // 去选择提现方式页面
       tochoose(){
         this.showmengban= true, // 控制开奖页显隐
@@ -1189,10 +1296,12 @@
         this.showcomplete= false,
         this.showhelphe= false,
         this.showsuccess= false
+        this.showchoose = false
         this.showtixian = false
         this.showphone = false
         this.showjiakefu= false
         this.showchoose = true
+        // 获取剩余金币和客服头像地址
         getLeftNum().then(res => { 
           // console.log('res',res)
           if(res.result.code == 10000){
@@ -1205,61 +1314,102 @@
         })
       },
       // 去提现页面
+      // totixian(){
+      //   let that  = this
+      //   if(this.award>500){
+      //     wx.showModal({
+      //       title: '温馨提示',
+      //       content: '您的财富过多（多于5元 ），请使用大额提现~',
+      //       showCancel : false,
+      //       confirmText: '立即提现',
+      //       success(res) {
+      //         if (res.confirm) {
+      //             // console.log('用户点击确定');
+      //             that.tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')
+      //         } else if (res.cancel) {
+      //             console.log('用户点击取消')
+      //         }
+      //       }
+      //     })
+      //   } else {
+      //     if(this.leftNumber==0){
+      //       wx.showModal({
+      //         title: '温馨提示',
+      //         content: '名额已满，继续努力去大额提现吧~',
+      //         showCancel : false,
+      //         confirmText: '继续助力',
+      //         success(res) {
+      //           if (res.confirm) {
+      //               // console.log('用户点击确定');
+      //           } else if (res.cancel) {
+      //               console.log('用户点击取消')
+      //           }
+      //         }
+      //       })
+      //     } else {
+      //       this.showmengban= true, // 控制开奖页显隐
+      //       this.showkaijiang= false,
+      //       this.showaward= false,
+      //       this.showshare= false,
+      //       this.showcomplete= false,
+      //       this.showhelphe= false,
+      //       this.showsuccess= false
+      //       this.showtixian = false
+      //       this.showchoose = false
+      //       this.showphone = false
+      //       this.showjiakefu= false
+
+      //       if(this.mob == ' '){
+      //         this.showtixian= true
+      //         this.showphone = false
+      //       } else {
+      //         this.showphone = true
+      //         this.showtixian= false
+      //       }
+      //     }  
+      //   }
+        
+      // },
+      // 去提现页面
       totixian(){
         let that  = this
-        if(this.award>500){
+        // console.log(this.award)
+        if(this.award>=100) {
+          this.showmengban= true, // 控制开奖页显隐
+          this.showkaijiang= false,
+          this.showaward= false,
+          this.showshare= false,
+          this.showcomplete= false,
+          this.showhelphe= false,
+          this.showsuccess= false
+          this.showtixian = false
+          this.showchoose = false
+          this.showphone = false
+          this.showjiakefu= false
+
+          if(this.mob == ' '){
+            this.showtixian= true
+            this.showphone = false
+          } else {
+            this.showphone = true
+            this.showtixian= false
+          }
+        } else {
+          that.goshare = true           
           wx.showModal({
             title: '温馨提示',
-            content: '您的财富过多（多于5元 ），请使用大额提现~',
-            showCancel : false,
-            confirmText: '立即提现',
+            content: "只有红包大于1元才能提现哦，您只需再邀请一位好友接龙就可以提现啦！",
+            showCancel: false,
             success(res) {
               if (res.confirm) {
-                  // console.log('用户点击确定');
-                  that.tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')
+                // console.log('用户点击确定')
+                // that.onShareAppMessage()
               } else if (res.cancel) {
-                  console.log('用户点击取消')
+                // console.log('用户点击取消')
               }
             }
           })
-        } else {
-          if(this.leftNumber==0){
-            wx.showModal({
-              title: '温馨提示',
-              content: '名额已满，继续努力去大额提现吧~',
-              showCancel : false,
-              confirmText: '继续助力',
-              success(res) {
-                if (res.confirm) {
-                    // console.log('用户点击确定');
-                } else if (res.cancel) {
-                    console.log('用户点击取消')
-                }
-              }
-            })
-          } else {
-            this.showmengban= true, // 控制开奖页显隐
-            this.showkaijiang= false,
-            this.showaward= false,
-            this.showshare= false,
-            this.showcomplete= false,
-            this.showhelphe= false,
-            this.showsuccess= false
-            this.showtixian = false
-            this.showchoose = false
-            this.showphone = false
-            this.showjiakefu= false
-
-            if(this.mob == ' '){
-              this.showtixian= true
-              this.showphone = false
-            } else {
-              this.showphone = true
-              this.showtixian= false
-            }
-          }  
         }
-        
       },
       // 提现页验证码计时
       getcode(){
@@ -1319,16 +1469,7 @@
                 icon: 'success',
                 duration: 500
               })
-              that.showmengban= true // 控制开奖页显隐
-              that.showkaijiang= false
-              that.showaward= false
-              that.showshare= false
-              that.showcomplete= false
-              that.showhelphe= false
-              that.showsuccess= false
-              that.showtixian= false
-              that.showphone= false
-              that.showjiakefu= true
+              that.tonewtixian()
             } else {
               wx.showToast({
                 title: '手机号或验证码错误',
@@ -1347,10 +1488,12 @@
         this.showcomplete= false,
         this.showhelphe= false,
         this.showsuccess= false,
+        this.showchoose = false
         this.showtixian= false,
+        this.shownewtixian= false,
         this.showphone= false,
         this.showjiakefu= true
-
+        // console.log('arrCode',this.arrCode)
       },
       // 加客服页点击图片在新窗口打开
       previewImage: function (e) { 
@@ -1369,6 +1512,25 @@
         //     // console.log(res.height)
         //   }
         // })
+
+      },
+      // 加客服页复制微信号
+      copywx(){
+        wx.setClipboardData({
+          data: 'W-H77777',
+          success: function(res) {
+            // self.setData({copyTip:true}),
+            // wx.showModal({
+            // title: '提示',
+            // content: '复制成功',
+            // success: function(res) {
+            //   if (res.confirm) {
+            //     console.log('确定')
+            //   } else if (res.cancel) {
+            //     console.log('取消')
+            //   }
+            }
+      })
 
       },
       // 跳转到活动说明
@@ -1484,6 +1646,37 @@
     onLoad(options) {  
       let that = this
       // console.log('option',options)
+      const updateManager = wx.getUpdateManager()
+
+      // updateManager.onCheckForUpdate(function (res) {
+      //   // 请求完新版本信息的回调
+      //   // console.log(res.hasUpdate)
+      // })
+
+      updateManager.onUpdateReady(function () {
+        wx.showModal({
+          title: '更新提示',
+          content: '新版本自动提现已经准备好，是否重启应用？',
+          showCancel : false,
+          confirmText: '立即重启',
+          success(res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              updateManager.applyUpdate()
+            }
+          }
+        })
+      })
+      updateManager.onUpdateFailed(function () {
+        // 新版本下载失败
+        wx.hideLoading();
+        wx.showModal({
+          title: '升级失败',
+          content: '新版本下载失败，请检查网络！',
+          showCancel: false
+        });
+
+      })
       if(options.scene){
         // let scene=decodeURIComponent(options.scene);
         this.iszhuli= options.scene
@@ -1503,7 +1696,7 @@
     //页面设置转发功能
     onShareAppMessage: function (res) {
       return {
-        title: `你的好友正在红包接龙，他已抢到${this.tixianNum}元，快来支援他！`,
+        title: `你的好友正在红包接龙，他已抢到${this.count/100}元，快来支援他！`,
         imageUrl: 'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/share_pig.jpg',
         path: `/pages/index/main?userId=${this.userInfo.openid}&from=1`
       }
@@ -1522,6 +1715,7 @@
       this.showchoose = false
       this.showjiakefu= false
       this.showtixian= false
+      this.shownewtixian= false
       this.showphone = false
 
       this.arrCode = []
@@ -1553,15 +1747,17 @@
                       that.showhelphe = false
                       that.showsuccess = false
                       that.showjiakefu= false
+                      that.showchoose = false
                       that.showtixian= false
                       that.showphone = false
                       that.completezhuli = true
                       that.gettaskinfo()
+                      // 助力人点击别人的分享
                     } else {
                       // 获取助力人的授权状态
                       getRWInfo({openid: res.data.openId}).then(res => { 
-                        // console.log('主理人',res)
-                        // 助力人未授权
+
+                        // 助力人未授权，显示帮好友助力页面，且按钮为获取用户信息功能
                         if(res.data.peoplestatus == 0){
                           // console.log('isshouquan',res.data.peoplestatus)
                           that.isshouquan = false
@@ -1573,10 +1769,11 @@
                           that.showhelphe = true
                           that.showsuccess = false
                           that.showjiakefu= false
+                          that.showchoose = false
                           that.showtixian= false
                           that.showphone = false
                           that.gettaskinfo(that.iszhuli)
-                          // 助力人已授权
+                          // 助力人已授权，显示帮好友助力页面，按钮功能为帮好友助力
                         } else if(res.data.peoplestatus == 1){
                           that.isshouquan = true
                           // console.log('secondxianshi',that.secondxianshi)   
@@ -1589,6 +1786,7 @@
                             that.showhelphe = false
                             that.showsuccess = false
                             that.showjiakefu= false
+                            that.showchoose = false
                             that.showtixian= false
                             that.showphone = false
                             that.gettaskinfo()
@@ -1611,6 +1809,7 @@
                                 that.showkaijiang = false
                                 that.showsuccess = false
                                 that.showjiakefu= false
+                                that.showchoose = false
                                 that.showtixian= false
                                 that.showphone = false
                                 that.completezhuli = true
@@ -1629,6 +1828,7 @@
                                 that.showshare = false
                                 that.showsuccess = false
                                 that.showjiakefu= false
+                                that.showchoose = false
                                 that.showtixian= false
                                 that.showphone = false
                                 // console.log('助力人的openid',that.iszhuli)
@@ -2100,6 +2300,7 @@
     display: block;
     clear: both;
     text-align: center;
+    
     .main_img{
       position: absolute;
       width: 100%;
@@ -2163,7 +2364,7 @@
       position: absolute;
       p:nth-of-type(1){
         font-size: 12px;
-        color: #9C0202;
+        color: #770000;
         .time{
           box-sizing: border-box;
           display: inline-block;
@@ -2252,7 +2453,7 @@
       p:nth-of-type(1){
         display: block;
         position: absolute;
-        top: 79rpx;
+        top: 73rpx;
         left: 0rpx;
         width: 100%;
         font-weight: 500;
@@ -2266,7 +2467,7 @@
         position: absolute;
         width: 100%;
         text-align: center;
-        top: 118rpx;
+        top: 112rpx;
         // left: 147rpx;
         font-size: 14px;
         color:#FDCD00;
@@ -2276,7 +2477,7 @@
       position: absolute;
       width: 472rpx;
       height: 101rpx;
-      top: 824rpx;
+      top: 812rpx;
       left: 77rpx;
       button{
         padding: 0;
@@ -2374,7 +2575,6 @@
         position: absolute;
         width: 100%;
         bottom: 0;
-        // text-align: center;
         p{
           width: 100%;
           text-align: center;
@@ -2390,7 +2590,7 @@
       width: 100%;
       top: 928rpx;
       font-weight: 600;
-      color: #9C0202;
+      color: #660000;
       font-size: 15px;
       // .complete_left{
       //   position: absolute;
@@ -2904,6 +3104,10 @@
       left: 97rpx;
       z-index: 9;
       width: 426rpx;
+      p{
+        color: #fff;
+        font-size: 12px;
+      }
       .tixian_input_code{
         position: relative;
         .getcode{
@@ -2941,15 +3145,15 @@
       z-index: 9;
       box-sizing: border-box;
       // height: 200rpx;
-      top: 886rpx;
+      top: 930rpx;
       left: 91rpx;
       // padding: 0 40rpx;
-      p:nth-of-type(1){
-        font-size: 10px;
-        line-height: 1.8;
-        color: #E9C011;
-      }
-      p:nth-of-type(2){
+      // p:nth-of-type(1){
+      //   font-size: 10px;
+      //   line-height: 1.8;
+      //   color: #E9C011;
+      // }
+      p{
         font-size: 12px;
         line-height: 1.8;
         font-weight: 700;
@@ -2960,9 +3164,24 @@
       width: 297rpx;
       height: 89rpx;
       position: absolute;
-      top: 774rpx;
+      top: 812rpx;
       left: 164rpx;
       z-index: 11;
+      span{
+        text-align: center;
+        padding: 0;
+        width: 297rpx;
+        height: 89rpx;
+        line-height: 79rpx;
+        letter-spacing: 46rpx;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        position: absolute;
+        padding-left: 20rpx;
+        top: 0;
+        left: 0;
+      }
       button{
         padding: 0;
         width: 100%;
@@ -2971,8 +3190,9 @@
         top: 0;
         left: 0;
         opacity: 0;
+        z-index: 15;
       }
-      .tixian_button{
+      .phone_button{
         width: 100%;
         height: 100%;
       }
@@ -2983,6 +3203,206 @@
       left: 40%;
       width: 20%;
       height: 16%;
+    }
+  }
+  .newtixian{
+    z-index: 10;
+    width: 616rpx;
+    height: 1030rpx;
+    position: fixed;
+    left: 67rpx;
+    top: 13rpx;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    .share_swiper{
+      position: absolute;
+      font-size: 10px;
+      color: #F22216;
+      top: 80rpx;
+      left: 61rpx;
+      width: 350rpx;
+      height: 42rpx;
+      z-index: 12;
+      text-align: left;
+      float: left;    
+      swiper-item{
+        height: 42rpx;
+      }
+      img{
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: top;
+        width: 30rpx;
+        height: 30rpx;
+        margin-right: 8rpx;
+      }
+    }
+    .to_share_right{
+      position: absolute;
+      top: 62rpx;
+      right: 23rpx;
+      width: 106rpx;
+      height: 70rpx;
+      z-index: 12;
+      .share_button{
+        z-index: 12;
+        position: absolute;
+        top: 0;
+        right: 0; 
+        height: 60rpx;
+        width: 100rpx; 
+        opacity: 0;    
+        padding: 0;    
+      }
+      .share_right{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: -1rpx;
+      }
+    }
+    .tixian_title{
+      position: absolute;
+      top: 177rpx;
+      left: 19rpx;
+      width: 100%;
+      text-align: center;
+      z-index: 9;
+      p:nth-of-type(1){
+        font-size: 28px;
+        line-height: 57rpx;
+        font-family:PingFangSC-Semibold;
+        color:#F22216;
+        font-weight: 600;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      p:nth-of-type(2){
+        margin-top: 14rpx;
+        font-size: 35px;
+        font-weight: 600;
+        color: #F22216;
+        margin-bottom: 6rpx;
+        text-shadow:0px 3px 5px rgba(187,122,122,0.8);
+      }
+      img{
+        width: 300rpx;
+      }
+    }
+    .newtixian_tips{
+      position: absolute;
+      top: 542rpx;
+      left: 80rpx;
+      width: 490rpx;
+      height: 76rpx;
+      text-align: left;
+      line-height: 1.5;
+      font-family:PingFangSC-Semibold;
+      p{
+        font-size: 13px;
+        color:#E9C011;
+        line-height: 43rpx;
+        font-weight: 500;
+      }
+      p:nth-of-type(3){
+        font-size: 11px;
+      }
+    }
+    .newtixian_button{
+      position: absolute;
+      top: 618rpx;
+      left: 90rpx;
+      width: 483rpx;
+      height: 76rpx;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.5;
+      
+      .choose_tixian_button{
+        position: absolute;
+        top:215rpx;
+        left: 85rpx;
+        width: 274rpx;
+        text-align: center;
+        
+        .choose_tixian_btn {
+          width: 274rpx;
+          height: 86rpx;
+          line-height: 78rpx;
+          color: #fff;
+          font-size: 17px;
+          font-family:PingFangSC-Semibold;
+          font-weight: 600;
+          letter-spacing: 2px;
+          background-image: url(../../assets/active/newtixian_btn.png);
+          background-size: 274rpx 86rpx;
+        }
+        button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          z-index: 15;
+        }
+      }
+      .choose_kefu_button{
+        position: absolute;
+        top:70rpx;
+        left: 112rpx;
+        width: 237rpx;
+        text-align: center;
+        img{
+          width: 50rpx;
+          height: 50rpx;
+          // box-shadow:-3px 5px 9px 1px rgba(198,162,6,0.3);
+          float: left;
+        }
+        .choose_kefu_btn {
+          position: absolute;
+          top: -11rpx;
+          left: -6rpx;
+          float: left;
+          // margin-left: 10rpx;
+          width: 274rpx;
+          height: 86rpx;
+          line-height: 78rpx;
+          color: #980202;
+          font-size: 14px;
+          font-family:PingFangSC-Semibold;
+          font-weight: 500;
+          letter-spacing: 2px;
+          background-size: 274rpx 86rpx;
+        }
+        button{
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+          z-index: 15;
+        }
+      }
+    }
+    .choose_shuoming{
+      position: absolute;
+      top: 930rpx;
+      font-size: 12px;
+      width: 80%;
+      height: 100rpx;
+      color: #E9C011;
+      line-height: 100rpx;
+      left: 9%;
+
     }
   }
   .phone{
@@ -3137,6 +3557,21 @@
       top: 750rpx;
       left: 164rpx;
       z-index: 11;
+      span{
+        text-align: center;
+        padding: 0;
+        width: 297rpx;
+        height: 89rpx;
+        line-height: 79rpx;
+        letter-spacing: 46rpx;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        position: absolute;
+        padding-left: 20rpx;
+        top: 0;
+        left: 0;
+      }
       button{
         padding: 0;
         width: 100%;
@@ -3145,6 +3580,7 @@
         top: 0;
         left: 0;
         opacity: 0;
+        z-index: 15;
       }
       .phone_button{
         width: 100%;
@@ -3219,7 +3655,118 @@
           display: inline-block;
           height: 19rpx;
           vertical-align: middle;
-          margin-top: 5rpx;
+          margin-top: 10rpx;
+          margin-right: 4rpx;
+        }
+      }
+      p:nth-of-type(1){
+        font-size: 12px;
+        width: 400rpx;
+        margin-left: 26rpx;
+        color: #fefefe;
+        line-height: 1.5;
+      }
+      p:nth-of-type(2){
+        font-size: 12px;
+        color: #fefefe;
+        line-height: 1.5;
+      }
+    }
+    .main_img{
+      position: absolute;
+      width: 100%;
+      top: 0;
+      left: 0;
+    }
+    
+    .quxiao{
+      position: absolute;
+      bottom: 0;
+      left: 40%;
+      width: 20%;
+      height: 16%;
+    }
+  }
+  .newjiakefu{
+    z-index: 10;
+    width: 610rpx;
+    height: 1035rpx;
+    position: fixed;
+    left: 69rpx;
+    top: 4rpx;
+    overflow: hidden;
+    display: block;
+    clear: both;
+    text-align: center;
+    
+    .newjiakefu_erweima{
+      position: absolute;
+      top: 128rpx;
+      left: 109rpx;
+      width: 398rpx;
+      
+      img{
+        display: block;
+        width: 318rpx;
+        height: 318rpx;
+        margin: 0 auto;
+      }
+      p{
+        margin-top: 32rpx;
+        width: 398rpx;
+        color:#E5180B;
+        line-height: 45rpx;
+        font-size: 13px;
+        font-weight: 600;
+      }
+    }
+    .newjiakefu_button{
+      position: absolute;
+      top: 804rpx;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      // height: 35rpx;
+      p:nth-of-type(1) {
+        font-size: 18px;
+        color:#fefefe;
+        font-weight: 600;
+        width: 327rpx;
+        height: 80rpx;
+        line-height: 75rpx;
+        margin: 0 auto;
+        background-image: url("../../assets/active/jiakefu_btn.png");
+        background-size: 327rpx 80rpx;
+      }
+      p:nth-of-type(2) {
+        font-size: 13px;
+        color:#fefefe;
+        font-weight: 500;
+        margin-top: 24rpx;
+        // width: 327rpx;
+        // height: 80rpx;
+        // line-height: 75rpx;
+        // margin: 0 auto;
+        // background-image: url("../../assets/active/jiakefu_btn.png");
+        // background-size: 327rpx 80rpx;
+      }
+    }
+    .jiakefu_tips{
+      position: absolute;
+      top: 763rpx;
+      left: 110rpx;
+      width: 405rpx;
+      height: 67rpx;
+      text-align: left;
+      li{
+        margin-bottom: 20rpx;
+        img{
+          float: left;
+          width: 19rpx;
+          display: inline-block;
+          height: 19rpx;
+          vertical-align: middle;
+          margin-top: 10rpx;
           margin-right: 4rpx;
         }
       }

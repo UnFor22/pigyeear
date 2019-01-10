@@ -1,9 +1,14 @@
 <template>
   <div class="wrap">
       <!-- <div @click="xiazai" style='position:absolute;bottom:0;left:0; z-index:997;width:100px; height: 100px; '> </div> -->
+      <!-- canvas生成海报页面 -->
     <canvas id="canvas" canvas-id='canvas' style="width:750rpx; height:1208rpx;"></canvas> 
+    <!-- 显示的主页面 -->
+    <!-- 第一种布局方式，22人及以下 -->
     <div class="main" v-if="oneLayout">
+        <!-- 背景图 -->
         <img src="../../assets/active/more_bg1.jpg" class="main_img" alt="">
+        <!-- 分享和炫耀按钮 -->
         <div class="more_button">
             <div class="toshare">
                 <button class="toshare_btn" open-type='share'></button>
@@ -14,8 +19,9 @@
                 <img src="../../assets/active/more_down.png" mode="widthFix" alt="">
             </div>
         </div>
-        
+        <!-- 页面主要部分 -->
         <div class="more">
+            <!-- 用户头像和用户名 -->
             <div class="zhulixiangqing">
                 <img mode="widthFix" :src="img" alt="">
                 <p>{{nickName}}</p>
@@ -47,12 +53,13 @@
                     </li>
                 </div>
             </div>
-            <div class="zhuli_erweima">
+            <div class="zhuli_erweima" @click="xiazai">
                 <img :src="QrCodeImgUrl" alt="" mode="widthFix">
                 <p>查看我的财气榜</p>
             </div>
         </div>
     </div>
+    <!-- 第二种布局方式，46人及以下，46人会显示第三种布局 -->
     <div class="main" v-if="twoLayout">
         <img src="../../assets/active/more_bg2.jpg" class="main_img2" alt="">
         <div class="more_button">
@@ -118,12 +125,13 @@
                     </li>
                 </div>
             </div>
-            <div class="zhuli_erweima2">
+            <div class="zhuli_erweima2" @click="xiazai">
                 <img :src="QrCodeImgUrl" alt="" mode="widthFix">
                 <p>查看我的财气榜</p>
             </div>
         </div>
     </div>
+    <!-- 第三种布局方式，70人及以下 -->
     <div class="main" v-if="threeLayout">
         <img src="../../assets/active/more_bg3.jpg" class="main_img3" alt="">
         <div class="more_button">
@@ -209,12 +217,13 @@
                     </li>
                 </div>
             </div>
-            <div class="zhuli_erweima3">
+            <div class="zhuli_erweima3" @click="xiazai">
                 <img :src="QrCodeImgUrl" alt="" mode="widthFix">
                 <p>查看我的财气榜</p>
             </div>
         </div>
     </div>
+    <!-- 第四种布局方式，可容纳97人 -->
     <div class="main" v-if="fourLayout">
         <img src="../../assets/active/more_bg4.jpg" class="main_img4" alt="">
         <div class="more_button">
@@ -320,7 +329,7 @@
                     </li>
                 </div>
             </div>
-            <div class="zhuli_erweima4">
+            <div class="zhuli_erweima4" @click="xiazai">
                 <img :src="QrCodeImgUrl" alt="" mode="widthFix">
                 <p>查看我的财气榜</p>
             </div>
@@ -339,25 +348,26 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
         zhulinum: '', // 帮助用户助力的人数
         coin: '',  // 用户累计金币数
         tixiannum: '', // 可提现金额数
+
         pm: '',  // 当前用户排名
         img: require('../../assets/active/morentouxiang.png'),
-        userArrOne: [],
-        userArrTow: [],
-        userArrThree: [],
-        userArrFour: [],
-        userArrFive: [],
-        userArrSix: [],
-        userArrSeven: [],
-        userArrEight: [],
-        userArrNine: [],
-        userArrTen: [],
-        userArrEleven: [],
-        userArrTwelve: [],
-        userArrThirteen: [],
-        userArrFourteen: [],
-        userArrFifteen: [],
-        userArrSixteen: [],
-        userName: '',
+        userArrOne: [], // 第一行助力人头像
+        userArrTow: [], // 第二行助力人头像
+        userArrThree: [], // 第三行助力人头像
+        userArrFour: [], // 第四行助力人头像
+        userArrFive: [], // 第五行助力人头像
+        userArrSix: [], // 第六行助力人头像
+        userArrSeven: [], // 第七行助力人头像
+        userArrEight: [], // 第八行助力人头像
+        userArrNine: [], // 第九行助力人头像
+        userArrTen: [], // 第十行助力人头像
+        userArrEleven: [], // 第十一行助力人头像
+        userArrTwelve: [], // 第十二行助力人头像
+        userArrThirteen: [], // 第十三行助力人头像
+        userArrFourteen: [], // 第十四行助力人头像
+        userArrFifteen: [], // 第十五行助力人头像
+        userArrSixteen: [], // 第十六行助力人头像
+        userName: '', 
         openid: '',
 
         oneLayout: false,
@@ -369,29 +379,14 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
         // 画图相关
         avatarUrl: '',
         nickName: '',
-        fengniaoID: '',
         QrCodeImgUrl: 'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/piggogo.jpg', // 用户二维码地址
-        color1: '',
-        color2: '',
-        color3: '',
-        color4: '',
-        color5: '',
-        urlDuck: '',  //鸭子图片
-        saveUrlDuck: '',
-        typeDuck: '',  //鸭子类型
-        introDuck: '',  //鸭子简介
-        parseDuck: '',  //鸭子详情
-        matchImg: '',
-        inviteImg: '',
+
         prurl: '',
       }
     },
     onLoad(){
       let that = this   
-    //   wx.showLoading({
-    //     title: '正在努力生成中...',
-    //     mask: true,
-    //   });  
+
       wx.getStorage({
         key:'openID',
         success:function(res){  
@@ -399,7 +394,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             let openid = res.data.openId
             getTaskInfo({openid: res.data.openId}).then(res=>{
                 // console.log('详情页活动信息',res)
-                that.tixiannum = res.data.coin/100
+                that.tixiannum = res.data.addup/100
                 that.img = res.data.headurl
                 that.zhulinum = res.data.peoples
                 that.nickName = decodeURI(res.data.usname)
@@ -428,6 +423,8 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                     // 没人助力用户，显示22个默认头像
                     if(res.data.peopleinfo == null || res.data.peopleinfo == '')
                     {
+                        console.log('没人助力')
+
                         that.oneLayout = true
                         that.twoLayout = false
                         that.threeLayout = false
@@ -456,7 +453,10 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                         'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/app2_0/moren.png',
                         'https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/app2_0/moren.png',
                         ]
-                        
+                        that.userArrOne = that.userimg.slice(0,5);
+                        that.userArrTow = that.userimg.slice(5,11);
+                        that.userArrThree = that.userimg.slice(11,17);
+                        that.userArrFour = that.userimg.slice(17,22);
                     } else {       
                         // 如果等于42人，可能有第二页数据
                         if (res.data.peopleinfo.length === 42){  
@@ -527,7 +527,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                                                 that.twoLayout = false
                                                 that.threeLayout = false
                                                 that.fourLayout = true
-                                                console.log(that.userimg)
+                                                // console.log(that.userimg)
                                                 that.userArrOne = that.userimg.slice(0,5);
                                                 that.userArrTow = that.userimg.slice(5,11);
                                                 that.userArrThree = that.userimg.slice(11,17);
@@ -1568,6 +1568,32 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                             icon: 'none',
                             duration: 1500
                         });
+                    },
+                    fail(){
+                        // console.log('用户不允许使用相册')
+                        wx.showModal({
+                            title: '温馨提示',
+                            content: '只有授权后才能保存图片成功哦~',
+                            showCancel : false,
+                            confirmText: '去授权',
+                            success(res) {
+                                if (res.confirm) {
+                                    // console.log('用户点击确定');
+                                    wx.openSetting({    
+                                        success: (res) => {
+                                            // console.log(res)
+                                            // res.authSetting = {
+                                            //     "scope.userInfo": true,
+                                            //     "scope.userLocation": true
+                                            // }
+                                        },        
+                                        fail(){
+                                            console.log('设置页没有允许授权')
+                                        }
+                                    })
+                                } 
+                            }
+                        })
                     }
                 })
 

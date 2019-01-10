@@ -214,7 +214,7 @@ fly.interceptors.response.use(
   // 获取用户二维码
   export const getQRcode = params => {
     // console.log('获取任务进度参数',params)
-    return fly.post(`https://main.pcuion.com/api.php/userwx/create_qrcode_pigyear`, Qs.stringify(params)).then(res => res.data);
+    return fly.post(`${baseURL}/api.php/userwx/create_qrcode_pigyear`, Qs.stringify(params)).then(res => res.data);
   };
   // 获取提现方式选择页剩余人数及客服头像
   export const getLeftNum = params => {
