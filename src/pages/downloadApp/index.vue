@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <img class="logo" src="https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/invit.jpg" mode="widthFix" alt="">
-    <div class="download" @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')">
+    <div class="download" @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp_new.html')">
       <img class="down" src="../../assets/zhanghushouyi_btn.png" mode="widthFix" alt="">
     </div>
     <vue-tab-bar v-if='!SHOW'

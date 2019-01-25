@@ -28,7 +28,7 @@
             pagePath: "/pages/index/main",
             iconPath: "/static/bankaNoactive.png",
             selectedIconPath: "/static/bankaActive.png",
-            text: "猪年接龙"
+            text: "猪年发发发"
           },
           {
             pagePath: "/pages/downloadApp/main",

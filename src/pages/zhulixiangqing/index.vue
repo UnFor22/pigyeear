@@ -5,7 +5,7 @@
     <canvas id="canvas" canvas-id='canvas' style="width:750rpx; height:1208rpx;"></canvas> 
     <!-- 显示的主页面 -->
     <!-- 第一种布局方式，22人及以下 -->
-    <div class="main" v-if="oneLayout">
+    <div class="main" style="height:1360rpx;" v-if="oneLayout">
         <!-- 背景图 -->
         <img src="../../assets/active/more_bg1.jpg" class="main_img" alt="">
         <!-- 分享和炫耀按钮 -->
@@ -827,7 +827,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                             success:function(res){ 
                                 // console.log('获取二维码失败',res) 
                                 getQRcode({openid:res.data.openId}).then(res => {
-                                    // console.log('erweima',res)
+                                    console.log('erweima',res)
                                     if(res == null|| res == '' || res == ' '){
                                         that.QrCodeImgUrl = "https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/piggogo.jpg"
                                     } else if(res.result.code == 10000){
@@ -858,6 +858,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
       }
     },
     methods: {
+        // 点击按钮保存图片
       xiazai() {
         let that = this;
         wx.showLoading({
@@ -865,6 +866,9 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
         });
         
         // console.log('that.userimg',that.userimg)
+
+        // 先将图片缓存到本地
+
         // 用户二维码
         let promise1 = new Promise(function (resolve, reject) {
             // console.log(that.QrCodeImgUrl)
@@ -905,6 +909,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                 }
             })
         });
+        // 助力人头像
         let promise3 = new Promise(function (resolve, reject) {
             // console.log(that.userimg)
             wx.getImageInfo({
@@ -1307,6 +1312,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                 }
             })
         });
+        // 分享二维码
         let promise25 = new Promise(function (resolve, reject) {
             wx.getImageInfo({
                 src: "https://ioskamidownload.oss-cn-qingdao.aliyuncs.com/miniprogram/more_bg.png",
@@ -1325,17 +1331,19 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                 }
             })
         });
-    
+        // 等待所有图片缓存完成再画图，避免图片生成失败
         Promise.all([promise1,
             promise2,promise3,promise4,promise5,promise6,promise7,promise8,promise9,promise10,promise11,promise12,promise13,promise14,promise15,promise16,promise17,promise18,promise19,promise20,promise21,promise22,promise23,promise24,promise25
         ]).then(res => {
             // console.log('res',res)
+            // 创建画布
             const ctx = wx.createCanvasContext('canvas');
             // 画用户头像
             
             // 背景图
             ctx.drawImage(res[24].path, 0, 0, 375, 604);
-
+            
+            // 写字
             ctx.setFillStyle('#C18A37');
             ctx.font = '14px 思源黑体';
             ctx.fillText(that.nickName, 160, 98);
@@ -1521,11 +1529,11 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             ctx.clip();
             ctx.drawImage(res[23].path, 111, 413, 24, 24);
             ctx.restore()
-            // console.log('生成即将结束')
             ctx.draw()
             // console.log('生成结束');
             
             wx.hideLoading();
+            // 图片生成成功，提示用户保存到本地
             wx.showModal({
                 title: '温馨提示',
                 content: '保存图片，去发朋友圈炫耀吧！',
@@ -1545,6 +1553,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
       },
       baocun() {
         let that = this
+        // 截取画布大小
         wx.canvasToTempFilePath({
             x: 0,
             y: 0,
@@ -1556,10 +1565,10 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
             success: function (res) {
                 // console.log('canvas返回',res)
                 that.prurl = res.tempFilePath;
-                console.log(that.prurl)
+                // console.log(that.prurl)
                 wx.hideLoading();
 
-                //生产环境时 记得这里要加入获取相册授权的代码
+                //获取相册授权
                 wx.saveImageToPhotosAlbum({
                     filePath: that.prurl,
                     success(res) {
@@ -1569,8 +1578,8 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                             duration: 1500
                         });
                     },
+                    // console.log('用户不允许使用相册')
                     fail(){
-                        // console.log('用户不允许使用相册')
                         wx.showModal({
                             title: '温馨提示',
                             content: '只有授权后才能保存图片成功哦~',
@@ -1578,7 +1587,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                             confirmText: '去授权',
                             success(res) {
                                 if (res.confirm) {
-                                    // console.log('用户点击确定');
+                                    // console.log('用户点击确定，进入到授权设置页');
                                     wx.openSetting({    
                                         success: (res) => {
                                             // console.log(res)
@@ -1588,7 +1597,7 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
                                             // }
                                         },        
                                         fail(){
-                                            console.log('设置页没有允许授权')
+                                            console.log('用户在设置页没有授权')
                                         }
                                     })
                                 } 
@@ -1634,7 +1643,8 @@ import {getTaskInfo, getMore, getQRcode} from '../../requestAPI/requestAPI';
     //   bottom: 0;
     //   right: 0;  
       width: 750rpx;
-      height: 1208rpx;           
+      height: 1208rpx;    
+
   }
   .main_img2{
       position: absolute;

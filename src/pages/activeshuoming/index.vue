@@ -9,10 +9,10 @@
         <span>{{Year}}{{Month}}{{Day}}</span>
       </div> <br>
       <div class="main">
-        <p>1、抢得红包金币后，需分享5名好友点击拆开，5名好友接龙后即可提现~</p>
+        <p>1、抢得红包金币后，需5名好友点击帮忙拆开，5名好友接龙后即可提现~</p>
         <br>
         <p>2、当接龙人数超过5人后，每增加1位好友可随机获得5-60金币，自动到账，好友越多，金币越多，可随时提现。</p> <br>
-        <p>3、活动期间内，可持续分享，账户金额可累加，接龙好友不可重复。</p> <br>
+        <p>3、活动期间内，可持续助力，账户金额可累加，接龙好友不可重复。</p> <br>
         <p>4、红包提现如遇到问题，请咨询客服。</p> <br>
         <p>5、活动页面可随时关闭，点击浮动图标可查看账户金额。</p> 
       </div> 
@@ -43,7 +43,7 @@ import {getTaskInfo,getMore} from '../../requestAPI/requestAPI';
             // that.Year ='2018'
             // that.Month = '12'
             // that.Day = '31'
-            that.time = 1548950399
+            that.time = 1551369600
           } else {
             that.time = res.data.time      
           }

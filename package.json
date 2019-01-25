@@ -2,7 +2,7 @@
   "name": "xinyongka-wx",
   "version": "1.0.0",
   "description": "A Mpvue project",
-  "author": "liuwenxue@sudaizhijia.com",
+  "author": "zhengshasha@sudaizhijia.com",
   "private": true,
   "scripts": {
     "dev:wx": "node build/dev-server.js wx",

@@ -73,7 +73,7 @@
           <img class="share_button" mode="widthFix" src="../../assets/active/share_btn.png" alt=""> 
         </div>
         <div class="share_tips">
-          <p>超过5人后，每增加1位好友可累积获得5-60金币不等，分享越多，提现金额越多</p>
+          <p>超过5人后，每增加1位好友可累积获得5-60金币不等，好友越多，提现金额越多</p>
         </div>
         
       </div>
@@ -94,7 +94,7 @@
         </div>
         <div class="complete_title">
           <p>{{complete_ttt}}</p>
-          <p>累积获得<span style="font-size:24px;  font-weight:600;">￥{{count}}</span>金币</p>
+          <p>累积获得<span style="font-size:24px; font-weight:600;">￥{{count}}</span>金币</p>
           <img src="../../assets/active/complete_tips.png" mode="widthFix" alt="">
         </div>
         <div class="share_main">
@@ -180,7 +180,7 @@
         <div class="newtixian_tips">
           <div class="choose_kefu_tips">
             <!-- <p>A.小额提现</p> -->
-            <p>1. 打开APP-我的-猪年接龙-兑换现金；</p>
+            <p>1. 打开APP-我的-猪年发发发-兑换现金；</p>
             <p>2. 系统自动支付，最快3秒到账。</p>
             <p>（加客服微信，有机会获得白金合伙人体验权益）</p>
           </div>     
@@ -190,9 +190,11 @@
             <img src="../../assets/active/kefu_img.png" alt="">
             <p class="choose_kefu_btn">客服咨询</p>       
           </div>
+          <!-- <button open-type="launchApp" v-if="fromAPP" app-parameter="wechat" @error="launchAppError" @tap="goAPP">打开APP</button> -->
+
           <div class="choose_tixian_button">
             <p class="choose_tixian_btn">立即提现</p>
-            <button @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp.html')"></button>
+            <button @click="tokefu('下载APP','http://page.kamicard.com/download/kami_downloadApp_new.html')"></button>
           </div>
           
         </div>
@@ -222,7 +224,7 @@
         <div class="choose_weixin">
           <div class="choose_weixin_tips">
             <p>B.大额提现</p>
-            <p>1. 打开卡秘信用卡APP-我的-猪年接龙-兑换；</p>
+            <p>1. 打开卡秘信用卡APP-我的-猪年发发发-兑换；</p>
             <p>2. 系统自动支付，最快3秒到账。</p>
           </div>
           <div class="choose_weixin_button">
@@ -266,7 +268,7 @@
           </div>
         </div>
         <div class="tixian_btn">
-          <button class="phone_button" @click="tonewtixian()"></button>
+          <button class="phone_button" @click="bindphone()"></button>
           <span>确认</span>
           <img mode="widthFix" class="phone_button" src="../../assets/active/newtixian_btn.png" alt="">
         </div>
@@ -497,6 +499,7 @@
           openid: ''
         },
         leftNumber: '', // 选择提现方式页，剩余名额数
+        fromAPP: '',  // 从APP跳转到小程序
       }
     },
     // 底部tabbar注册组件
@@ -504,6 +507,12 @@
       vueTabBar,
     },   
     methods: {  
+      // launchAppError(e) {
+      //   console.log(e.detail.errMsg)
+      // },
+      // goAPP(e){
+      //   // console.log(e)
+      // },
       // 新用户点击开奖获取用户信息，并传到服务器
       onGotUserInfo: function(e) {
         let that = this
@@ -913,7 +922,7 @@
                   that.showphone= false
                   that.showjiakefu= false
                   if(that.endtime==null ||that.endtime==''){
-                    that.endtime = 1548950399
+                    that.endtime = 1551369600
                   } 
                   
                   let times = that.endtime - xianziatime
@@ -971,7 +980,7 @@
                   that.showphone= false
                   that.showjiakefu= false
                   if(that.endtime==null ||that.endtime==''){
-                    that.endtime = 1548950399
+                    that.endtime = 1551369600
                   } 
                     let times = that.endtime - xianziatime
                     that.times.secs = parseInt(times%60) 
@@ -998,12 +1007,12 @@
                     that.times.secs = parseInt(that.times.secs) - 1
                     // console.log('secs',that.times.secs)
 
-                    if(that.times.secs == 0){
+                    if(that.times.secs == -1){
                       // console.log('22222')
-                      that.times.secs = 60
+                      that.times.secs = 59
                       that.times.mins = parseInt(that.times.mins) - 1
-                      if(that.times.mins == 0){
-                        that.times.mins = 60
+                      if(that.times.mins == -1){
+                        that.times.mins = 59
                         that.times.hours = parseInt(that.times.hours) - 1
                         if(that.times.hours = -1){
                           that.times.hours = 23
@@ -1374,7 +1383,7 @@
       totixian(){
         let that  = this
         // console.log(this.award)
-        if(this.award>=100) {
+        if(this.award>=10) {
           this.showmengban= true, // 控制开奖页显隐
           this.showkaijiang= false,
           this.showaward= false,
@@ -1462,7 +1471,7 @@
           })
         } else {
           bandPhone(params).then(res => {
-            // console.log(res)
+            console.log(res)
             if(res.result.code == 10000){
               wx.showToast({
                 title: '绑定成功',
@@ -1629,7 +1638,7 @@
         getContent().then(data => {
           // console.log('调用一次',data)
           if(data.end == '' || data.end == null){
-            this.endtime = 1548950399
+            this.endtime = 1551369600
           } else {
             this.endtime = data.end
           }
@@ -1647,11 +1656,6 @@
       let that = this
       // console.log('option',options)
       const updateManager = wx.getUpdateManager()
-
-      // updateManager.onCheckForUpdate(function (res) {
-      //   // 请求完新版本信息的回调
-      //   // console.log(res.hasUpdate)
-      // })
 
       updateManager.onUpdateReady(function () {
         wx.showModal({
@@ -1677,6 +1681,10 @@
         });
 
       })
+      if(options.from == 3){
+        console.log('从APP跳过来的')
+        // this.fromAPP = true
+      }
       if(options.scene){
         // let scene=decodeURIComponent(options.scene);
         this.iszhuli= options.scene
@@ -1702,7 +1710,6 @@
       }
     },
     onShow(){ 
-     
       let that = this
       clearInterval(that.computetime)
       this.showmengban = false  
@@ -2096,10 +2103,10 @@
     }
     .to_share_right{
       position: absolute;
-      top: 62rpx;
-      right: 23rpx;
-      width: 106rpx;
-      height: 70rpx;
+      top: 73rpx;
+      right: 34rpx;
+      width: 80rpx;
+      height: 40rpx;
       z-index: 12;
       .share_button{
         z-index: 12;
@@ -2117,6 +2124,9 @@
         top: 0;
         right: -1rpx;
       }
+      // img{
+      //   height: 20rpx;
+      // }
     }
     .share_userInfo{
       position: absolute;
@@ -2332,9 +2342,9 @@
     }
     .to_share_right{
       position: absolute;
-      top: 62rpx;
-      right: 21rpx;
-      width: 106rpx;
+      top: 72rpx;
+      right: 34rpx;
+      width: 80rpx;
       height: 70rpx;
       z-index: 12;
       .share_button{
@@ -3049,9 +3059,9 @@
     }
     .to_share_right{
       position: absolute;
-      top: 62rpx;
-      right: 23rpx;
-      width: 106rpx;
+      top: 69rpx;
+      right: 34rpx;
+      width: 80rpx;
       height: 70rpx;
       z-index: 12;
       .share_button{
@@ -3247,9 +3257,9 @@
     }
     .to_share_right{
       position: absolute;
-      top: 62rpx;
-      right: 23rpx;
-      width: 106rpx;
+      top: 66rpx;
+      right: 35rpx;
+      width: 101rpx;
       height: 70rpx;
       z-index: 12;
       .share_button{
@@ -3447,9 +3457,9 @@
     }
     .to_share_right{
       position: absolute;
-      top: 62rpx;
-      right: 23rpx;
-      width: 106rpx;
+      top: 66rpx;
+      right: 35rpx;
+      width: 101rpx;
       height: 70rpx;
       z-index: 12;
       .share_button{
